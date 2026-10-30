@@ -99,7 +99,6 @@ function openPage(id) {
 
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
-// שים לב שגם ל-openAllNatures וכו' כדאי להוסיף את removeCoordinateTracker() אם אתה רוצה ניקוי מלא
 
 function openPathologies() {
     saveCurrentScroll();
@@ -181,95 +180,6 @@ function showElement(elementKey, btnElement) {
         showOrganPathology(elementKey, firstOrganKey, document.querySelector('.organ-tab.active-tab'));
     }
 }
-// --- מערכת פרופיל אישי ---
-function openProfile() {
-    saveCurrentScroll();
-    currentView = 'profile';
-
-    // איפוס סביבת התצוגה
-    const mapArea = document.getElementById('interactive-map-area');
-    const pointsDisplay = document.getElementById('pointsDisplay');
-    if (mapArea) mapArea.style.display = 'none';
-    if (pointsDisplay) {
-        pointsDisplay.style.display = 'none'; 
-        pointsDisplay.innerHTML = '';
-    }
-    if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
-
-    document.getElementById('globalSearch').value = '';
-    document.getElementById('filterBtn').style.display = 'none';
-    document.getElementById('welcome-view').style.display = 'none';
-
-    // עדכון תפריט הצד
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-    const btnProfile = document.getElementById('btn-profile');
-    if(btnProfile) btnProfile.classList.add('active-menu');
-
-    // שליפת נתוני המשתמש המחובר מ-Firebase
-    const user = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-    
-    let profileHtml = `
-        <div class="article-container" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); max-width: 800px; margin: auto;">
-            <h1 style="text-align: center; color: var(--ink); margin-bottom: 30px; font-size: 2.2rem;">פרופיל אישי</h1>
-    `;
-
-    if (user) {
-        // אם למשתמש אין תמונת פרופיל מוגדרת בגוגל, נשים תמונת ברירת מחדל
-        const photoURL = user.photoURL || 'https://via.placeholder.com/120?text=User';
-        
-        profileHtml += `
-            <div style="text-align: center; margin-bottom: 40px;">
-                <img src="${photoURL}" alt="תמונת פרופיל" style="width: 120px; height: 120px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px; border: 3px solid #f0f2f5;">
-                <h2 style="color: var(--ink); margin: 0; font-size: 1.8rem;">${user.displayName || 'סטודנט'}</h2>
-                <p style="color: #777; margin-top: 5px; font-size: 1.1rem;">${user.email}</p>
-                <button onclick="logoutUser()" style="margin-top: 20px; background: #ff6b6b; color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">התנתק מהמערכת</button>
-            </div>
-            
-            <div style="border-top: 2px solid #f0f2f5; padding-top: 30px;">
-                <h3 style="color: var(--ink); margin-bottom: 25px; text-align: center;">ההתקדמות שלי (בקרוב)</h3>
-                
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: center; flex: 1; min-width: 160px; border: 1px solid #eee; transition: 0.3s;" onmouseover="this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
-                        <h4 style="margin: 0 0 10px 0; color: #7f8c8d; font-size: 1.1rem;">מבחנים שבוצעו</h4>
-                        <span style="font-size: 2.5rem; font-weight: bold; color: #2ecc71;">--</span>
-                    </div>
-                    <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: center; flex: 1; min-width: 160px; border: 1px solid #eee; transition: 0.3s;" onmouseover="this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
-                        <h4 style="margin: 0 0 10px 0; color: #7f8c8d; font-size: 1.1rem;">ציון ממוצע</h4>
-                        <span style="font-size: 2.5rem; font-weight: bold; color: #3498db;">--%</span>
-                    </div>
-                </div>
-                <p style="text-align: center; color: #999; margin-top: 20px; font-size: 0.95rem;">* הנתונים יחוברו בהמשך למסד הנתונים בענן (Firestore) וישמרו אוטומטית בכל פעם שתסיים מבחן.</p>
-            </div>
-        `;
-    } else {
-        profileHtml += `<p style="text-align: center; color: #e74c3c; font-size: 1.2rem;">אנא התחבר כדי לראות את הפרופיל שלך.</p>`;
-    }
-
-    profileHtml += `</div>`;
-    document.getElementById('content-area').innerHTML = profileHtml;
-    window.scrollTo(0, 0);
-
-    if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
-    if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
-    
-    // סגירת התפריט במובייל לאחר לחיצה
-    if (window.innerWidth <= 1100) {
-        document.body.classList.add('sidebar-closed');
-    }
-}
-
-
-// פונקציית התנתקות
-window.logoutUser = function() {
-    if(window.firebaseAuth) {
-        window.firebaseAuth.signOut().then(() => {
-            // לאחר ההתנתקות נרענן את העמוד כדי להחזיר את מסך ההתחברות
-            window.location.reload();
-        }).catch((error) => {
-            console.error("שגיאה בהתנתקות:", error);
-        });
-    }
-};
 
 function showOrganPathology(elementKey, organKey, btnElement) {
     document.querySelectorAll('.organ-tab').forEach(btn => btn.classList.remove('active-tab'));
@@ -324,7 +234,6 @@ function openFundamentals() {
 
     let cardsHTML = '<div class="topics-grid">';
     Object.keys(theoryData).forEach(key => {
-        // מחריג את דף השכבות כדי שיופיע רק כדף עצמאי דרך התפריט
        if (key === 'layers' || key === 'pathogens' || key === 'bigpicture' || key === 'theoretical_exam' || key === 'practical_exam') return;
         const item = theoryData[key];
         const gradientStyle = `background: linear-gradient(135deg, ${item.color1} 0%, ${item.color2} 100%);`;
@@ -363,7 +272,6 @@ function openArticle(articleId) {
     
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
     
-    // בודק אם למאמר יש כפתור עצמאי בתפריט (כמו לשכבות), אחרת מסמן את "מבוא ויסודות"
     const specificBtn = document.getElementById('btn-' + articleId);
     if (specificBtn) {
         specificBtn.classList.add('active-menu');
@@ -384,6 +292,7 @@ function openArticle(articleId) {
     window.scrollTo(0, 0);
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
+
 function openNatureFromTag(tag) {
     const map = { 
         'Mu': 'mu',
@@ -408,53 +317,6 @@ function openNatureFromTag(tag) {
     
     const target = Object.keys(map).find(k => tag.includes(k));
     if (target) openAllNatures(map[target]);
-}
-
-// --- מערכת דיווח ---
-function openReportModal() {
-    document.getElementById('report-text').value = '';
-    document.getElementById('report-modal').style.display = 'flex';
-}
-
-// --- מערכת צ'אט ---
-function openChat() {
-    saveCurrentScroll();
-    currentView = 'chat';
-    
-    // ניקוי המסך מדברים אחרים
-    const mapArea = document.getElementById('interactive-map-area');
-    const pointsDisplay = document.getElementById('pointsDisplay');
-    if (mapArea) mapArea.style.display = 'none';
-    if (pointsDisplay) { pointsDisplay.style.display = 'none'; pointsDisplay.innerHTML = ''; }
-    if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
-
-    document.getElementById('welcome-view').style.display = 'none';
-    document.getElementById('globalSearch').value = '';
-    document.getElementById('filterBtn').style.display = 'none';
-
-    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-    const btnChat = document.getElementById('btn-chat');
-    if (btnChat) btnChat.classList.add('active-menu');
-
-    // הזרקת ממשק הצ'אט
-    document.getElementById('content-area').innerHTML = `
-        <div class="article-container" style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); max-width: 800px; margin: auto; height: 75vh; display: flex; flex-direction: column;">
-            <h2 style="text-align: center; color: var(--ink); margin-top: 0; margin-bottom: 15px;">צ'אט הסטודנטים</h2>
-            <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 15px; background: #fdfaf5; border-radius: 15px; margin-bottom: 15px; border: 1px solid #eee; display: flex; flex-direction: column; gap: 12px;">
-                <div style="text-align:center; color:#999; margin-top: 20px;">מתחבר לשרת ההודעות...</div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="chat-input" placeholder="הקלד הודעה..." onkeypress="if(event.key === 'Enter') sendChatMessage()" style="flex: 1; padding: 15px; border: 1px solid #ddd; border-radius: 12px; font-family: inherit; font-size: 1.05rem; outline: none;">
-                <button onclick="sendChatMessage()" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; border: none; padding: 0 30px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);">שלח</button>
-            </div>
-        </div>
-    `;
-
-    // הפעלת מאזין ההודעות מ-Firebase
-    if (window.initChatListener) window.initChatListener();
-    if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
-    
-    if (window.innerWidth <= 1100) document.body.classList.add('sidebar-closed');
 }
 
 function openAllNatures(targetId = null) {
