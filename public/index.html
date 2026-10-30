@@ -37,7 +37,9 @@
             
             <!-- הכפתור החדש של הפרופיל האישי -->
             <div class="menu-item" id="btn-profile" onclick="openProfile()">👤 פרופיל אישי</div>
-            
+            <div class="menu-item" id="btn-chat" onclick="openChat()">💬 צ'אט הסטודנטים</div>
+            <div class="menu-item" onclick="openReportModal()">🚨 דיווח על טעות בחומר</div>
+
            <div class="menu-section">
                 <h2>מרידיאנים</h2>
                 
@@ -201,7 +203,20 @@
                     <div style="text-align: left; margin-top: 30px;">
                         <button id="quiz-next-btn" class="start-quiz-btn" style="display: none; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); box-shadow: 0 5px 15px rgba(139, 28, 49, 0.3); color: white;" onclick="nextQuizQuestion()">לשאלה הבאה ⬅️</button>
                     </div>
+
+
+                    <!-- מודל דיווח על טעות -->
+        <div id="report-modal" class="quiz-overlay" style="display: none;">
+            <div class="quiz-box" style="text-align: center;">
+                <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'">✖</button>
+                <h2 style="color: var(--ink); margin-bottom: 15px;">דיווח על טעות</h2>
+                <p style="color: #666; margin-bottom: 20px;">מצאת נתון שגוי או חסר? פרט כאן ונתקן!</p>
+                <textarea id="report-text" style="width: 100%; height: 100px; padding: 15px; border-radius: 10px; border: 1px solid #ccc; font-family: inherit; resize: none; margin-bottom: 15px;" placeholder="לדוגמה: בנקודה ST-36 חסרה אינדיקציה..."></textarea>
+                <button class="start-quiz-btn" onclick="submitReport()">שלח דיווח בעילום שם</button>
+            </div>
+        </div>
                 </div>
+
             </div>
         </div>
     </div> <!-- סגירת app-container -->
@@ -209,7 +224,7 @@
     <script src="data_points.js"></script>
     <script src="data_pathologies.js"></script>
     <script src="data_theory.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
     <script src="ui.js"></script>
     <script src="data_exam.js"></script>
     <script src="quiz.js"></script>
@@ -220,8 +235,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCUUehirog3DEx1thYy0WOt0jVzufHSv_Q",
             authDomain: "uv-website-eef74.firebaseapp.com",
@@ -266,6 +280,81 @@
                     authError.style.display = 'block';
                 });
         });
+
+        // --- לוגיקת צ'אט (Firestore) ---
+        let chatUnsubscribe = null;
+
+        window.initChatListener = function() {
+            const messagesDiv = document.getElementById('chat-messages');
+            if(!messagesDiv) return;
+            
+            // שליפת ההודעות לפי סדר כרונולוגי
+            const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
+            
+            if(chatUnsubscribe) chatUnsubscribe(); // ניקוי האזנה קודמת
+            
+            chatUnsubscribe = onSnapshot(q, (snapshot) => {
+                messagesDiv.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const isMe = auth.currentUser && data.userEmail === auth.currentUser.email;
+                    
+                    // עיצוב שונה להודעה שלי מול הודעה של אחרים
+                    const align = isMe ? 'flex-start' : 'flex-end';
+                    const bg = isMe ? '#d1f2eb' : '#ffffff';
+                    const nameColor = isMe ? '#16a085' : '#7f8c8d';
+                    
+                    messagesDiv.innerHTML += `
+                        <div style="align-self: ${align}; background: ${bg}; padding: 12px 18px; border-radius: 18px; max-width: 75%; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #eee;">
+                            <div style="font-size: 0.8rem; color: ${nameColor}; font-weight: bold; margin-bottom: 5px;">${data.userName}</div>
+                            <div style="color: var(--ink); line-height: 1.4; word-wrap: break-word;">${data.text}</div>
+                        </div>
+                    `;
+                });
+                // גלילה אוטומטית למטה להודעה החדשה ביותר
+                messagesDiv.scrollTop = messagesDiv.scrollHeight; 
+            });
+        };
+
+        window.sendChatMessage = async function() {
+            const input = document.getElementById('chat-input');
+            const text = input.value;
+            if(!text.trim()) return;
+            
+            const user = auth.currentUser;
+            if(!user) return alert("אנא התחבר כדי לשלוח הודעה.");
+
+            input.value = ''; 
+            try {
+                await addDoc(collection(db, "chats"), {
+                    text: text,
+                    userName: user.displayName || "סטודנט",
+                    userEmail: user.email,
+                    timestamp: serverTimestamp()
+                });
+            } catch(e) {
+                console.error("שגיאה:", e);
+            }
+        };
+
+        // --- לוגיקת דיווח (Firestore) ---
+        window.submitReport = async function() {
+            const text = document.getElementById('report-text').value;
+            if(!text.trim()) return alert("אנא הזן את פרטי הדיווח.");
+            
+            const user = auth.currentUser;
+            try {
+                await addDoc(collection(db, "reports"), {
+                    text: text,
+                    userEmail: user ? user.email : "לא מחובר",
+                    timestamp: serverTimestamp()
+                });
+                alert("הדיווח נשלח בהצלחה, תודה רבה!");
+                document.getElementById('report-modal').style.display = 'none';
+            } catch(e) {
+                alert("שגיאה בשליחה: " + e.message);
+            }
+        };
     </script>
 </body>
 </html>
