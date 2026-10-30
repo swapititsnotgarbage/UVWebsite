@@ -234,9 +234,9 @@
     <script src="data_points.js"></script>
     <script src="data_pathologies.js"></script>
     <script src="data_theory.js"></script>
-    <script src="app.js?v=5"></script>
-    <script src="profile.js?v=5"></script>
-    <script src="chat.js?v=5"></script>
+    <script src="app.js?v=6"></script>
+    <script src="profile.js?v=6"></script>
+    <script src="chat.js?v=6"></script>
     <script src="ui.js"></script>
     <script src="data_exam.js"></script>
     <script src="quiz.js"></script>
@@ -308,7 +308,6 @@
                     const data = doc.data();
                     const isMe = auth.currentUser && data.userEmail === auth.currentUser.email;
                     
-                    // המרת התאריך מפיירבייס לשעות ודקות
                     let timeString = '';
                     if (data.timestamp) {
                         const date = data.timestamp.toDate();
@@ -319,16 +318,16 @@
                         timeString = 'שולח...'; 
                     }
 
-                    // הגדרות עיצוב בועת וואטסאפ (RTL: ירוק משמאל-שלי, לבן מימין-של אחרים)
-                    const align = isMe ? 'flex-end' : 'flex-start';
+                    // הודעות שלי מימין (flex-start ב-RTL) והודעות של אחרים משמאל
+                    const align = isMe ? 'flex-start' : 'flex-end';
                     const bg = isMe ? '#d9fdd3' : '#ffffff';
-                    const radius = isMe ? '15px 15px 0 15px' : '15px 15px 15px 0';
-                    const nameColor = '#075e54';
+                    const radius = isMe ? '15px 15px 15px 0' : '15px 15px 0 15px';
+                    const nameColor = isMe ? '#075e54' : '#d35400';
                     
                     messagesDiv.innerHTML += `
-                        <div style="align-self: ${align}; background: ${bg}; padding: 8px 12px; border-radius: ${radius}; max-width: 75%; min-width: 120px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; margin-bottom: 4px;">
-                            ${!isMe ? `<div style="font-size: 0.85rem; color: ${nameColor}; font-weight: bold; margin-bottom: 2px;">${data.userName}</div>` : ''}
-                            <div style="color: #111b21; font-size: 1.05rem; line-height: 1.4; word-wrap: break-word; padding-bottom: 15px; padding-left: ${isMe ? '15px' : '30px'};">${data.text}</div>
+                        <div style="align-self: ${align}; text-align: right; background: ${bg}; padding: 8px 12px; border-radius: ${radius}; max-width: 75%; min-width: 120px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; margin-bottom: 4px;">
+                            <div style="font-size: 0.85rem; color: ${nameColor}; font-weight: bold; margin-bottom: 2px;">${data.userName}</div>
+                            <div style="color: #111b21; font-size: 1.05rem; line-height: 1.4; word-wrap: break-word; padding-bottom: 15px; padding-left: 30px;">${data.text}</div>
                             <div style="font-size: 0.7rem; color: #667781; position: absolute; bottom: 4px; left: 8px;">${timeString}</div>
                         </div>
                     `;
