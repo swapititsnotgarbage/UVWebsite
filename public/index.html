@@ -27,18 +27,16 @@
         </div>
     </div>
 
-    <!-- עטיפת התוכן הראשי של האתר (מוסתר כברירת מחדל עד לאימות) -->
+    <!-- עטיפת התוכן הראשי של האתר -->
     <div id="app-container" style="display: none; width: 100%;">
         <button id="sidebarToggle" onclick="toggleSidebar()">▶</button>
 
         <aside id="sidebar">
             <div class="logo" onclick="goHome()">UV Website</div>
-            <div class="menu-item active-menu" id="btn-home" onclick="goHome()">🏠 דף הבית</div>
-            
-            <!-- הכפתור החדש של הפרופיל האישי -->
-            <div class="menu-item" id="btn-profile" onclick="openProfile()">👤 פרופיל אישי</div>
-            <div class="menu-item" id="btn-chat" onclick="openChat()">💬 צ'אט הסטודנטים</div>
-            <div class="menu-item" onclick="openReportModal()">🚨 דיווח על טעות בחומר</div>
+            <div class="menu-item active-menu" id="btn-home" onclick="goHome()">דף הבית 🏠</div>
+            <div class="menu-item" id="btn-profile" onclick="openProfile()">פרופיל אישי 👤</div>
+            <div class="menu-item" id="btn-chat" onclick="openChat()">צ'אט הסטודנטים 💬</div>
+            <div class="menu-item" onclick="openReportModal()">דיווח על טעות בחומר 🚨</div>
 
            <div class="menu-section">
                 <h2>מרידיאנים</h2>
@@ -203,9 +201,11 @@
                     <div style="text-align: left; margin-top: 30px;">
                         <button id="quiz-next-btn" class="start-quiz-btn" style="display: none; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); box-shadow: 0 5px 15px rgba(139, 28, 49, 0.3); color: white;" onclick="nextQuizQuestion()">לשאלה הבאה ⬅️</button>
                     </div>
+                </div>
+            </div>
+        </div>
 
-
-                    <!-- מודל דיווח על טעות -->
+        <!-- מודל דיווח על טעות תוקן והועבר מחוץ לחלון המבחן -->
         <div id="report-modal" class="quiz-overlay" style="display: none;">
             <div class="quiz-box" style="text-align: center;">
                 <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'">✖</button>
@@ -215,16 +215,13 @@
                 <button class="start-quiz-btn" onclick="submitReport()">שלח דיווח בעילום שם</button>
             </div>
         </div>
-                </div>
 
-            </div>
-        </div>
     </div> <!-- סגירת app-container -->
 
     <script src="data_points.js"></script>
     <script src="data_pathologies.js"></script>
     <script src="data_theory.js"></script>
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=4"></script>
     <script src="ui.js"></script>
     <script src="data_exam.js"></script>
     <script src="quiz.js"></script>
