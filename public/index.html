@@ -205,14 +205,28 @@
             </div>
         </div>
 
-        <!-- מודל דיווח על טעות תוקן והועבר מחוץ לחלון המבחן -->
-        <div id="report-modal" class="quiz-overlay" style="display: none;">
-            <div class="quiz-box" style="text-align: center;">
-                <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'">✖</button>
-                <h2 style="color: var(--ink); margin-bottom: 15px;">דיווח על טעות</h2>
-                <p style="color: #666; margin-bottom: 20px;">מצאת נתון שגוי או חסר? פרט כאן ונתקן!</p>
-                <textarea id="report-text" style="width: 100%; height: 100px; padding: 15px; border-radius: 10px; border: 1px solid #ccc; font-family: inherit; resize: none; margin-bottom: 15px;" placeholder="לדוגמה: בנקודה ST-36 חסרה אינדיקציה..."></textarea>
-                <button class="start-quiz-btn" onclick="submitReport()">שלח דיווח בעילום שם</button>
+       <!-- מודל דיווח על טעות מעוצב מחדש -->
+        <div id="report-modal" class="quiz-overlay" style="display: none; justify-content: center; align-items: center; background: rgba(0,0,0,0.5);">
+            <div class="quiz-box" style="text-align: center; max-width: 550px; width: 90%; padding: 40px 35px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); background: #ffffff; position: relative; border: none;">
+                <!-- כפתור סגירה מעוגל -->
+                <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'" style="position: absolute; top: 20px; left: 20px; background: #f0f2f5; color: #7f8c8d; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#e4e6eb'; this.style.color='#2c3e50';" onmouseout="this.style.background='#f0f2f5'; this.style.color='#7f8c8d';">✖</button>
+                
+                <h2 style="color: #2c3e50; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    דיווח על טעות או חסר 🚨
+                </h2>
+                <p style="color: #576574; font-size: 1.05rem; line-height: 1.5; margin-bottom: 30px; font-weight: 500;">
+                    נתקלתם בנתון שגוי, חסר או לא מעודכן? שתפו אותנו ונתקן זאת בהקדם!
+                </p>
+                
+                <textarea id="report-text" style="width: 100%; height: 160px; padding: 18px; border-radius: 12px; border: 1px solid #dcdde1; font-family: inherit; font-size: 1rem; line-height: 1.6; resize: none; margin-bottom: 25px; outline: none; box-sizing: border-box; transition: 0.3s; background: #ffffff;" placeholder="לדוגמה: בנקודה ST-36 חסרה אינדיקציה...&#10;אנא פרטו ככל הניתן" onfocus="this.style.borderColor='#2ecc71'; this.style.boxShadow='0 0 0 3px rgba(46, 204, 113, 0.15)'" onblur="this.style.borderColor='#dcdde1'; this.style.boxShadow='none'"></textarea>
+                
+                <button class="start-quiz-btn" onclick="submitReport()" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.25rem; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.25); transition: 0.3s; margin-bottom: 15px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(46, 204, 113, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(46, 204, 113, 0.25)';">
+                    שליחת דיווח מהיר (בעילום שם)
+                </button>
+                
+                <span style="display: block; color: #8a97a6; font-size: 0.85rem; font-weight: 500;">
+                    * הדיווחים נשלחים ישירות למנהלי המערכת ונבדקים מדי יום.
+                </span>
             </div>
         </div>
 
