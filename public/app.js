@@ -250,7 +250,14 @@ function openProfile() {
     window.scrollTo(0, 0);
 
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
+    if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
+    
+    // סגירת התפריט במובייל לאחר לחיצה
+    if (window.innerWidth <= 1100) {
+        document.body.classList.add('sidebar-closed');
+    }
 }
+
 
 // פונקציית התנתקות
 window.logoutUser = function() {

@@ -222,7 +222,8 @@ function toggleSidebar() {
     const body = document.body;
     body.classList.toggle('sidebar-closed');
 
-    // סגירת התפריט אוטומטית במובייל בעת לחיצה על פריט
+
+   // סגירת התפריט אוטומטית במובייל בעת לחיצה על פריט
     if (window.innerWidth <= 1100) {
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
