@@ -219,9 +219,20 @@ function clearAllFlashcardInputs() {
 }
 
 function toggleSidebar() {
-    document.body.classList.toggle('sidebar-closed');
-    const btn = document.getElementById('sidebarToggle');
-    btn.innerHTML = document.body.classList.contains('sidebar-closed') ? '◀' : '▶';
+    const body = document.body;
+    body.classList.toggle('sidebar-closed');
+
+    // סגירת התפריט אוטומטית במובייל בעת לחיצה על פריט
+    if (window.innerWidth <= 1100) {
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.id === 'btn-home' || item.id === 'btn-profile' || item.id.startsWith('btn-') && item.id !== 'btn-main-study') {
+                    body.classList.add('sidebar-closed');
+                }
+            });
+        });
+    }
 }
 
 function toggleMenuSection(headerElement) {
