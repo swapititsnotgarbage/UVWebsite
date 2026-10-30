@@ -47,7 +47,13 @@ function generateCard(point, forceFront = false, isModal = false) {
                 <div class="flip-front">
                     <div class="card elm-${point.elm || 'none'}">
                         <div class="element-label" id="${prefix}front-elm-${point.id}" style="display: ${elementName ? 'block' : 'none'}"><span class="actual-text">${elementName}</span></div>
-                        <div class="point-id">${point.id || ''}</div>
+                        
+                        <!-- שורת מזהה, שם וכפתור מועדפים ⭐ -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div class="point-id">${point.id || ''}</div>
+                            <button class="fav-btn" data-id="${point.id}" onclick="event.stopPropagation(); toggleFavorite('${point.id}', '${point.id} - ${point.name}', 'point', this)" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ccc; padding: 0; transition: 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">☆</button>
+                        </div>
+
                         <div class="point-name">${point.name || ''}</div>
                         ${tagsHtml}
                         ${imageHtml}
@@ -173,18 +179,14 @@ function checkCard(pointId, isModal = false) {
     document.querySelector(`#${prefix}front-func-${pointId} .actual-text`).innerHTML = highlightedFunc;
     document.querySelector(`#${prefix}front-ind-${pointId} .actual-text`).innerHTML = highlightedInd;
 
-    // הפוך את הכרטיסייה בחזרה
     const container = document.getElementById(`${prefix}container-${pointId}`);
     if(container) container.classList.remove('is-flipped');
     flippedCards.delete(pointId);
 
-    // אם אנחנו בתוך כרטיסייה אקראית
     if (isModal) {
         const nextBtn = document.getElementById('random-next-btn');
         if (nextBtn) {
             nextBtn.style.display = 'block';
-            
-            // גלול טיפה למטה כדי שיראו את הכפתור בקלות
             setTimeout(() => {
                 nextBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
             }, 300);
@@ -222,8 +224,6 @@ function toggleSidebar() {
     const body = document.body;
     body.classList.toggle('sidebar-closed');
 
-
-   // סגירת התפריט אוטומטית במובייל בעת לחיצה על פריט
     if (window.innerWidth <= 1100) {
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
@@ -260,10 +260,6 @@ function checkEnter(event) {
     if (event.key === 'Enter') checkPassword();
 }
 
-// ==========================================
-// כלי למידה (תפריט בחינה)
-// ==========================================
-
 function toggleStudyMenu() {
     const menu = document.getElementById('study-menu');
     if (menu.style.display === 'none' || menu.style.display === '') {
@@ -289,7 +285,6 @@ function updateStudyToolsVisibility() {
 
     if (!studyTools) return;
 
-    // הסתרת הכפתור הצף לחלוטין בדף הבית, במבחן העיוני ובמבחן המעשי
     if (currentView === 'home' || currentView === 'article_theoretical_exam' || currentView === 'article_practical_exam') {
         studyTools.style.display = 'none';
         return;
@@ -298,7 +293,6 @@ function updateStudyToolsVisibility() {
     studyTools.style.display = 'flex';
     if (studyMenu) studyMenu.style.display = 'none'; 
 
-    // קודם כל נסתיר את כל הלחצנים של התפריט
     if (flashTestBtn) flashTestBtn.style.display = 'none';
     if (flashSolveBtn) flashSolveBtn.style.display = 'none';
     if (flashClearBtn) flashClearBtn.style.display = 'none';
@@ -309,7 +303,6 @@ function updateStudyToolsVisibility() {
     if (bpFullBtn) bpFullBtn.style.display = 'none';
     if (bpCheckBtn) bpCheckBtn.style.display = 'none';
 
-    // עכשיו נציג רק את מה שצריך לפי הדף הנוכחי
     if (currentView === 'article_bigpicture') {
         if (bpEmptyBtn) bpEmptyBtn.style.display = 'block';
         if (bpFullBtn) bpFullBtn.style.display = 'block';
@@ -322,12 +315,16 @@ function updateStudyToolsVisibility() {
         if (flashClearBtn) flashClearBtn.style.display = 'block';
         if (randomCardBtn) randomCardBtn.style.display = 'block';
         if (mapToggleBtn) mapToggleBtn.style.display = 'block'; 
+        
+        // בדיקת סטטוס המועדפים לאחר טעינת הכרטיסיות
+        if (window.checkFavoritesStatus) {
+            setTimeout(window.checkFavoritesStatus, 150);
+        }
     } else {
         studyTools.style.display = 'none';
     }
 }
 
-// פונקציות המבחן של התמונה הגדולה
 function bpEmptyQuiz() {
     document.querySelectorAll('.interactive-table input').forEach(i => { 
         i.value = ''; 

@@ -50,6 +50,14 @@ function openProfile() {
                     </div>
                 </div>
             </div>
+
+            <!-- אזור המועדפים החדש -->
+            <div style="border-top: 2px solid #f0f2f5; padding-top: 30px; margin-top: 30px;">
+                <h3 style="color: var(--ink); margin-bottom: 20px; text-align: center;">המחברת שלי - מועדפים ⭐</h3>
+                <div id="profile-favorites-list" style="display: flex; flex-direction: column; gap: 10px; text-align: center; color: #777;">
+                    טוען מועדפים...
+                </div>
+            </div>
         `;
     } else {
         profileHtml += `<p style="text-align: center; color: #e74c3c; font-size: 1.2rem;">אנא התחבר כדי לראות את הפרופיל שלך.</p>`;
@@ -62,7 +70,6 @@ function openProfile() {
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
     if (window.innerWidth <= 1100) document.body.classList.add('sidebar-closed');
 
-    // קריאה לפונקציה שמושכת נתונים מהענן כשהפרופיל נטען
     if (user && window.loadUserProfileData) {
         window.loadUserProfileData();
     }
