@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UV Website - אינדקס רפואה סינית</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+    <!-- מסך התחברות -->
+    <div id="login-screen" class="login-overlay">
+        <div class="login-box">
+            <h2>ברוכים הבאים</h2>
+            <p>התחבר למערכת כדי להמשיך:</p>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <button id="btnGoogleLogin" style="background: white; color: #757575; border: 1px solid #ddd; padding: 12px 20px; border-radius: 5px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.3s; width: 100%; justify-content: center;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+                    התחברות באמצעות Google
+                </button>
+            </div>
+            <p id="auth-error" style="color: #e74c3c; display: none; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <!-- עטיפת התוכן הראשי של האתר (מוסתר כברירת מחדל עד לאימות) -->
+    <div id="app-container" style="display: none; width: 100%;">
+        <button id="sidebarToggle" onclick="toggleSidebar()">▶</button>
+
+        <aside id="sidebar">
+            <div class="logo" onclick="goHome()">UV Website</div>
+            <div class="menu-item active-menu" id="btn-home" onclick="goHome()">🏠 דף הבית</div>
+            
+           <div class="menu-section">
+                <h2>מרידיאנים</h2>
+                
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני עץ</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-LIV" onclick="openPage('LIV')">כבד (LIV) (Yin)</div>
+                    <div class="menu-item" id="btn-GB" onclick="openPage('GB')">כיס מרה (GB) (Yang)</div>
+                </div>
+
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני אש</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-HT" onclick="openPage('HT')">הלב (HT) (Yin)</div>
+                    <div class="menu-item" id="btn-SI" onclick="openPage('SI')">המעי הדק (SI) (Yang)</div>
+                    <div class="menu-item" id="btn-PC" onclick="openPage('PC')">מעטפת הלב (PC) (Yin)</div>
+                    <div class="menu-item" id="btn-TW" onclick="openPage('TW')">תלת מחמם (TW) (Yang)</div>
+                </div>
+
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני אדמה</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-ST" onclick="openPage('ST')">קיבה (ST) (Yang)</div>
+                    <div class="menu-item" id="btn-SP" onclick="openPage('SP')">טחול (SP) (Yin)</div>
+                </div>
+
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני מתכת</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-LI" onclick="openPage('LI')">מעי גס (LI) (Yang)</div>
+                    <div class="menu-item" id="btn-LU" onclick="openPage('LU')">ריאות (LU) (Yin)</div>
+                </div>
+
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני מים</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-KID" onclick="openPage('KID')">כליות (KID) (Yin)</div>
+                    <div class="menu-item" id="btn-BL" onclick="openPage('BL')">שלפוחית השתן (BL) (Yang)</div>
+                </div>
+
+                <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאנים מיוחדים</div>
+                <div class="accordion-content">
+                    <div class="menu-item" id="btn-REN" onclick="openPage('REN')">Ren Mai (RN \ CV)</div>
+                    <div class="menu-item" id="btn-DU" onclick="openPage('DU')">Du Mai (GV)</div>
+                </div>
+
+                <div class="menu-section">
+                <h2>מבחנים - נקודות דיקור</h2>
+                <div class="menu-item" id="btn-theoretical_exam" onclick="openArticle('theoretical_exam')">מבחן עיוני</div>
+                <div class="menu-item" id="btn-practical_exam" onclick="openArticle('practical_exam')">מבחן מעשי</div>
+            </div>
+            </div>
+
+            <div class="menu-section">
+                <h2>נקודות חומר עיוני</h2>
+                <div class="menu-item" id="btn-nature" onclick="openAllNatures()">אופי נקודות דיקור</div>
+                <div class="menu-item" id="btn-bigpicture" onclick="openArticle('bigpicture')">התמונה הגדולה (טבלאות)</div>
+            </div>
+
+            <div class="menu-section">
+                <h2>יסודות הרפואה הסינית</h2>
+                <div class="menu-item" id="btn-fundamentals" onclick="openFundamentals()">מבוא ויסודות</div>
+                <div class="menu-item" id="btn-layers" onclick="openArticle('layers')">שעון ביולוגי ושכבות</div>
+                <div class="menu-item" id="btn-pathogens" onclick="openArticle('pathogens')">גורמי מחלה</div>
+            </div>
+
+            <div class="menu-section">
+               <h2>קליניקה</h2>
+               <div class="menu-item" id="btn-pathologies" onclick="openPathologies()">סינדרומים ופתולוגיות</div>
+            </div>
+        </aside>
+
+        <main>
+            <div class="search-container">
+                <input type="text" id="globalSearch" placeholder="חיפוש חופשי..." oninput="handleSearch()">
+                <button id="filterBtn" onclick="toggleFilterMenu()">🔽 סינון</button>
+                
+                <div id="filterMenu" class="filter-dropdown" style="display: none;">
+                    <h4>לפי אלמנט:</h4>
+                    <button onclick="filterBy('wood')">עץ (Wood)</button>
+                    <button onclick="filterBy('fire')">אש (Fire)</button>
+                    <button onclick="filterBy('earth')">אדמה (Earth)</button>
+                    <button onclick="filterBy('metal')">מתכת (Metal)</button>
+                    <button onclick="filterBy('water')">מים (Water)</button>
+
+                    <h4 style="margin-top: 15px;">לפי נקודות עתיקות:</h4>
+                    <button onclick="filterBy('באר - Jing-Well')">באר (Jing-Well)</button>
+                    <button onclick="filterBy('מעיין - Ying-Spring')">מעיין (Ying-Spring)</button>
+                    <button onclick="filterBy('פלג - Shu-Stream')">פלג (Shu-Stream)</button>
+                    <button onclick="filterBy('נהר - Jing-River')">נהר (Jing-River)</button>
+                    <button onclick="filterBy('ים - He-Sea')">ים (He-Sea)</button>
+
+                    <h4 style="margin-top: 15px;">לפי אופי:</h4>
+                    <button onclick="filterBy('מקור - Yuan')">מקור (Yuan)</button>
+                    <button onclick="filterBy('חיבור - Luo')">חיבור (Luo)</button>
+                    <button onclick="filterBy('הצטברות - Xi-Cleft')">הצטברות (Xi-Cleft)</button>
+                    <button onclick="filterBy('חיזוק - Tonification')">חיזוק (Tonification)</button>
+                    <button onclick="filterBy('פיזור - Sedation')">פיזור (Sedation)</button>
+                    <button onclick="filterBy('שעה - Horary')">שעה (Horary)</button>
+                    <button onclick="filterBy('ים הדגנים - Sea of Grain')">ים הדגנים</button>
+                </div>
+            </div>
+
+            <div id="welcome-view" style="text-align: center; margin-top: 50px;">
+                <h1>UV Website</h1>
+                <p>אינדקס רפואה סינית מקצועי. המידע המלא במקום אחד.</p>
+            </div>
+
+            <div id="content-area"></div>
+            
+            <div id="interactive-map-area" style="display: none; text-align: center; margin-bottom: 40px;">
+                <h2 style="color: var(--ink); margin-bottom: 20px;">מפת מרידיאנים אינטראקטיבית</h2>
+                <div class="body-map-wrapper">
+                    <img src="images/Map.png" alt="Body Map 1" class="body-map-image">
+                    <img src="images/Map2.png" alt="Body Map 2" class="body-map-image" style="margin-top: 10px; border-top: 2px solid #eee; padding-top: 10px;">
+                    <div id="map-points-layer"></div>
+                </div>
+            </div>
+            <div class="points-grid" id="pointsDisplay"></div>
+        </main>
+
+        <div id="study-tools" class="study-tools-container">
+            <button id="btn-toggle-map" class="study-btn" onclick="toggleMapMode()" style="display: none; background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%); margin-bottom: 10px;" title="מפה ויזואלית של המרידיאן">🗺️ מפה אינטראקטיבית</button>
+            <div id="study-menu" class="study-menu-popup" style="display: none;">
+                <button id="btn-flash-test" class="study-btn-small" onclick="flipAllCards(true)">🧠 מבחן כרטיסיות</button>
+                <button id="btn-flash-solve" class="study-btn-small" onclick="flipAllCards(false)">👁️ חשוף תשובות</button>
+                <button id="btn-flash-clear" class="study-btn-small clear-btn" onclick="clearAllFlashcardInputs()" style="display: none;">🧹 נקה הכל</button>
+                <button id="btn-random-card" class="study-btn-small random-btn" onclick="openRandomCardModal()" style="display: none;">🔀 כרטיסייה אקראית</button>
+                <button id="btn-smart-quiz" class="study-btn-small quiz-btn" onclick="openQuizSetup()" style="display: none;">📝 מבחן חכם</button>
+                <div class="menu-item" id="btn-bp-empty" onclick="bpEmptyQuiz()" style="display: none;">🔄 מבחן ריק</div>
+                <div class="menu-item" id="btn-bp-full" onclick="bpFullQuiz()" style="display: none;">📖 מבחן מלא (תשובות)</div>
+                <div class="menu-item" id="btn-bp-check" onclick="bpCheckQuiz()" style="display: none;">✅ בדיקה</div>
+            </div>
+            <button id="btn-main-study" class="study-btn" onclick="toggleStudyMenu()" title="פתיחת אפשרויות מבחן">🎓 תפריט בחינה</button>
+        </div>
+
+        <div id="quiz-setup-modal" class="quiz-overlay" style="display: none;">
+            <div class="quiz-box">
+                <button class="close-quiz-btn" onclick="closeQuizSetup()">✖</button>
+                <h2 id="quiz-setup-title">הגדרת מבחן</h2>
+                <p id="quiz-setup-desc">בחר את הנושאים שתרצה לתרגל:</p>
+                <div id="quiz-checkboxes" class="quiz-checkboxes-container"></div>
+                <div class="quiz-actions">
+                    <button class="start-quiz-btn" onclick="startSmartQuiz()">התחל מבחן (20 שאלות)</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="random-card-modal" class="quiz-overlay" style="display: none;">
+            <div class="quiz-box" style="width: 100%; max-width: 450px; background: transparent; box-shadow: none; padding: 0; position: relative; margin: auto; display: flex; flex-direction: column;">
+                <button class="close-quiz-btn" style="position: absolute; top: -40px; right: 0; color: white; font-size: 1.5rem; cursor: pointer; border: none; background: none; z-index: 2001;" onclick="closeRandomCardModal()">✖ סגור</button>
+                <div id="random-card-container" style="display: block; width: 100%;"></div>
+                <button id="random-next-btn" class="start-quiz-btn" style="display: none; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); color: white; font-size: 1.3rem;" onclick="showNextRandomCard()">לכרטיסייה הבאה 🔀</button>
+            </div>
+        </div>
+
+        <div id="active-quiz-modal" class="quiz-overlay" style="display: none;">
+            <div class="quiz-box" id="quiz-container" style="width: 100%; max-width: 600px; padding: 0; overflow: hidden; background: #fdfbf7; margin: auto;">
+                <div class="quiz-header-active" style="background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <span id="quiz-progress" style="font-weight: bold; color: white; font-size: 1.2rem;">שאלה 1 מתוך 20</span>
+                    <button class="close-quiz-btn" style="position: static; color: rgba(255,255,255,0.7);" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'" onclick="quitQuiz()">✖ סיום מבחן</button>
+                </div>
+                <div class="quiz-body" style="padding: 30px;">
+                    <h3 id="quiz-question-text" style="color: var(--ink); line-height: 1.5; margin-bottom: 25px; font-size: 1.4rem; border-right: 5px solid #8b1c31; padding-right: 15px;">טוען שאלה...</h3>
+                    <div id="quiz-options-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    <div style="text-align: left; margin-top: 30px;">
+                        <button id="quiz-next-btn" class="start-quiz-btn" style="display: none; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); box-shadow: 0 5px 15px rgba(139, 28, 49, 0.3); color: white;" onclick="nextQuizQuestion()">לשאלה הבאה ⬅️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- סגירת app-container -->
+
+    <script src="data_points.js"></script>
+    <script src="data_pathologies.js"></script>
+    <script src="data_theory.js"></script>
+    <script src="app.js"></script>
+    <script src="ui.js"></script>
+    <script src="data_exam.js"></script>
+    <script src="quiz.js"></script>
+    <script src="map.js"></script>
+    <script src="search.js"></script>
+
+    <!-- חיבור ל-Firebase Auth ול-Firestore -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUUehirog3DEx1thYy0WOt0jVzufHSv_Q",
+            authDomain: "uv-website-eef74.firebaseapp.com",
+            projectId: "uv-website-eef74",
+            storageBucket: "uv-website-eef74.firebasestorage.app",
+            messagingSenderId: "839906861932",
+            appId: "1:839906861932:web:e917a1199d129b09830949",
+            measurementId: "G-ZTBE5WTFJT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // חשיפת המשתנים ברמה הגלובלית לקבצים עתידיים
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+
+        const provider = new GoogleAuthProvider();
+        const loginScreen = document.getElementById('login-screen');
+        const appContainer = document.getElementById('app-container');
+        const btnGoogleLogin = document.getElementById('btnGoogleLogin');
+        const authError = document.getElementById('auth-error');
+
+        // ניהול תצוגה מבוסס אימות
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginScreen.style.display = 'none';
+                appContainer.style.display = 'flex'; // שמירה על פריסת העמוד המקורית
+            } else {
+                loginScreen.style.display = 'flex';
+                appContainer.style.display = 'none';
+            }
+        });
+
+        // התחברות עם גוגל
+        btnGoogleLogin.addEventListener('click', () => {
+            authError.style.display = 'none';
+            signInWithPopup(auth, provider)
+                .catch((error) => {
+                    authError.innerText = "שגיאה בהתחברות: " + error.message;
+                    authError.style.display = 'block';
+                });
+        });
+    </script>
+</body>
+</html>
