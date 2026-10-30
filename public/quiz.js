@@ -212,6 +212,11 @@ function showQuizSummary() {
     const percentage = Math.round((quizScore / currentQuizQuestions.length) * 100);
     let msg = percentage >= 80 ? "אלופ/ה! שליטה מעולה בחומר." : "שווה לחזור על החומר שוב.";
     
+    // קריאה לפונקציה השומרת את הציון בענן
+    if (window.saveQuizScore) {
+        window.saveQuizScore(quizScore, currentQuizQuestions.length);
+    }
+
     document.getElementById('quiz-container').innerHTML = `
         <div class="quiz-header-active" style="background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); padding: 20px 30px; text-align: center;">
             <h2 style="margin: 0; color: white;">סיכום מבחן</h2>

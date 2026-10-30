@@ -249,6 +249,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         const firebaseConfig = {
             apiKey: "AIzaSyCUUehirog3DEx1thYy0WOt0jVzufHSv_Q",
             authDomain: "uv-website-eef74.firebaseapp.com",
@@ -366,6 +367,58 @@
                 document.getElementById('report-modal').style.display = 'none';
             } catch(e) {
                 alert("שגיאה בשליחה: " + e.message);
+            }
+        };
+
+        // --- לוגיקת ציונים (Firestore) ---
+        window.saveQuizScore = async function(correctAnswers, totalQuestions) {
+            const user = auth.currentUser;
+            if (!user) return; // לא שומר אם המשתמש לא מחובר
+            
+            const scorePercent = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            try {
+                await addDoc(collection(db, "exam_results"), {
+                    userEmail: user.email,
+                    correctAnswers: correctAnswers,
+                    totalQuestions: totalQuestions,
+                    score: scorePercent,
+                    timestamp: serverTimestamp()
+                });
+                console.log("הציון נשמר בהצלחה בענן!");
+            } catch(e) {
+                console.error("שגיאה בשמירת הציון:", e);
+            }
+        };
+
+        window.loadUserProfileData = async function() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                // חיפוש כל המבחנים של המשתמש הספציפי
+                const q = query(collection(db, "exam_results"), where("userEmail", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                
+                let totalExams = 0;
+                let sumScores = 0;
+                
+                querySnapshot.forEach((doc) => {
+                    totalExams++;
+                    sumScores += doc.data().score;
+                });
+
+                const avgScore = totalExams > 0 ? Math.round(sumScores / totalExams) : 0;
+
+                // עדכון המסך בפרופיל
+                const examsCountEl = document.getElementById('profile-exams-count');
+                const examsAvgEl = document.getElementById('profile-exams-avg');
+                
+                if (examsCountEl) examsCountEl.innerText = totalExams;
+                if (examsAvgEl) examsAvgEl.innerText = avgScore + '%';
+
+            } catch(e) {
+                console.error("שגיאה במשיכת נתוני פרופיל:", e);
             }
         };
     </script>

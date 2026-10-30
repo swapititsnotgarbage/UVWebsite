@@ -1,3 +1,4 @@
+// === קובץ profile.js ===
 function openProfile() {
     saveCurrentScroll();
     currentView = 'profile';
@@ -37,18 +38,17 @@ function openProfile() {
             </div>
             
             <div style="border-top: 2px solid #f0f2f5; padding-top: 30px;">
-                <h3 style="color: var(--ink); margin-bottom: 25px; text-align: center;">ההתקדמות שלי (בקרוב)</h3>
+                <h3 style="color: var(--ink); margin-bottom: 25px; text-align: center;">ההתקדמות שלי</h3>
                 <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                     <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: center; flex: 1; min-width: 160px; border: 1px solid #eee; transition: 0.3s;" onmouseover="this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
                         <h4 style="margin: 0 0 10px 0; color: #7f8c8d; font-size: 1.1rem;">מבחנים שבוצעו</h4>
-                        <span style="font-size: 2.5rem; font-weight: bold; color: #2ecc71;">--</span>
+                        <span id="profile-exams-count" style="font-size: 2.5rem; font-weight: bold; color: #2ecc71;">⏳</span>
                     </div>
                     <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: center; flex: 1; min-width: 160px; border: 1px solid #eee; transition: 0.3s;" onmouseover="this.style.boxShadow='0 5px 15px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
                         <h4 style="margin: 0 0 10px 0; color: #7f8c8d; font-size: 1.1rem;">ציון ממוצע</h4>
-                        <span style="font-size: 2.5rem; font-weight: bold; color: #3498db;">--%</span>
+                        <span id="profile-exams-avg" style="font-size: 2.5rem; font-weight: bold; color: #3498db;">⏳</span>
                     </div>
                 </div>
-                <p style="text-align: center; color: #999; margin-top: 20px; font-size: 0.95rem;">* הנתונים יחוברו בהמשך למסד הנתונים בענן (Firestore) וישמרו אוטומטית בכל פעם שתסיים מבחן.</p>
             </div>
         `;
     } else {
@@ -61,6 +61,11 @@ function openProfile() {
 
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
     if (window.innerWidth <= 1100) document.body.classList.add('sidebar-closed');
+
+    // קריאה לפונקציה שמושכת נתונים מהענן כשהפרופיל נטען
+    if (user && window.loadUserProfileData) {
+        window.loadUserProfileData();
+    }
 }
 
 window.logoutUser = function() {
