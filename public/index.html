@@ -205,10 +205,9 @@
             </div>
         </div>
 
-       <!-- מודל דיווח על טעות מעוצב מחדש -->
+        <!-- מודל דיווח על טעות מעוצב מחדש -->
         <div id="report-modal" class="quiz-overlay" style="display: none; justify-content: center; align-items: center; background: rgba(0,0,0,0.5);">
             <div class="quiz-box" style="text-align: center; max-width: 550px; width: 90%; padding: 40px 35px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); background: #ffffff; position: relative; border: none;">
-                <!-- כפתור סגירה מעוגל -->
                 <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'" style="position: absolute; top: 20px; left: 20px; background: #f0f2f5; color: #7f8c8d; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#e4e6eb'; this.style.color='#2c3e50';" onmouseout="this.style.background='#f0f2f5'; this.style.color='#7f8c8d';">✖</button>
                 
                 <h2 style="color: #2c3e50; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
@@ -235,11 +234,11 @@
     <script src="data_points.js"></script>
     <script src="data_pathologies.js"></script>
     <script src="data_theory.js"></script>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
+    <script src="profile.js?v=5"></script>
+    <script src="chat.js?v=5"></script>
     <script src="ui.js"></script>
     <script src="data_exam.js"></script>
-    <script src="profile.js?v=4"></script>
-    <script src="chat.js?v=4"></script>
     <script src="quiz.js"></script>
     <script src="map.js"></script>
     <script src="search.js"></script>
@@ -249,7 +248,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-          const firebaseConfig = {
+        
+        const firebaseConfig = {
             apiKey: "AIzaSyCUUehirog3DEx1thYy0WOt0jVzufHSv_Q",
             authDomain: "uv-website-eef74.firebaseapp.com",
             projectId: "uv-website-eef74",
@@ -263,7 +263,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // חשיפת המשתנים ברמה הגלובלית לקבצים עתידיים
         window.firebaseAuth = auth;
         window.firebaseDb = db;
 
@@ -273,18 +272,16 @@
         const btnGoogleLogin = document.getElementById('btnGoogleLogin');
         const authError = document.getElementById('auth-error');
 
-        // ניהול תצוגה מבוסס אימות
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginScreen.style.display = 'none';
-                appContainer.style.display = 'flex'; // שמירה על פריסת העמוד המקורית
+                appContainer.style.display = 'flex'; 
             } else {
                 loginScreen.style.display = 'flex';
                 appContainer.style.display = 'none';
             }
         });
 
-        // התחברות עם גוגל
         btnGoogleLogin.addEventListener('click', () => {
             authError.style.display = 'none';
             signInWithPopup(auth, provider)
@@ -294,17 +291,16 @@
                 });
         });
 
-        // --- לוגיקת צ'אט (Firestore) ---
+        // --- לוגיקת צ'אט מעוצבת ---
         let chatUnsubscribe = null;
 
         window.initChatListener = function() {
             const messagesDiv = document.getElementById('chat-messages');
             if(!messagesDiv) return;
             
-            // שליפת ההודעות לפי סדר כרונולוגי
             const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
             
-            if(chatUnsubscribe) chatUnsubscribe(); // ניקוי האזנה קודמת
+            if(chatUnsubscribe) chatUnsubscribe(); 
             
             chatUnsubscribe = onSnapshot(q, (snapshot) => {
                 messagesDiv.innerHTML = '';
@@ -312,19 +308,31 @@
                     const data = doc.data();
                     const isMe = auth.currentUser && data.userEmail === auth.currentUser.email;
                     
-                    // עיצוב שונה להודעה שלי מול הודעה של אחרים
-                    const align = isMe ? 'flex-start' : 'flex-end';
-                    const bg = isMe ? '#d1f2eb' : '#ffffff';
-                    const nameColor = isMe ? '#16a085' : '#7f8c8d';
+                    // המרת התאריך מפיירבייס לשעות ודקות
+                    let timeString = '';
+                    if (data.timestamp) {
+                        const date = data.timestamp.toDate();
+                        const hours = date.getHours().toString().padStart(2, '0');
+                        const minutes = date.getMinutes().toString().padStart(2, '0');
+                        timeString = `${hours}:${minutes}`;
+                    } else {
+                        timeString = 'שולח...'; 
+                    }
+
+                    // הגדרות עיצוב בועת וואטסאפ (RTL: ירוק משמאל-שלי, לבן מימין-של אחרים)
+                    const align = isMe ? 'flex-end' : 'flex-start';
+                    const bg = isMe ? '#d9fdd3' : '#ffffff';
+                    const radius = isMe ? '15px 15px 0 15px' : '15px 15px 15px 0';
+                    const nameColor = '#075e54';
                     
                     messagesDiv.innerHTML += `
-                        <div style="align-self: ${align}; background: ${bg}; padding: 12px 18px; border-radius: 18px; max-width: 75%; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #eee;">
-                            <div style="font-size: 0.8rem; color: ${nameColor}; font-weight: bold; margin-bottom: 5px;">${data.userName}</div>
-                            <div style="color: var(--ink); line-height: 1.4; word-wrap: break-word;">${data.text}</div>
+                        <div style="align-self: ${align}; background: ${bg}; padding: 8px 12px; border-radius: ${radius}; max-width: 75%; min-width: 120px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; margin-bottom: 4px;">
+                            ${!isMe ? `<div style="font-size: 0.85rem; color: ${nameColor}; font-weight: bold; margin-bottom: 2px;">${data.userName}</div>` : ''}
+                            <div style="color: #111b21; font-size: 1.05rem; line-height: 1.4; word-wrap: break-word; padding-bottom: 15px; padding-left: ${isMe ? '15px' : '30px'};">${data.text}</div>
+                            <div style="font-size: 0.7rem; color: #667781; position: absolute; bottom: 4px; left: 8px;">${timeString}</div>
                         </div>
                     `;
                 });
-                // גלילה אוטומטית למטה להודעה החדשה ביותר
                 messagesDiv.scrollTop = messagesDiv.scrollHeight; 
             });
         };
@@ -372,7 +380,7 @@
         // --- לוגיקת ציונים (Firestore) ---
         window.saveQuizScore = async function(correctAnswers, totalQuestions) {
             const user = auth.currentUser;
-            if (!user) return; // לא שומר אם המשתמש לא מחובר
+            if (!user) return; 
             
             const scorePercent = Math.round((correctAnswers / totalQuestions) * 100);
             
@@ -395,7 +403,6 @@
             if (!user) return;
 
             try {
-                // חיפוש כל המבחנים של המשתמש הספציפי
                 const q = query(collection(db, "exam_results"), where("userEmail", "==", user.email));
                 const querySnapshot = await getDocs(q);
                 
@@ -409,7 +416,6 @@
 
                 const avgScore = totalExams > 0 ? Math.round(sumScores / totalExams) : 0;
 
-                // עדכון המסך בפרופיל
                 const examsCountEl = document.getElementById('profile-exams-count');
                 const examsAvgEl = document.getElementById('profile-exams-avg');
                 
