@@ -10,64 +10,54 @@
     <link rel="stylesheet" href="cards.css">
     <link rel="stylesheet" href="pages.css">
 
-    <!-- עיצוב למצב לילה (Dark Mode) - גרסה אגרסיבית שדורסת עיצוב פנימי -->
+    <!-- עיצוב מצב לילה - תיקון שדורס עיצוב פנימי -->
     <style id="dark-mode-styles">
-        /* --- בסיס --- */
         body.dark-mode { 
             background-color: #121212 !important; 
             color: #e0e0e0 !important; 
             --ink: #e0e0e0; 
         }
         
-        /* --- תפריט צד --- */
         body.dark-mode aside { background-color: #1e1e1e !important; border-left: 1px solid #333 !important; }
         body.dark-mode .menu-item, body.dark-mode .accordion-header { color: #e0e0e0 !important; }
         body.dark-mode .menu-item:hover, body.dark-mode .active-menu { background-color: #333 !important; color: white !important; }
         
-        /* --- תיבות, מאמרים וכרטיסיות --- */
-        /* דריסה מוחלטת של כל רקע בהיר שהוגדר דרך ה-JS */
-        body.dark-mode [style*="background: white"], 
-        body.dark-mode [style*="background: #ffffff"],
-        body.dark-mode [style*="background: #fff"],
-        body.dark-mode [style*="background-color: white"],
-        body.dark-mode [style*="background-color: #ffffff"],
-        body.dark-mode [style*="background: #f8f9fa"], 
-        body.dark-mode [style*="background-color: #f8f9fa"],
+        /* דריסה גורפת לכל הקופסאות והרקעים הלבנים */
         body.dark-mode .article-container, 
         body.dark-mode .quiz-box,
         body.dark-mode .card,
         body.dark-mode .flip-front,
         body.dark-mode .flip-back,
-        body.dark-mode .info-box {
+        body.dark-mode .info-box,
+        body.dark-mode [style*="background: white"], 
+        body.dark-mode [style*="background: #ffffff"],
+        body.dark-mode [style*="background-color: white"],
+        body.dark-mode [style*="background-color: #ffffff"],
+        body.dark-mode [style*="background: #f8f9fa"], 
+        body.dark-mode [style*="background-color: #f8f9fa"] {
             background-color: #1e1e1e !important; 
             background: #1e1e1e !important; 
             border-color: #444 !important;
+            color: #e0e0e0 !important;
         }
 
-        /* --- כפיית צבע טקסט בהיר --- */
         body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, 
         body.dark-mode h4, body.dark-mode h5, body.dark-mode p, 
         body.dark-mode span, body.dark-mode li {
             color: #e0e0e0 !important;
         }
 
-        /* --- חריגים של צבע כדי לא לאבד עיצוב חיוני --- */
         body.dark-mode .tag { color: white !important; }
-        body.dark-mode .exam-next-btn { color: white !important; }
-        body.dark-mode .exam-next-btn span { color: white !important; }
+        body.dark-mode .exam-next-btn, body.dark-mode .exam-next-btn span { color: white !important; }
         
-        /* --- מבחנים, לחצנים ותיבות קלט --- */
         body.dark-mode .exam-opt-btn { background: #2c2c2c !important; color: #e0e0e0 !important; border-color: #444 !important; }
         body.dark-mode .exam-opt-btn:hover:not([disabled]) { background: #3c3c3c !important; border-color: #a18cd1 !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background-color: #2c2c2c !important; color: #e0e0e0 !important; border: 1px solid #444 !important; }
         
-        /* --- טבלאות --- */
         body.dark-mode .theory-table th { background-color: #333 !important; color: #e0e0e0 !important; border-color: #444 !important;}
         body.dark-mode .theory-table td { border-color: #444 !important; color: #e0e0e0 !important; }
         
-        /* --- צ'אט הסטודנטים --- */
         body.dark-mode #chat-messages { background-color: #121212 !important; background-blend-mode: multiply; }
-        /* בועות צ'אט נכנסות ויוצאות */
         body.dark-mode #chat-messages div[style*="background: #ffffff"] { background: #2c2c2c !important; border-color: #444 !important; }
         body.dark-mode #chat-messages div[style*="background: #d9fdd3"] { background: #005c4b !important; border-color: #005c4b !important; }
         
@@ -106,7 +96,6 @@
 
            <div class="menu-section">
                 <h2>מרידיאנים</h2>
-                
                 <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני עץ</div>
                 <div class="accordion-content">
                     <div class="menu-item" id="btn-LIV" onclick="openPage('LIV')">כבד (LIV) (Yin)</div>
@@ -183,22 +172,6 @@
                     <button onclick="filterBy('earth')">אדמה (Earth)</button>
                     <button onclick="filterBy('metal')">מתכת (Metal)</button>
                     <button onclick="filterBy('water')">מים (Water)</button>
-
-                    <h4 style="margin-top: 15px;">לפי נקודות עתיקות:</h4>
-                    <button onclick="filterBy('באר - Jing-Well')">באר (Jing-Well)</button>
-                    <button onclick="filterBy('מעיין - Ying-Spring')">מעיין (Ying-Spring)</button>
-                    <button onclick="filterBy('פלג - Shu-Stream')">פלג (Shu-Stream)</button>
-                    <button onclick="filterBy('נהר - Jing-River')">נהר (Jing-River)</button>
-                    <button onclick="filterBy('ים - He-Sea')">ים (He-Sea)</button>
-
-                    <h4 style="margin-top: 15px;">לפי אופי:</h4>
-                    <button onclick="filterBy('מקור - Yuan')">מקור (Yuan)</button>
-                    <button onclick="filterBy('חיבור - Luo')">חיבור (Luo)</button>
-                    <button onclick="filterBy('הצטברות - Xi-Cleft')">הצטברות (Xi-Cleft)</button>
-                    <button onclick="filterBy('חיזוק - Tonification')">חיזוק (Tonification)</button>
-                    <button onclick="filterBy('פיזור - Sedation')">פיזור (Sedation)</button>
-                    <button onclick="filterBy('שעה - Horary')">שעה (Horary)</button>
-                    <button onclick="filterBy('ים הדגנים - Sea of Grain')">ים הדגנים</button>
                 </div>
             </div>
 
@@ -288,23 +261,36 @@
                 <button class="start-quiz-btn" onclick="submitReport()" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.25rem; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.25); transition: 0.3s; margin-bottom: 15px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(46, 204, 113, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(46, 204, 113, 0.25)';">
                     שליחת דיווח מהיר (בעילום שם)
                 </button>
-                
-                <span style="display: block; color: #8a97a6; font-size: 0.85rem; font-weight: 500;">
-                    * הדיווחים נשלחים ישירות למנהלי המערכת ונבדקים מדי יום.
-                </span>
             </div>
         </div>
 
     </div> <!-- סגירת app-container -->
 
     <script>
+        // פונקציית תיקון צבעים דינמיים בעת מעבר למצב לילה
+        function enforceDarkModeFix() {
+            if (document.body.classList.contains('dark-mode')) {
+                // מאתר אלמנטים שהוזרקו על ידי JS וקיבלו עיצוב של רקע לבן בכוח
+                const elementsToFix = document.querySelectorAll('div[style*="background: white"], div[style*="background: #ffffff"], div[style*="background-color: white"], div[style*="background-color: #ffffff"]');
+                elementsToFix.forEach(el => {
+                    el.style.setProperty('background-color', '#1e1e1e', 'important');
+                    el.style.setProperty('background', '#1e1e1e', 'important');
+                    el.style.setProperty('color', '#e0e0e0', 'important');
+                });
+            }
+        }
+
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('darkMode', isDark);
+            
             const btn = document.getElementById('darkModeBtn');
             if (btn) btn.innerText = isDark ? '☀️ מצב יום' : '🌙 מצב לילה';
+            
+            enforceDarkModeFix(); // מבטיח שתיבות שהוזרקו יקבלו את השינוי מיד
         }
+        
         document.addEventListener('DOMContentLoaded', () => {
             if(localStorage.getItem('darkMode') === 'true') {
                 document.body.classList.add('dark-mode');
@@ -312,23 +298,38 @@
                 if (btn) btn.innerText = '☀️ מצב יום';
             }
         });
+
+        // יצירת Observer שמאזין לשינויים ב-DOM ומוודא שמצב לילה נאכף על תוכן חדש (כמו כרטיסיות ומאמרים)
+        const observer = new MutationObserver(() => {
+            if (document.body.classList.contains('dark-mode')) {
+                enforceDarkModeFix();
+            }
+        });
+        
+        // התחל להאזין לאזור התוכן הראשי לשינויים
+        window.addEventListener('load', () => {
+            const contentArea = document.getElementById('content-area');
+            if (contentArea) {
+                observer.observe(contentArea, { childList: true, subtree: true });
+            }
+        });
     </script>
 
-    <script src="data_points.js?v=14"></script>
-    <script src="data_theory.js?v=14"></script>
-    <script src="pathologies_theory.js?v=14"></script>
-    <script src="pathologies_zang.js?v=14"></script>
-    <script src="pathologies_fu.js?v=14"></script>
-    <script src="exam_bank.js?v=14"></script>
-    <script src="exam_generator.js?v=14"></script>
-    <script src="exam_logic.js?v=14"></script>
-    <script src="app.js?v=14"></script>
-    <script src="profile.js?v=14"></script>
-    <script src="chat.js?v=14"></script>
-    <script src="ui.js?v=14"></script>
-    <script src="quiz.js?v=14"></script>
-    <script src="map.js?v=14"></script>
-    <script src="search.js?v=14"></script>
-    <script type="module" src="firebase-manager.js?v=14"></script>
+    <script src="data_points.js?v=15"></script>
+    <script src="data_theory.js?v=15"></script>
+    <script src="pathologies_theory.js?v=15"></script>
+    <script src="pathologies_zang.js?v=15"></script>
+    <script src="pathologies_fu.js?v=15"></script>
+    <script src="exam_bank.js?v=15"></script>
+    <script src="exam_generator.js?v=15"></script>
+    <script src="exam_logic.js?v=15"></script>
+    <script src="app.js?v=15"></script>
+    <script src="profile.js?v=15"></script>
+    <script src="chat.js?v=15"></script>
+    <script src="ui.js?v=15"></script>
+    <script src="quiz.js?v=15"></script>
+    <script src="map.js?v=15"></script>
+    <script src="search.js?v=15"></script>
+    <script type="module" src="firebase-manager.js?v=15"></script>
 </body>
 </html>
