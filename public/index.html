@@ -169,6 +169,7 @@
             <button id="btn-main-study" class="study-btn" onclick="toggleStudyMenu()" title="פתיחת אפשרויות מבחן">🎓 תפריט בחינה</button>
         </div>
 
+        <!-- מודלים של המבחנים, הדיווח והכרטיסיות -->
         <div id="quiz-setup-modal" class="quiz-overlay" style="display: none;">
             <div class="quiz-box">
                 <button class="close-quiz-btn" onclick="closeQuizSetup()">✖</button>
@@ -231,25 +232,32 @@
 
     </div> <!-- סגירת app-container -->
 
-    <script src="data_points.js"></script>
-    <script src="pathologies_theory.js"></script>
-    <script src="pathologies_zang.js"></script>
-    <script src="pathologies_fu.js"></script>
-    <script src="data_theory.js"></script>
-    <script src="app.js?v=8"></script>
-    <script src="profile.js?v=8"></script>
-    <script src="chat.js?v=8"></script>
-    <script src="ui.js?v=8"></script>
-    <script src="exam_bank.js?v=10"></script>
-    <script src="exam_generator.js?v=10"></script>
-    <script src="exam_logic.js?v=10"></script>
-    <script src="quiz.js?v=8"></script>
-    <script src="map.js"></script>
-    <script src="search.js"></script>
+    <!-- כל הקבצים שפוצלו בסדר הנכון -->
+    
+    <!-- 1. מאגרי המידע הראשיים -->
+    <script src="data_points.js?v=12"></script>
+    <script src="data_theory.js?v=12"></script>
+    
+    <!-- 2. קבצי הפתולוגיות המפוצלים -->
+    <script src="pathologies_theory.js?v=12"></script>
+    <script src="pathologies_zang.js?v=12"></script>
+    <script src="pathologies_fu.js?v=12"></script>
+    
+    <!-- 3. קבצי המבחן העיוני המפוצלים -->
+    <script src="exam_bank.js?v=12"></script>
+    <script src="exam_generator.js?v=12"></script>
+    <script src="exam_logic.js?v=12"></script>
+    
+    <!-- 4. הליבה של האתר וממשק המשתמש -->
+    <script src="app.js?v=12"></script>
+    <script src="profile.js?v=12"></script>
+    <script src="chat.js?v=12"></script>
+    <script src="ui.js?v=12"></script>
+    <script src="quiz.js?v=12"></script>
+    <script src="map.js?v=12"></script>
+    <script src="search.js?v=12"></script>
 
-    <!-- חיבור ל-Firebase Auth ול-Firestore -->
-    <script type="module" src="firebase-manager.js?v=9"></script>
-</body>
-</html>
+    <!-- 5. ניהול ה-Firebase -->
+    <script type="module" src="firebase-manager.js?v=12"></script>
 </body>
 </html>
