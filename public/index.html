@@ -9,6 +9,36 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="cards.css">
     <link rel="stylesheet" href="pages.css">
+
+    <!-- עיצוב למצב לילה (Dark Mode) -->
+    <style>
+        body.dark-mode { background-color: #121212 !important; color: #e0e0e0 !important; --ink: #e0e0e0; }
+        body.dark-mode aside { background-color: #1e1e1e !important; border-left: 1px solid #333 !important; }
+        body.dark-mode .menu-item, body.dark-mode .accordion-header { color: #e0e0e0 !important; }
+        body.dark-mode .menu-item:hover, body.dark-mode .active-menu { background-color: #333 !important; }
+        
+        body.dark-mode .article-container, body.dark-mode .quiz-box, 
+        body.dark-mode div[style*="background: white"], 
+        body.dark-mode div[style*="background: #ffffff"],
+        body.dark-mode div[style*="background-color: #ffffff"] {
+            background-color: #1e1e1e !important; color: #e0e0e0 !important; border-color: #333 !important;
+        }
+        
+        body.dark-mode .exam-opt-btn { background: #2c2c2c !important; color: #e0e0e0 !important; border-color: #444 !important; }
+        body.dark-mode .exam-opt-btn:hover:not([disabled]) { background: #3c3c3c !important; border-color: #a18cd1 !important; }
+        
+        body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background-color: #2c2c2c !important; color: #e0e0e0 !important; border: 1px solid #444 !important; }
+        
+        body.dark-mode [style*="background: #f8f9fa"], body.dark-mode [style*="background: #f0f2f5"] { background: #2c2c2c !important; border-color: #444 !important; color: #e0e0e0 !important; }
+        body.dark-mode [style*="background: #fff8e1"] { background: #4a3b00 !important; color: #ffd54f !important; border-color: #665200 !important; }
+        
+        body.dark-mode .theory-table th { background-color: #333 !important; color: #e0e0e0 !important; border-color: #444 !important;}
+        body.dark-mode .theory-table td { border-color: #444 !important; color: #e0e0e0 !important; }
+        body.dark-mode #chat-messages { background-color: #121212 !important; background-blend-mode: multiply; }
+        
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode span { color: #e0e0e0 !important; }
+        body.dark-mode .highlight-match { background-color: #0056b3 !important; color: white !important; }
+    </style>
 </head>
 <body>
 
@@ -33,6 +63,9 @@
 
         <aside id="sidebar">
             <div class="logo" onclick="goHome()">UV Website</div>
+            <!-- כפתור מצב לילה חדש -->
+            <div class="menu-item" id="darkModeBtn" onclick="toggleDarkMode()">🌙 מצב לילה</div>
+            
             <div class="menu-item active-menu" id="btn-home" onclick="goHome()">דף הבית 🏠</div>
             <div class="menu-item" id="btn-profile" onclick="openProfile()">פרופיל אישי 👤</div>
             <div class="menu-item" id="btn-chat" onclick="openChat()">צ'אט הסטודנטים 💬</div>
@@ -40,7 +73,6 @@
 
            <div class="menu-section">
                 <h2>מרידיאנים</h2>
-                
                 <div class="accordion-header" onclick="toggleMenuSection(this)">מרידיאני עץ</div>
                 <div class="accordion-content">
                     <div class="menu-item" id="btn-LIV" onclick="openPage('LIV')">כבד (LIV) (Yin)</div>
@@ -81,7 +113,8 @@
 
                 <div class="menu-section">
                 <h2>מבחנים - נקודות דיקור</h2>
-                <div class="menu-item" id="btn-theoretical_exam" onclick="openArticle('theoretical_exam')">מבחן עיוני</div>
+                <!-- הפניה למסך ההגדרות של המבחן העיוני -->
+                <div class="menu-item" id="btn-theoretical_exam" onclick="window.openTheoreticalExamSetup()">מבחן עיוני</div>
                 <div class="menu-item" id="btn-practical_exam" onclick="openArticle('practical_exam')">מבחן מעשי</div>
             </div>
             </div>
@@ -232,32 +265,50 @@
 
     </div> <!-- סגירת app-container -->
 
+    <!-- סקריפט מנהל מצב הלילה -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            const btn = document.getElementById('darkModeBtn');
+            if (btn) btn.innerText = isDark ? '☀️ מצב יום' : '🌙 מצב לילה';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkModeBtn');
+                if (btn) btn.innerText = '☀️ מצב יום';
+            }
+        });
+    </script>
+
     <!-- כל הקבצים שפוצלו בסדר הנכון -->
     
     <!-- 1. מאגרי המידע הראשיים -->
-    <script src="data_points.js?v=12"></script>
-    <script src="data_theory.js?v=12"></script>
+    <script src="data_points.js?v=13"></script>
+    <script src="data_theory.js?v=13"></script>
     
     <!-- 2. קבצי הפתולוגיות המפוצלים -->
-    <script src="pathologies_theory.js?v=12"></script>
-    <script src="pathologies_zang.js?v=12"></script>
-    <script src="pathologies_fu.js?v=12"></script>
+    <script src="pathologies_theory.js?v=13"></script>
+    <script src="pathologies_zang.js?v=13"></script>
+    <script src="pathologies_fu.js?v=13"></script>
     
     <!-- 3. קבצי המבחן העיוני המפוצלים -->
-    <script src="exam_bank.js?v=12"></script>
-    <script src="exam_generator.js?v=12"></script>
-    <script src="exam_logic.js?v=12"></script>
+    <script src="exam_bank.js?v=13"></script>
+    <script src="exam_generator.js?v=13"></script>
+    <script src="exam_logic.js?v=13"></script>
     
     <!-- 4. הליבה של האתר וממשק המשתמש -->
-    <script src="app.js?v=12"></script>
-    <script src="profile.js?v=12"></script>
-    <script src="chat.js?v=12"></script>
-    <script src="ui.js?v=12"></script>
-    <script src="quiz.js?v=12"></script>
-    <script src="map.js?v=12"></script>
-    <script src="search.js?v=12"></script>
+    <script src="app.js?v=13"></script>
+    <script src="profile.js?v=13"></script>
+    <script src="chat.js?v=13"></script>
+    <script src="ui.js?v=13"></script>
+    <script src="quiz.js?v=13"></script>
+    <script src="map.js?v=13"></script>
+    <script src="search.js?v=13"></script>
 
     <!-- 5. ניהול ה-Firebase -->
-    <script type="module" src="firebase-manager.js?v=12"></script>
+    <script type="module" src="firebase-manager.js?v=13"></script>
 </body>
 </html>
