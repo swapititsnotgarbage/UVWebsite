@@ -15,16 +15,13 @@ function saveCurrentScroll() {
 function goHome() {
     currentView = 'home';
     
-    // 1. ניקוי המפה והחזרת תצוגת הרשת
     const mapArea = document.getElementById('interactive-map-area');
     const pointsDisplay = document.getElementById('pointsDisplay');
     if (mapArea) mapArea.style.display = 'none';
     if (pointsDisplay) pointsDisplay.style.display = 'grid';
 
-    // 2. הסרת כלי המפתחים (x/y)
     if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
 
-    // 3. איפוס כפתור המפה
     const mapToggleBtn = document.getElementById('btn-toggle-map');
     if (mapToggleBtn) {
         mapToggleBtn.style.display = 'none';
@@ -32,7 +29,6 @@ function goHome() {
         mapToggleBtn.style.background = 'linear-gradient(135deg, #16a085 0%, #1abc9c 100%)';
     }
 
-    // 4. לוגיקת תצוגת דף הבית
     document.getElementById('welcome-view').style.display = 'block';
     document.getElementById('content-area').innerHTML = '';
     document.getElementById('pointsDisplay').innerHTML = '';
@@ -43,7 +39,6 @@ function goHome() {
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
     document.getElementById('btn-home').classList.add('active-menu');
     
-    // 5. עדכון נראות תפריט הבחינה (יוסתר אוטומטית בדף הבית)
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
 
@@ -51,16 +46,13 @@ function openPage(id) {
     saveCurrentScroll();
     currentView = id;
 
-    // 1. בכל מעבר דף - המפה נסגרת וחוזרים לכרטיסיות כברירת מחדל
     const mapArea = document.getElementById('interactive-map-area');
     const pointsDisplay = document.getElementById('pointsDisplay');
     if (mapArea) mapArea.style.display = 'none';
     if (pointsDisplay) pointsDisplay.style.display = 'grid';
 
-    // 2. ניקוי ה-tracker
     if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
 
-    // 3. איפוס כפתור המפה (טקסט וצבע)
     const mapToggleBtn = document.getElementById('btn-toggle-map');
     if (mapToggleBtn) {
         mapToggleBtn.innerText = '🗺️ מפה אינטראקטיבית';
@@ -78,7 +70,7 @@ function openPage(id) {
     document.getElementById('btn-' + id).classList.add('active-menu');
     
     document.getElementById('content-area').innerHTML = `
-        <div class="id-badge">
+        <div class="id-badge theme-box">
             <div class="id-grid">
                 <div class="id-item"><span>מרידיאן</span><strong>${m.title}</strong></div>
                 <div class="id-item"><span>אלמנט</span><strong>${m.element}</strong></div>
@@ -151,7 +143,7 @@ function showElement(elementKey, btnElement) {
     const elementData = pathologiesData[elementKey];
 
     let html = `
-        <div class="theory-box" style="border-top-color: ${elementData.themeColor || 'var(--ink)'}">
+        <div class="theory-box theme-box" style="border-top-color: ${elementData.themeColor || 'var(--ink)'}">
             ${elementData.theory}
         </div>
     `;
@@ -188,7 +180,7 @@ function showOrganPathology(elementKey, organKey, btnElement) {
     const organ = pathologiesData[elementKey].organs[organKey];
     
     let html = `
-        <div class="theory-box organ-theory">
+        <div class="theory-box organ-theory theme-box">
             <h2 style="color: var(--ink); margin-top: 0;">${organ.title}</h2>
             ${organ.theory}
         </div>
@@ -205,7 +197,7 @@ function showOrganPathology(elementKey, organKey, btnElement) {
         let bottomHtml = (treatmentHtml || pointsHtml) ? `<div class="patho-points">${treatmentHtml}${pointsHtml}</div>` : '';
 
         html += `
-            <div class="patho-card">
+            <div class="patho-card theme-box">
                 <div class="patho-title"><strong>${syn.name}</strong></div>
                 <p><strong>אטיולוגיה:</strong> ${syn.etiology}</p>
                 <p><strong>קליניקה:</strong> ${syn.symptoms}</p>
@@ -239,7 +231,7 @@ function openFundamentals() {
         const gradientStyle = `background: linear-gradient(135deg, ${item.color1} 0%, ${item.color2} 100%);`;
 
         cardsHTML += `
-            <div class="topic-card" onclick="openArticle('${key}')">
+            <div class="topic-card theme-box" onclick="openArticle('${key}')">
                 <div class="topic-gradient-header" style="${gradientStyle}">
                     <div class="topic-icon-floating">${item.icon || '📜'}</div>
                 </div>
@@ -281,9 +273,9 @@ function openArticle(articleId) {
     }
     
     document.getElementById('content-area').innerHTML = `
-        <div class="article-container" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); line-height: 1.8;">
+        <div class="article-container theme-box">
             <h1 style="text-align: center; color: var(--ink); margin-bottom: 30px; font-size: 2rem;">${article.title}</h1>
-            <div class="article-content" style="font-size: 1.1rem; color: #333;">
+            <div class="article-content" style="font-size: 1.1rem; color: var(--ink);">
                 ${article.content}
             </div>
         </div>
@@ -335,9 +327,9 @@ function openAllNatures(targetId = null) {
     if (btnNature) btnNature.classList.add('active-menu');
 
     document.getElementById('content-area').innerHTML = `
-        <h1 style="text-align:center; margin-bottom:40px;">אופי נקודות דיקור - מדריך מלא</h1>
+        <h1 style="text-align:center; margin-bottom:40px; color: var(--ink);">אופי נקודות דיקור - מדריך מלא</h1>
         
-        <div class="nature-section" id="sec-elements">
+        <div class="nature-section theme-box" id="sec-elements">
             <h2>נקודות חמש האלמנטים (Five Elements Points)</h2>
             <p>לכל מרידיאן יש נקודה המייצגת את אחד מחמשת האלמנטים. האנרגטיקה של האלמנט מעניקה לנקודה את תפקודה העיקרי:</p>
             <ul>
@@ -349,7 +341,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-ancient">
+        <div class="nature-section theme-box" id="sec-ancient">
             <h2>הנקודות העתיקות (Wu Shu Xue - The Five Transporting Points)</h2>
             <p>ממוקמות בין המרפקים/ברכיים לקצות האצבעות. זרימת הצ'י בהן מתוארת כנהר המתגבר בעומק וברוחב:</p>
             <ul>
@@ -361,24 +353,24 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-yuan">
+        <div class="nature-section theme-box" id="sec-yuan">
             <h2>נקודות מקור (Yuan-Source)</h2>
             <p>בנקודות אלו ה-Yuan Qi (צ'י המקור) של האיבר זמין ביותר.</p>
             <p>במרידיאני Yin: זהות לנקודות הפלג. משמשות לחיזוק האיבר.</p>
             <p>במרידיאני Yang: נמצאות בין נקודות הפלג לנהר. משמשות לסילוק גורמי מחלה עודפים.</p>
         </div>
 
-        <div class="nature-section" id="sec-luo">
+        <div class="nature-section theme-box" id="sec-luo">
             <h2>נקודות חיבור (Luo-Connecting)</h2>
             <p>נקודות בהן המרידיאן מתפצל ומחבר בין בן הזוג (Yin/Yang).</p>
             <p>תפקודים: 1. טיפול בבעיות של איבר בן הזוג. 2. טיפול בבעיות רגשיות. 3. טיפול בבעיות לאורך מסלול ה-Luo.</p>
         </div>
 
-        <div class="nature-section" id="sec-mu">
+        <div class="nature-section theme-box" id="sec-mu">
             <h2>נקודות התראה (Mu-Front)</h2>
             <p>ממוקמות על החזה או הבטן, קרוב לאיבר עצמו.</p>
             <p>תפקוד: אבחון (רגישות למגע) וטיפול במצבים אקוטיים של האיבר.</p>
-            <table class="mu-table">
+            <table class="mu-table theory-table">
                 <tr><th>איבר</th><th>נקודת Mu</th><th>איבר</th><th>נקודת Mu</th></tr>
                 <tr><td>ריאות (LU)</td><td>LU-1</td><td>מעי גס (LI)</td><td>ST-25</td></tr>
                 <tr><td>לב (HT)</td><td>RN-14</td><td>מעי דק (SI)</td><td>RN-4</td></tr>
@@ -389,14 +381,14 @@ function openAllNatures(targetId = null) {
             </table>
         </div>
 
-        <div class="nature-section" id="sec-xi">
+        <div class="nature-section theme-box" id="sec-xi">
             <h2>נקודות הצטברות (Xi-Cleft)</h2>
             <p>נקודות בהן ה-Qi והדם מצטברים ב"סדק".</p>
             <p>תפקוד: טיפול במצבים אקוטיים של המרידיאן או האיבר, וטיפול בכאב אקוטי. במרידיאני Yin מטפלות גם בעצירת דימומים.</p>
             <p>דוגמאות: LU-6, LI-7, ST-34, SI-6, BL-63, KID-5 וכו'.</p>
         </div>
 
-        <div class="nature-section" id="sec-hui">
+        <div class="nature-section theme-box" id="sec-hui">
             <h2>נקודות השפעה (Hui-Gathering)</h2>
             <p>נקודות בעלות השפעה ספציפית על רקמות או תפקודים בגוף:</p>
             <ul>
@@ -411,14 +403,14 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-window">
+        <div class="nature-section theme-box" id="sec-window">
             <h2>נקודות אשנב לרקיע (Window of Heaven)</h2>
             <p>נקודות הממוקמות לרוב סביב הצוואר.</p>
             <p>תפקוד: ויסות המעבר של Qi ודם בין הגוף לראש, טיפול בבעיות רגשיות קשות ("חוסר תקשורת בין הגוף לנפש") ובעיות חושים (ראייה, שמיעה).</p>
             <p>דוגמאות: LU-3, ST-9, LI-18, SI-16, SI-17.</p>
         </div>
 
-        <div class="nature-section" id="sec-horary">
+        <div class="nature-section theme-box" id="sec-horary">
             <h2>נקודות שעה (Horary)</h2>
             <p>נקודות המייצגות את אותו האלמנט (פאזה) של המרידיאן שעליו הן נמצאות (לדוגמה, נקודת אדמה על מרידיאן השייך לאלמנט האדמה).</p>
             <ul>
@@ -427,7 +419,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-command">
+        <div class="nature-section theme-box" id="sec-command">
             <h2>נקודות שליטה (Command Points)</h2>
             <p>נקודות בעלות השפעה חזקה וספציפית על אזורים אנטומיים נרחבים ומרכזיים בגוף.</p>
             <ul>
@@ -436,7 +428,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-         <div class="nature-section" id="sec-tonification">
+         <div class="nature-section theme-box" id="sec-tonification">
             <h2>נקודות חיזוק (Tonification Points)</h2>
             <p>נקודות המייצגות את פאזת ה"אמא" (Mother) של המרידיאן, על פי מעגל ההזנה/יצירה (Sheng cycle) של חמשת האלמנטים.</p>
             <ul>
@@ -445,7 +437,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-sedation">
+        <div class="nature-section theme-box" id="sec-sedation">
             <h2>נקודות פיזור / הרגעה (Sedation Points)</h2>
             <p>נקודות המייצגות את פאזת ה"בן" (Son) של המרידיאן, על פי מעגל ההזנה/יצירה של חמשת האלמנטים.</p>
             <ul>
@@ -454,7 +446,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-seagrain">
+        <div class="nature-section theme-box" id="sec-seagrain">
             <h2>ים הדגנים (Sea of Grain)</h2>
             <p>נקודות המרכיבות את אחד מ"ארבעת הימים", מקושרות לייצור והפצה של אנרגיה מתוך עיכול של מזון ושתייה.</p>
             <ul>
@@ -463,7 +455,7 @@ function openAllNatures(targetId = null) {
             </ul>
         </div>
 
-        <div class="nature-section" id="sec-seablood">
+        <div class="nature-section theme-box" id="sec-seablood">
             <h2>ים הדם (Sea of Blood)</h2>
             <p>נקודות המרכיבות את אחד מ"ארבעת הימים", מקושרות למרידיאן ה-Chong (מרידיאן החוצה) ומרכזות את השפעת הדם בגוף.</p>
             <ul>

@@ -10,8 +10,14 @@
     <link rel="stylesheet" href="cards.css">
     <link rel="stylesheet" href="pages.css">
 
-    <!-- עיצוב מצב לילה - תיקון שדורס עיצוב פנימי -->
+    <!-- עיצוב מצב לילה חדש ומותאם למחלקות -->
     <style id="dark-mode-styles">
+        /* מחלקת theme-box מחליפה את העיצוב הפנימי המכוער */
+        .theme-box {
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+        }
+
         body.dark-mode { 
             background-color: #121212 !important; 
             color: #e0e0e0 !important; 
@@ -22,23 +28,20 @@
         body.dark-mode .menu-item, body.dark-mode .accordion-header { color: #e0e0e0 !important; }
         body.dark-mode .menu-item:hover, body.dark-mode .active-menu { background-color: #333 !important; color: white !important; }
         
-        /* דריסה גורפת לכל הקופסאות והרקעים הלבנים */
+        /* כל הקופסאות שיקבלו theme-box, כרטיסיות ומאמרים */
+        body.dark-mode .theme-box,
         body.dark-mode .article-container, 
         body.dark-mode .quiz-box,
         body.dark-mode .card,
         body.dark-mode .flip-front,
         body.dark-mode .flip-back,
         body.dark-mode .info-box,
-        body.dark-mode [style*="background: white"], 
-        body.dark-mode [style*="background: #ffffff"],
-        body.dark-mode [style*="background-color: white"],
-        body.dark-mode [style*="background-color: #ffffff"],
-        body.dark-mode [style*="background: #f8f9fa"], 
-        body.dark-mode [style*="background-color: #f8f9fa"] {
+        body.dark-mode .nature-section {
             background-color: #1e1e1e !important; 
             background: #1e1e1e !important; 
             border-color: #444 !important;
             color: #e0e0e0 !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5) !important;
         }
 
         body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, 
@@ -48,14 +51,14 @@
         }
 
         body.dark-mode .tag { color: white !important; }
-        body.dark-mode .exam-next-btn, body.dark-mode .exam-next-btn span { color: white !important; }
+        body.dark-mode .exam-next-btn, body.dark-mode .exam-next-btn span, body.dark-mode .start-quiz-btn { color: white !important; }
         
         body.dark-mode .exam-opt-btn { background: #2c2c2c !important; color: #e0e0e0 !important; border-color: #444 !important; }
         body.dark-mode .exam-opt-btn:hover:not([disabled]) { background: #3c3c3c !important; border-color: #a18cd1 !important; }
         body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background-color: #2c2c2c !important; color: #e0e0e0 !important; border: 1px solid #444 !important; }
         
-        body.dark-mode .theory-table th { background-color: #333 !important; color: #e0e0e0 !important; border-color: #444 !important;}
-        body.dark-mode .theory-table td { border-color: #444 !important; color: #e0e0e0 !important; }
+        body.dark-mode .theory-table th, body.dark-mode .mu-table th { background-color: #333 !important; color: #e0e0e0 !important; border-color: #444 !important;}
+        body.dark-mode .theory-table td, body.dark-mode .mu-table td { border-color: #444 !important; color: #e0e0e0 !important; }
         
         body.dark-mode #chat-messages { background-color: #121212 !important; background-blend-mode: multiply; }
         body.dark-mode #chat-messages div[style*="background: #ffffff"] { background: #2c2c2c !important; border-color: #444 !important; }
@@ -68,7 +71,7 @@
 
     <!-- מסך התחברות -->
     <div id="login-screen" class="login-overlay">
-        <div class="login-box">
+        <div class="login-box theme-box">
             <h2>ברוכים הבאים</h2>
             <p>התחבר למערכת כדי להמשיך:</p>
             <div style="display: flex; justify-content: center; margin-top: 20px;">
@@ -165,13 +168,20 @@
                 <input type="text" id="globalSearch" placeholder="חיפוש חופשי..." oninput="handleSearch()">
                 <button id="filterBtn" onclick="toggleFilterMenu()">🔽 סינון</button>
                 
-                <div id="filterMenu" class="filter-dropdown" style="display: none;">
+                <div id="filterMenu" class="filter-dropdown theme-box" style="display: none;">
                     <h4>לפי אלמנט:</h4>
                     <button onclick="filterBy('wood')">עץ (Wood)</button>
                     <button onclick="filterBy('fire')">אש (Fire)</button>
                     <button onclick="filterBy('earth')">אדמה (Earth)</button>
                     <button onclick="filterBy('metal')">מתכת (Metal)</button>
                     <button onclick="filterBy('water')">מים (Water)</button>
+
+                    <h4 style="margin-top: 15px;">לפי נקודות עתיקות:</h4>
+                    <button onclick="filterBy('באר - Jing-Well')">באר (Jing-Well)</button>
+                    <button onclick="filterBy('מעיין - Ying-Spring')">מעיין (Ying-Spring)</button>
+                    <button onclick="filterBy('פלג - Shu-Stream')">פלג (Shu-Stream)</button>
+                    <button onclick="filterBy('נהר - Jing-River')">נהר (Jing-River)</button>
+                    <button onclick="filterBy('ים - He-Sea')">ים (He-Sea)</button>
                 </div>
             </div>
 
@@ -195,7 +205,7 @@
 
         <div id="study-tools" class="study-tools-container">
             <button id="btn-toggle-map" class="study-btn" onclick="toggleMapMode()" style="display: none; background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%); margin-bottom: 10px;" title="מפה ויזואלית של המרידיאן">🗺️ מפה אינטראקטיבית</button>
-            <div id="study-menu" class="study-menu-popup" style="display: none;">
+            <div id="study-menu" class="study-menu-popup theme-box" style="display: none;">
                 <button id="btn-flash-test" class="study-btn-small" onclick="flipAllCards(true)">🧠 מבחן כרטיסיות</button>
                 <button id="btn-flash-solve" class="study-btn-small" onclick="flipAllCards(false)">👁️ חשוף תשובות</button>
                 <button id="btn-flash-clear" class="study-btn-small clear-btn" onclick="clearAllFlashcardInputs()" style="display: none;">🧹 נקה הכל</button>
@@ -209,7 +219,7 @@
         </div>
 
         <div id="quiz-setup-modal" class="quiz-overlay" style="display: none;">
-            <div class="quiz-box">
+            <div class="quiz-box theme-box">
                 <button class="close-quiz-btn" onclick="closeQuizSetup()">✖</button>
                 <h2 id="quiz-setup-title">הגדרת מבחן</h2>
                 <p id="quiz-setup-desc">בחר את הנושאים שתרצה לתרגל:</p>
@@ -220,45 +230,21 @@
             </div>
         </div>
 
-        <div id="random-card-modal" class="quiz-overlay" style="display: none;">
-            <div class="quiz-box" style="width: 100%; max-width: 450px; background: transparent; box-shadow: none; padding: 0; position: relative; margin: auto; display: flex; flex-direction: column;">
-                <button class="close-quiz-btn" style="position: absolute; top: -40px; right: 0; color: white; font-size: 1.5rem; cursor: pointer; border: none; background: none; z-index: 2001;" onclick="closeRandomCardModal()">✖ סגור</button>
-                <div id="random-card-container" style="display: block; width: 100%;"></div>
-                <button id="random-next-btn" class="start-quiz-btn" style="display: none; margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); color: white; font-size: 1.3rem;" onclick="showNextRandomCard()">לכרטיסייה הבאה 🔀</button>
-            </div>
-        </div>
-
-        <div id="active-quiz-modal" class="quiz-overlay" style="display: none;">
-            <div class="quiz-box" id="quiz-container" style="width: 100%; max-width: 600px; padding: 0; overflow: hidden; background: #fdfbf7; margin: auto;">
-                <div class="quiz-header-active" style="background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                    <span id="quiz-progress" style="font-weight: bold; color: white; font-size: 1.2rem;">שאלה 1 מתוך 20</span>
-                    <button class="close-quiz-btn" style="position: static; color: rgba(255,255,255,0.7);" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'" onclick="quitQuiz()">✖ סיום מבחן</button>
-                </div>
-                <div class="quiz-body" style="padding: 30px;">
-                    <h3 id="quiz-question-text" style="color: var(--ink); line-height: 1.5; margin-bottom: 25px; font-size: 1.4rem; border-right: 5px solid #8b1c31; padding-right: 15px;">טוען שאלה...</h3>
-                    <div id="quiz-options-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
-                    <div style="text-align: left; margin-top: 30px;">
-                        <button id="quiz-next-btn" class="start-quiz-btn" style="display: none; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); box-shadow: 0 5px 15px rgba(139, 28, 49, 0.3); color: white;" onclick="nextQuizQuestion()">לשאלה הבאה ⬅️</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- מודל דיווח על טעות מעוצב מחדש -->
         <div id="report-modal" class="quiz-overlay" style="display: none; justify-content: center; align-items: center; background: rgba(0,0,0,0.5);">
-            <div class="quiz-box" style="text-align: center; max-width: 550px; width: 90%; padding: 40px 35px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); background: #ffffff; position: relative; border: none;">
+            <div class="quiz-box theme-box" style="text-align: center; max-width: 550px; width: 90%; padding: 40px 35px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); position: relative; border: none;">
                 <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'" style="position: absolute; top: 20px; left: 20px; background: #f0f2f5; color: #7f8c8d; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#e4e6eb'; this.style.color='#2c3e50';" onmouseout="this.style.background='#f0f2f5'; this.style.color='#7f8c8d';">✖</button>
                 
-                <h2 style="color: #2c3e50; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <h2 style="color: var(--ink); font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
                     דיווח על טעות או חסר 🚨
                 </h2>
                 <p style="color: #576574; font-size: 1.05rem; line-height: 1.5; margin-bottom: 30px; font-weight: 500;">
                     נתקלתם בנתון שגוי, חסר או לא מעודכן? שתפו אותנו ונתקן זאת בהקדם!
                 </p>
                 
-                <textarea id="report-text" style="width: 100%; height: 160px; padding: 18px; border-radius: 12px; border: 1px solid #dcdde1; font-family: inherit; font-size: 1rem; line-height: 1.6; resize: none; margin-bottom: 25px; outline: none; box-sizing: border-box; transition: 0.3s; background: #ffffff;" placeholder="לדוגמה: בנקודה ST-36 חסרה אינדיקציה...&#10;אנא פרטו ככל הניתן" onfocus="this.style.borderColor='#2ecc71'; this.style.boxShadow='0 0 0 3px rgba(46, 204, 113, 0.15)'" onblur="this.style.borderColor='#dcdde1'; this.style.boxShadow='none'"></textarea>
+                <textarea id="report-text" style="width: 100%; height: 160px; padding: 18px; border-radius: 12px; font-family: inherit; font-size: 1rem; line-height: 1.6; resize: none; margin-bottom: 25px; outline: none; box-sizing: border-box; transition: 0.3s;" placeholder="לדוגמה: בנקודה ST-36 חסרה אינדיקציה...&#10;אנא פרטו ככל הניתן"></textarea>
                 
-                <button class="start-quiz-btn" onclick="submitReport()" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.25rem; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.25); transition: 0.3s; margin-bottom: 15px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(46, 204, 113, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(46, 204, 113, 0.25)';">
+                <button class="start-quiz-btn" onclick="submitReport()" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.25rem; box-shadow: 0 6px 20px rgba(46, 204, 113, 0.25); transition: 0.3s; margin-bottom: 15px;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
                     שליחת דיווח מהיר (בעילום שם)
                 </button>
             </div>
@@ -267,28 +253,12 @@
     </div> <!-- סגירת app-container -->
 
     <script>
-        // פונקציית תיקון צבעים דינמיים בעת מעבר למצב לילה
-        function enforceDarkModeFix() {
-            if (document.body.classList.contains('dark-mode')) {
-                // מאתר אלמנטים שהוזרקו על ידי JS וקיבלו עיצוב של רקע לבן בכוח
-                const elementsToFix = document.querySelectorAll('div[style*="background: white"], div[style*="background: #ffffff"], div[style*="background-color: white"], div[style*="background-color: #ffffff"]');
-                elementsToFix.forEach(el => {
-                    el.style.setProperty('background-color', '#1e1e1e', 'important');
-                    el.style.setProperty('background', '#1e1e1e', 'important');
-                    el.style.setProperty('color', '#e0e0e0', 'important');
-                });
-            }
-        }
-
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('darkMode', isDark);
-            
             const btn = document.getElementById('darkModeBtn');
             if (btn) btn.innerText = isDark ? '☀️ מצב יום' : '🌙 מצב לילה';
-            
-            enforceDarkModeFix(); // מבטיח שתיבות שהוזרקו יקבלו את השינוי מיד
         }
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -298,38 +268,23 @@
                 if (btn) btn.innerText = '☀️ מצב יום';
             }
         });
-
-        // יצירת Observer שמאזין לשינויים ב-DOM ומוודא שמצב לילה נאכף על תוכן חדש (כמו כרטיסיות ומאמרים)
-        const observer = new MutationObserver(() => {
-            if (document.body.classList.contains('dark-mode')) {
-                enforceDarkModeFix();
-            }
-        });
-        
-        // התחל להאזין לאזור התוכן הראשי לשינויים
-        window.addEventListener('load', () => {
-            const contentArea = document.getElementById('content-area');
-            if (contentArea) {
-                observer.observe(contentArea, { childList: true, subtree: true });
-            }
-        });
     </script>
 
-    <script src="data_points.js?v=15"></script>
-    <script src="data_theory.js?v=15"></script>
-    <script src="pathologies_theory.js?v=15"></script>
-    <script src="pathologies_zang.js?v=15"></script>
-    <script src="pathologies_fu.js?v=15"></script>
-    <script src="exam_bank.js?v=15"></script>
-    <script src="exam_generator.js?v=15"></script>
-    <script src="exam_logic.js?v=15"></script>
-    <script src="app.js?v=15"></script>
-    <script src="profile.js?v=15"></script>
-    <script src="chat.js?v=15"></script>
-    <script src="ui.js?v=15"></script>
-    <script src="quiz.js?v=15"></script>
-    <script src="map.js?v=15"></script>
-    <script src="search.js?v=15"></script>
-    <script type="module" src="firebase-manager.js?v=15"></script>
+    <script src="data_points.js?v=17"></script>
+    <script src="data_theory.js?v=17"></script>
+    <script src="pathologies_theory.js?v=17"></script>
+    <script src="pathologies_zang.js?v=17"></script>
+    <script src="pathologies_fu.js?v=17"></script>
+    <script src="exam_bank.js?v=17"></script>
+    <script src="exam_generator.js?v=17"></script>
+    <script src="exam_logic.js?v=17"></script>
+    <script src="app.js?v=17"></script>
+    <script src="profile.js?v=17"></script>
+    <script src="chat.js?v=17"></script>
+    <script src="ui.js?v=17"></script>
+    <script src="quiz.js?v=17"></script>
+    <script src="map.js?v=17"></script>
+    <script src="search.js?v=17"></script>
+    <script type="module" src="firebase-manager.js?v=17"></script>
 </body>
 </html>
