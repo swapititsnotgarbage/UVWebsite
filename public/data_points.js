@@ -476,6 +476,7 @@ const data = {
 
 
 // --- מרידיאן מיוחד Du Mai ---
+    // --- מרידיאן מיוחד Du Mai ---
     DU: {
         title: "מרידיאן החוצה האחורי (DU MAI - 督脉)", 
         element: "-", 
@@ -490,18 +491,19 @@ const data = {
             {id: 'DU-3', name: 'Yao Yang Guan', heb: '', elm: 'none', elmN: '', tags: [], loc: 'על קו האמצע של הגב התחתון, בשקע מתחת ל-SPINOUS PROCESS של החוליה הלומברית ה-4 (L4-L5).', func: '', ind: '1. כאב גב תחתון.', img: 'images/DU/DU3.jpg'},
             {id: 'DU-4', name: 'Ming Men', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של החוליה הלומברית ה-2 (בין L2 ל L3).', func: '1. מחזקת KIDNEY YANG.', ind: '1. אימפוטנציה.<br>2. בעיות פוריות (גבר ואישה) וקור קיצוני בכל הגוף.<br><br><em>הערה קלינית (Kidney Yang Xu):</em> חסר זה מתבטא בתחושת קור בכל הגוף, צניחות, חיוורון בוהק, כאב גב תחתון, שתן מרובה ובהיר, בצקות, עייפות ואימפוטנציה.', img: 'images/DU/DU4.jpg'},
             {id: 'DU-8', name: 'Jin Suo', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-9 (מרווח T9-T10).', func: '1. משחררת התכווצות שרירים.', ind: '', img: 'images/DU/DU8.jpg'},
-            {id: 'DU-10', name: 'Ling Tai', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-6 (מרווח T6-T7).', func: '', ind: '', img: 'images/DU/DU10.jpg'},
-            {id: 'DU-11', name: 'Shen Dao', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-5 (מרווח T5-T6).', func: '', ind: '', img: 'images/DU/DU11.jpg'},
             {
-            id: "DU-10",
-            name: "Ling Tai",
-            elm: "-",
-            loc: "על קו האמצע האחורי, בשקע שמתחת לזיז הקוצי של חוליה T6.",
-            func: "מטהרת חום ורעילות מהדם, מרגיעה שיעול וצפצופי נשימה.",
-            ind: "נקודה אמפירית (ספציפית) למצבי רעילות בדם, פריחות חמות, פרונקלים (Boils / שחין) ודלקות עור. בנוסף מטפלת בשיעול, אסטמה, וכאב או נוקשות בגב העליון.",
-            insideM: "-",
-            tags: ["אמפירית"]
-        },
+                id: 'DU-10', 
+                name: 'Ling Tai', 
+                heb: '', 
+                elm: 'none', 
+                elmN: '', 
+                tags: ['אמפירית'], 
+                loc: 'על קו האמצע האחורי, בשקע מתחת ל-SPINOUS PROCESS של חוליה T-6 (מרווח T6-T7).', 
+                func: 'מטהרת חום ורעילות מהדם, מרגיעה שיעול וצפצופי נשימה.', 
+                ind: 'נקודה אמפירית (ספציפית) למצבי רעילות בדם, פריחות חמות, פרונקלים (Boils / שחין) ודלקות עור. בנוסף מטפלת בשיעול, אסטמה, וכאב או נוקשות בגב העליון.', 
+                img: 'images/DU/DU10.jpg'
+            },
+            {id: 'DU-11', name: 'Shen Dao', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-5 (מרווח T5-T6).', func: '', ind: '', img: 'images/DU/DU11.jpg'},
             {id: 'DU-14', name: 'Da Zhui', heb: '', elm: 'none', elmN: '', tags: ['מפגש מרידיאני ה-YANG', 'ים ה-Qi - Sea of Qi'], loc: 'בשקע מתחת ל-SPINOUS PROCESS של החוליה C-7.', func: '1. מוציאה חום.<br>2. מסלקת רוח.<br>3. מניעה YANG.', ind: '', img: 'images/DU/DU14.jpg'},
             {id: 'DU-15', name: 'Ya Men', heb: '', elm: 'none', elmN: '', tags: ['ים ה-Qi - Sea of Qi'], loc: 'בשקע 0.5 צון אינפריורית ל-DU 16, מתחת ל-SPINOUS PROCESS של החוליה C-1 (אינה ניתנת למישוש).', func: '1. מטיבה עם הקול.', ind: '1. גמגום ואיבוד קול.', img: 'images/DU/DU15.jpg'},
             {id: 'DU-16', name: 'Feng Fu', heb: '', elm: 'none', elmN: '', tags: ['ים מח העצם - Sea of Marrow', 'אשנב לרקיע - Window of Heaven'], loc: 'בשקע ישירות מתחת ל-EXTERNAL OCCIPITAL PROTUBERANCE.', func: '1. מוציאה רוח מאזור הראש (פנימית וחיצונית).<br>2. מזינה את ה-MARROW.', ind: '1. רעד ואפילפסיה.', img: 'images/DU/DU16.jpg'},
@@ -511,6 +513,7 @@ const data = {
             {id: 'DU-26', name: 'Ren Zhong', heb: '', elm: 'none', elmN: '', tags: [], loc: 'מעל השפה העליונה, בשקע שנמצא בין השליש העליון לשני השלישים התחתונים של הפילטרום.', func: '1. מטיבה עם הגב התחתון.<br>2. מחזירה להכרה.', ind: '1. כאב גב תחתון אקוטי.<br>2. התעלפויות.', img: 'images/DU/DU26.jpg'}
         ]
     },
+   
 
 
     // --- מרידיאן הכליות ---
