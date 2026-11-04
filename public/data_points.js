@@ -476,7 +476,6 @@ const data = {
 
 
 // --- מרידיאן מיוחד Du Mai ---
-    // --- מרידיאן מיוחד Du Mai ---
     DU: {
         title: "מרידיאן החוצה האחורי (DU MAI - 督脉)", 
         element: "-", 
@@ -491,18 +490,7 @@ const data = {
             {id: 'DU-3', name: 'Yao Yang Guan', heb: '', elm: 'none', elmN: '', tags: [], loc: 'על קו האמצע של הגב התחתון, בשקע מתחת ל-SPINOUS PROCESS של החוליה הלומברית ה-4 (L4-L5).', func: '', ind: '1. כאב גב תחתון.', img: 'images/DU/DU3.jpg'},
             {id: 'DU-4', name: 'Ming Men', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של החוליה הלומברית ה-2 (בין L2 ל L3).', func: '1. מחזקת KIDNEY YANG.', ind: '1. אימפוטנציה.<br>2. בעיות פוריות (גבר ואישה) וקור קיצוני בכל הגוף.<br><br><em>הערה קלינית (Kidney Yang Xu):</em> חסר זה מתבטא בתחושת קור בכל הגוף, צניחות, חיוורון בוהק, כאב גב תחתון, שתן מרובה ובהיר, בצקות, עייפות ואימפוטנציה.', img: 'images/DU/DU4.jpg'},
             {id: 'DU-8', name: 'Jin Suo', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-9 (מרווח T9-T10).', func: '1. משחררת התכווצות שרירים.', ind: '', img: 'images/DU/DU8.jpg'},
-            {
-                id: 'DU-10', 
-                name: 'Ling Tai', 
-                heb: '', 
-                elm: 'none', 
-                elmN: '', 
-                tags: ['אמפירית'], 
-                loc: 'על קו האמצע האחורי, בשקע מתחת ל-SPINOUS PROCESS של חוליה T-6 (מרווח T6-T7).', 
-                func: 'מטהרת חום ורעילות מהדם, מרגיעה שיעול וצפצופי נשימה.', 
-                ind: 'נקודה אמפירית (ספציפית) למצבי רעילות בדם, פריחות חמות, פרונקלים (Boils / שחין) ודלקות עור. בנוסף מטפלת בשיעול, אסטמה, וכאב או נוקשות בגב העליון.', 
-                img: 'images/DU/DU10.jpg'
-            },
+            {id: 'DU-10', name: 'Ling Tai', heb: '', elm: 'none', elmN: '', tags: ['אמפירית'], loc: 'על קו האמצע האחורי, בשקע מתחת ל-SPINOUS PROCESS של חוליה T-6 (מרווח T6-T7).', func: 'מטהרת חום ורעילות מהדם, מרגיעה שיעול וצפצופי נשימה.', ind: 'נקודה אמפירית (ספציפית) למצבי רעילות בדם, פריחות חמות, פרונקלים (Boils / שחין) ודלקות עור. בנוסף מטפלת בשיעול, אסטמה, וכאב או נוקשות בגב העליון.', img: 'images/DU/DU10.jpg'},
             {id: 'DU-11', name: 'Shen Dao', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע מתחת ל-SPINOUS PROCESS של חוליה T-5 (מרווח T5-T6).', func: '', ind: '', img: 'images/DU/DU11.jpg'},
             {id: 'DU-14', name: 'Da Zhui', heb: '', elm: 'none', elmN: '', tags: ['מפגש מרידיאני ה-YANG', 'ים ה-Qi - Sea of Qi'], loc: 'בשקע מתחת ל-SPINOUS PROCESS של החוליה C-7.', func: '1. מוציאה חום.<br>2. מסלקת רוח.<br>3. מניעה YANG.', ind: '', img: 'images/DU/DU14.jpg'},
             {id: 'DU-15', name: 'Ya Men', heb: '', elm: 'none', elmN: '', tags: ['ים ה-Qi - Sea of Qi'], loc: 'בשקע 0.5 צון אינפריורית ל-DU 16, מתחת ל-SPINOUS PROCESS של החוליה C-1 (אינה ניתנת למישוש).', func: '1. מטיבה עם הקול.', ind: '1. גמגום ואיבוד קול.', img: 'images/DU/DU15.jpg'},
@@ -513,7 +501,6 @@ const data = {
             {id: 'DU-26', name: 'Ren Zhong', heb: '', elm: 'none', elmN: '', tags: [], loc: 'מעל השפה העליונה, בשקע שנמצא בין השליש העליון לשני השלישים התחתונים של הפילטרום.', func: '1. מטיבה עם הגב התחתון.<br>2. מחזירה להכרה.', ind: '1. כאב גב תחתון אקוטי.<br>2. התעלפויות.', img: 'images/DU/DU26.jpg'}
         ]
     },
-   
 
 
     // --- מרידיאן הכליות ---
@@ -533,15 +520,4 @@ const data = {
             {id: 'KID-5', name: 'Shui Quan', heb: '', elm: 'none', elmN: '', tags: ['הצטברות - Xi-Cleft'], loc: 'ישירות מתחת ל-KID-3 בשקע אנטריורית וסופריורית ל-CALCANEAL TUBEROSITY.', func: '1. מווסתת את המחזור.', ind: '1. דיסמנוריאה.<br>2. אמנוריאה.<br>3. בעיות פוריות.', img: 'images/KID/KID5.jpg'},
             {id: 'KID-6', name: 'Zhao Hai', heb: '', elm: 'none', elmN: '', tags: ['פתיחת Yin Qiao'], loc: '1 צון מתחת לבליטת המלאולוס המדיאלי, בשקע הנוצר בין שני קבצי רצועות.', func: '1. מחזקת KID YIN.<br>2. מטיבה עם הגרון.<br>3. מפעילה את ה-YIN QIAO.', ind: '1. אינסומניה.<br>2. גרון יבש.<br>3. בעיות גינקולוגיה.', img: 'images/KID/KID6.jpg'},
             {id: 'KID-7', name: 'Fu Liu', heb: '', elm: 'metal', elmN: 'אלמנט: מתכת', tags: ['נהר - Jing-River', 'חיזוק - Tonification'], loc: 'באספקט המדיאלי של השוק, בשקע 2 צון סופריורית ל-KID-3 בגבול האנטריורי של גיד אכילס.', func: '1. מחזקת YANG.<br>2. מווסתת זיעה.<br>3. מטפלת בבצקות.', ind: '1. בצקות.<br>2. הזעות לילה.<br>3. הזעות ספונטאניות.<br>4. אימפוטנציה.', img: 'images/KID/KID7.jpg'},
-            {id: 'KID-9', name: 'Zhu Bin', heb: '', elm: 'none', elmN: '', tags: ['הצטברות של Yin Wei'], loc: 'באספקט המדיאלי של השוק, 5 צון סופריורית ל-KID-3 על הקו המחבר בין KID-10 לבין KID-3.', func: '1. מרגיעה נפש.<br>2. פותחת את פתחי החישה.<br>3. פותחת את החזה.<br>4. מחזקת KID YIN.', ind: '1. אינסומניה.<br>2. חרדות.', img: 'images/KID/KID9.jpg'},
-            {id: 'KID-10', name: 'Yin Gu', heb: '', elm: 'water', elmN: 'אלמנט: מים', tags: ['ים - He-Sea', 'שעה - Horary'], loc: 'בצד המדיאלי של הקפל הפופליטאלי, בין שני הגידים SEMITENDINOSUS ו-SEMIMEMBRANOSUS.', func: '1. מחזקת KIDNEY YIN.<br>2. מטיבה עם ה-Lower Jiao.', ind: '1. קושי במתן שתן.<br>2. שתן מגמגם.', img: 'images/KID/KID10.jpg'},
-            {id: 'KID-11', name: 'Heng Gu', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בבטן התחתונה, 5 צון אינפריורית לטבור, בגבול הסופריורי של ה-SYMPHYSIS PUBIS, ממוקמת 0.5 צון לטרלית לקו האמצע בגובה הנקודה REN-2.', func: '-', ind: '-', img: 'images/KID/KID11.jpg'},
-            {id: 'KID-13', name: 'Qi Xue', heb: '', elm: 'none', elmN: '', tags: ['מפגש עם CHONG MAI'], loc: 'בבטן התחתונה, 3 צון אינפריורית לטבור, 0.5 צון לטרלית לקו האמצע בגובה הנקודה REN-4.', func: '1. מטיבה עם ה-CHONG וה-REN.', ind: '1. בעיות פוריות.<br>2. אמנוריאה.', img: 'images/KID/KID13.jpg'},
-            {id: 'KID-16', name: 'Huang Shu', heb: '', elm: 'none', elmN: '', tags: ['מפגש עם CHONG MAI'], loc: 'על הבטן, 0.5 צון לטרלית למרכז הטבור.', func: '1. מווסתת את המעיים.<br>2. מאזנת בין אש למים.', ind: '1. עצירות על רקע חוסר YIN.', img: 'images/KID/KID16.jpg'},
-            {id: 'KID-25', name: 'Shen Cang', heb: '', elm: 'none', elmN: '', tags: [], loc: 'במרווח הבין-צלעי השני, 2 צון לטרלית לקו האמצע.', func: '1. מרגיעה את הנפש.<br>2. מאזנת בין ה-HT ל-KID.', ind: '1. קוצר נשימה עקב חרדה.<br>2. מועקה בחזה על רקע חרדה.', img: 'images/KID/KID25.jpg'},
-            {id: 'KID-27', name: 'Shu Fu', heb: '', elm: 'none', elmN: '', tags: [], loc: 'בשקע בגבול התחתון של הקלויקולה (מרווח 0), 2 צון לטרלית לקו האמצע.', func: '1. מורידה LUNG QI.', ind: '1. אסטמה על רקע LU/KID.', img: 'images/KID/KID27.jpg'}
-        ]
-    },
-
-};
-
+            {id: 'KID-9', name: 'Zhu Bin', heb: '', elm: 'none', elmN: '', tags: ['הצטברות של Yin Wei'], loc: 'באספקט המדיאלי של השוק, 5 צון סופריורית ל-KID-3 על הקו המחבר בין KID-10 לבין KID-3.', func: '1. מרגיעה
