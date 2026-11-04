@@ -2,12 +2,6 @@
 // === קובץ data_theory.js ===
 // ==========================================
 // קובץ זה נועד למאמרי עומק, תיאוריה ויסודות הרפואה הסינית.
-//
-// מבנה הנתונים:
-// המשתנה 'theoryData' מכיל אובייקטים שכל אחד מהם הוא מאמר.
-// כל מאמר מיוצג על ידי מזהה ייחודי באנגלית (כמו 'qi').
-// בתוכו יש כותרת, תת-כותרת, אייקון, צבעי עיצוב (לגרדיאנט בכרטיסייה) 
-// והתוכן עצמו מעוצב בעזרת תגיות HTML בסיסיות (h2, p, ul, li).
 // ==========================================
 
 const theoryData = {
@@ -80,8 +74,8 @@ const theoryData = {
         title: "דם (Xue)",
         subtitle: "תהליך ייצור הדם, תפקודיו והקשר שלו לאיברים ולנפש.",
         icon: "🩸",
-        color1: "#ff9a9e", // ורוד בהיר
-        color2: "#d63031", // אדום דם
+        color1: "#ff9a9e", 
+        color2: "#d63031", 
         content: `
             <h2>1. מהו הדם ברפואה הסינית?</h2>
             <p>המשמעות של "דם" ברפואה הסינית שונה ממשמעותו ברפואה המערבית. הדם נחשב לצורה של צ'י (Qi) – צורה דחוסה, חומרית ומזינה יותר. עם זאת, הדם והצ'י בלתי נפרדים: הצ'י הוא זה שמפיח חיים בדם, ובלעדיו הדם היה נותר נוזל חסר חיים.</p>
@@ -148,8 +142,8 @@ const theoryData = {
         title: "נוזלי גוף (Jin Ye)",
         subtitle: "תהליכי יצירת והפרשת נוזלים, וההבדלים בין Jin ל-Ye.",
         icon: "💧",
-        color1: "#a1c4fd", // תכלת
-        color2: "#c2e9fb", // תכלת בהיר
+        color1: "#a1c4fd", 
+        color2: "#c2e9fb", 
         content: `
             <h2>1. מהם נוזלי הגוף (Jin Ye)?</h2>
             <p>המונח הסיני "Jin-Ye" מתייחס לכלל הנוזלים האורגניים בגוף. המילה Jin פירושה לחות או רוק, ומתייחסת לכל דבר נוזלי, ואילו המילה Ye מתייחסת לנוזלים של אורגניזמים חיים (כמו אלו הנמצאים בפירות).</p>
@@ -212,8 +206,8 @@ const theoryData = {
         title: "הנפש (Shen)",
         subtitle: "המהות הרוחנית, תפקודי ה-Shen וחמשת ההיבטים הרוחניים (Wu Shen).",
         icon: "✨",
-        color1: "#e0c3fc", // סגול לילך בהיר
-        color2: "#8ec5fc", // תכלת עדין
+        color1: "#e0c3fc", 
+        color2: "#8ec5fc", 
         content: `
             <h2>1. מהי ה-Shen (Mind / Spirit)?</h2>
             <p>ברפואה הסינית, המונח Shen מתורגם לרוב כ"נפש" (Mind) או "רוח" (Spirit). זהו אינו מושג ערטילאי לחלוטין, אלא החומר ה"שמיימי" והמעודן ביותר מבין "שלושת האוצרות" (San Bao: צ'י, תמצית/Jing, ו-Shen). ה-Shen אחראית לכל התפקודים הקוגניטיביים, הרגשיים וההכרתיים של האדם.</p>
@@ -259,8 +253,8 @@ const theoryData = {
         title: "תורת 6 ה-Qi והשעון הביולוגי",
         subtitle: "המודל הקוסמי של השכבות (Shang Han Lun) והשעון הביולוגי של איברי הגוף.",
         icon: "⏱️",
-        color1: "#f6d365", // צהוב רך
-        color2: "#fda085", // כתום חם
+        color1: "#f6d365", 
+        color2: "#fda085", 
         content: `
             <div style="background: #fdfaf5; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 35px; text-align: center; border-right: 6px solid #fda085;">
                 <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--ink);">🎧 האזן לפרק הפודקאסט המלא</h3>
@@ -348,14 +342,13 @@ const theoryData = {
         `
     },
 
-
 // --- מאמר 6: גורמי מחלה ---
     pathogens: {
         title: "גורמי מחלה",
         subtitle: "חלוקה ל-3 קטגוריות: גורמים חיצוניים (6 הפתוגנים), פנימיים (רגשות), ונוספים.",
         icon: "🦠",
-        color1: "#ff9a9e", // ורוד-אדמדם
-        color2: "#fecfef", // ורוד בהיר
+        color1: "#ff9a9e", 
+        color2: "#fecfef", 
         content: `
             <div style="background: #fdfaf5; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 35px; text-align: center; border-right: 6px solid #ff9a9e;">
                 <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--ink);">🎧 האזן לפרק הפודקאסט המלא</h3>
@@ -369,7 +362,6 @@ const theoryData = {
                     <button onclick="document.getElementById('podcastAudioPathogens').currentTime += 10" style="background: white; border: 1px solid #ddd; padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-weight: bold; color: var(--ink); box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#f0f2f5'" onmouseout="this.style.background='white'">קדימה 10 שניות ⏩</button>
                 </div>
             </div>
-        
         
             <p>המחלות ברפואה הסינית נחלקות לשלוש קטגוריות עיקריות של גורמים: חיצוניים, פנימיים ונוספים.</p>
 
@@ -659,28 +651,31 @@ const theoryData = {
 
             <h3 class="bp-header">נקודות מפגש ושליטה</h3>
             <table class="theory-table interactive-table">
-                <tr><th colspan="2">נקודות מפגש</th><th colspan="2">נקודות שליטה</th></tr>
+                <tr><th colspan="2">נקודות מפגש (Hui)</th><th colspan="2">נקודות שליטה (Command)</th></tr>
                 <tr>
                     <td><strong>מפגש כלי דם</strong></td><td><input type="text" data-strict="LU9" data-full="LU9"></td>
-                    <td><strong>פנים</strong></td><td><input type="text" data-strict="LI4" data-full="LI4"></td>
+                    <td><strong>פנים ופה</strong></td><td><input type="text" data-strict="LI4" data-full="LI4"></td>
                 </tr>
                 <tr>
                     <td><strong>מפגש עם ST</strong></td><td><input type="text"></td>
-                    <td><strong>בטן</strong></td><td><input type="text" data-strict="ST36" data-full="ST36"></td>
+                    <td><strong>בטן ועיכול</strong></td><td><input type="text" data-strict="ST36" data-full="ST36"></td>
                 </tr>
                 <tr>
                     <td><strong>מפגש TAI YIN - SP LU</strong></td><td><input type="text" data-strict="LU1" data-full="LU1"></td>
-                    <td><strong>עורף</strong></td><td><input type="text"></td>
+                    <td><strong>ראש ועורף (LU-7)</strong></td><td><input type="text" data-strict="LU7" data-full="LU7"></td>
                 </tr>
                 <tr>
                     <td><strong>מפגש עם הצ’ונג מאי</strong></td><td><input type="text" data-strict="ST30,CV1" data-full="ST30, CV1"></td>
-                    <td><strong>גב</strong></td><td><input type="text"></td>
+                    <td><strong>גב וגב תחתון (BL-40)</strong></td><td><input type="text" data-strict="BL40" data-full="BL40"></td>
                 </tr>
                 <tr>
                     <td><strong>מפגש מרידיאני היאנג מלבד BL</strong></td><td><input type="text" data-strict="ST12" data-full="ST12"></td>
-                    <td><strong>ראש</strong></td><td><input type="text" data-strict="LU7" data-full="LU7"></td>
+                    <td><strong>חזה, לב וצלעות</strong></td><td><input type="text" data-strict="PC6" data-full="PC6"></td>
                 </tr>
-                <tr><td><strong>מפגש ST GB YANG WEI</strong></td><td><input type="text" data-strict="ST8" data-full="ST8"></td><td></td><td></td></tr>
+                <tr>
+                    <td><strong>מפגש ST GB YANG WEI</strong></td><td><input type="text" data-strict="ST8" data-full="ST8"></td>
+                    <td><strong>החייאה, עילפון ועזרה ראשונה</strong></td><td><input type="text" data-strict="DU26" data-full="DU26"></td>
+                </tr>
                 <tr><td><strong>מפגש 3 מרידיאני ה-YIN של הרגל</strong></td><td><input type="text" data-strict="SP6" data-full="SP6"></td><td></td><td></td></tr>
                 <tr><td><strong>מפגש איברי ה-FU</strong></td><td><input type="text" data-strict="RN12" data-full="RN12"></td><td></td><td></td></tr>
             </table>
@@ -725,8 +720,8 @@ const theoryData = {
         title: "מבחן עיוני - נקודות דיקור",
         subtitle: "סימולטור מבחנים חכם המשלב שאלות ממאגר ושאלות שנוצרות אוטומטית.",
         icon: "📝",
-        color1: "#84fab0", // ירוק רך
-        color2: "#8fd3f4", // תכלת
+        color1: "#84fab0", 
+        color2: "#8fd3f4", 
         content: `
             <!-- טריק שמזהה אם אנחנו באמצע מבחן וטוען אותו מיד -->
             <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" onload="if(typeof resumeExamIfActive === 'function') resumeExamIfActive();" style="display:none;">
@@ -752,8 +747,8 @@ const theoryData = {
         title: "מבחן מעשי",
         subtitle: "הכנה ותרגול לקראת המבחן המעשי בקליניקה.",
         icon: "💆‍♂️",
-        color1: "#fccb90", // כתום בהיר
-        color2: "#d57eeb", // ורוד/סגול
+        color1: "#fccb90", 
+        color2: "#d57eeb", 
         content: `
             <div style="text-align: center; margin-top: 50px; color: var(--ink);">
                 <h2>הדף בבנייה 🚧</h2>
