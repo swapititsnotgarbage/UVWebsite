@@ -110,26 +110,28 @@ function openWesternIndex() {
     let cardsHTML = '<div class="topics-grid">';
     
     // מעבר על כל הנתונים בקובץ westernData ויצירת כרטיסיות דינמיות
-    Object.keys(westernData).forEach(key => {
-        const item = westernData[key];
-        const gradientStyle = `background: linear-gradient(135deg, ${item.color1} 0%, ${item.color2} 100%);`;
+    if (typeof westernData !== 'undefined') {
+        Object.keys(westernData).forEach(key => {
+            const item = westernData[key];
+            const gradientStyle = `background: linear-gradient(135deg, ${item.color1} 0%, ${item.color2} 100%);`;
 
-        cardsHTML += `
-            <div class="topic-card theme-box" onclick="openWesternArticle('${key}')">
-                <div class="topic-gradient-header" style="${gradientStyle}">
-                    <div class="topic-icon-floating">${item.icon || '🩺'}</div>
+            cardsHTML += `
+                <div class="topic-card theme-box" onclick="openWesternArticle('${key}')">
+                    <div class="topic-gradient-header" style="${gradientStyle}">
+                        <div class="topic-icon-floating">${item.icon || '🩺'}</div>
+                    </div>
+                    <div class="topic-card-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.subtitle}</p>
+                    </div>
                 </div>
-                <div class="topic-card-content">
-                    <h3>${item.title}</h3>
-                    <p>${item.subtitle}</p>
-                </div>
-            </div>
-        `;
-    });
+            `;
+        });
+    }
     
     // כרטיסיות 'בקרוב' לנושאים הבאים
     cardsHTML += `
-            <div class="topic-card theme-box" style="opacity: 0.6;">
+            <div class="topic-card theme-box" style="opacity: 0.6; cursor: default;">
                 <div class="topic-gradient-header" style="background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);">
                     <div class="topic-icon-floating">🦴</div>
                 </div>
@@ -139,7 +141,7 @@ function openWesternIndex() {
                 </div>
             </div>
             
-            <div class="topic-card theme-box" style="opacity: 0.6;">
+            <div class="topic-card theme-box" style="opacity: 0.6; cursor: default;">
                 <div class="topic-gradient-header" style="background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);">
                     <div class="topic-icon-floating">🦵</div>
                 </div>
@@ -153,7 +155,7 @@ function openWesternIndex() {
     cardsHTML += '</div>';
 
     document.getElementById('content-area').innerHTML = `
-        <h1 style="text-align: center; color: var(--ink); margin-bottom: 40px;">רפואה מערבית - פתולוגיות אורטופדיות</h1>
+        <h1 style="text-align: center; color: var(--ink); margin-bottom: 40px;">רפואה מערבית - פתולוגיות אורתופדיות</h1>
         ${cardsHTML}
     `;
 
