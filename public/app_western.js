@@ -1,5 +1,5 @@
 // === app_western.js ===
-// ניהול תצוגת רפואה מערבית - שנה ב'
+// ניהול תצוגת רפואה מערבית - שנה ב' ומבחנים
 
 function openWesternIndex() {
     saveCurrentScroll();
@@ -34,28 +34,7 @@ function openWesternIndex() {
             `;
         });
     }
-    
-    cardsHTML += `
-            <div class="topic-card theme-box" style="opacity: 0.6; cursor: default;">
-                <div class="topic-gradient-header" style="background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);">
-                    <div class="topic-icon-floating">🦴</div>
-                </div>
-                <div class="topic-card-content">
-                    <h3>מפרק המרפק (בקרוב)</h3>
-                    <p>אנטומיה ופתולוגיות של מרפק.</p>
-                </div>
-            </div>
-            
-            <div class="topic-card theme-box" style="opacity: 0.6; cursor: default;">
-                <div class="topic-gradient-header" style="background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);">
-                    <div class="topic-icon-floating">🦵</div>
-                </div>
-                <div class="topic-card-content">
-                    <h3>מפרק הברך (בקרוב)</h3>
-                    <p>אנטומיה ופתולוגיות של הברך.</p>
-                </div>
-            </div>
-    </div>`;
+    cardsHTML += '</div>';
 
     document.getElementById('content-area').innerHTML = `
         <h1 style="text-align: center; color: var(--ink); margin-bottom: 40px;">רפואה מערבית - פתולוגיות אורתופדיות</h1>
@@ -82,7 +61,6 @@ function openWesternArticle(articleId) {
     document.getElementById('filterBtn').style.display = 'none';
     
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-    
     const specificBtn = document.getElementById('btn-western_index');
     if (specificBtn) specificBtn.classList.add('active-menu');
     
@@ -103,4 +81,57 @@ function openWesternArticle(articleId) {
     
     window.scrollTo(0, 0);
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
+}
+
+// הפעלת מבחן מערבית חכם
+function startWesternQuiz() {
+    if (typeof westernExamBank === 'undefined' || westernExamBank.length === 0) {
+        alert("מאגר השאלות בטעינה, נסה שוב בעוד שניה.");
+        return;
+    }
+    
+    // מכין את המבחן דרך מנגנון המבחנים הקיים 
+    const shuffled = [...westernExamBank].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 10); // מבחן של 10 שאלות אורתופדיה
+    
+    window.currentQuizQuestions = selected.map(q => {
+        let answers = [...q.options];
+        let correctText = answers[q.correct];
+        answers.sort(() => 0.5 - Math.random());
+        let newCorrectIndex = answers.indexOf(correctText);
+        
+        return {
+            q: q.q,
+            answers: answers,
+            correct: newCorrectIndex,
+            exp: q.exp || ''
+        };
+    });
+    
+    window.currentQuizIndex = 0;
+    window.quizScore = 0;
+    
+    const studyMenu = document.getElementById('study-menu');
+    if (studyMenu) studyMenu.style.display = 'none';
+    
+    const quizSetupModal = document.getElementById('quiz-setup-modal');
+    if (quizSetupModal) quizSetupModal.style.display = 'none';
+    
+    document.getElementById('content-area').innerHTML = `
+        <div id="quiz-container" class="quiz-container theme-box">
+            <h2 id="quiz-question" style="color: var(--ink);"></h2>
+            <div id="quiz-options"></div>
+            <div id="quiz-feedback" class="quiz-feedback"></div>
+            <div class="quiz-footer">
+                <span id="quiz-progress"></span>
+                <button id="quiz-next-btn" class="exam-next-btn" onclick="nextQuizQuestion()" style="display:none;">הבא <span>←</span></button>
+            </div>
+        </div>
+    `;
+    
+    if (typeof renderQuizQuestion === 'function') {
+        renderQuizQuestion();
+    } else {
+        alert('שגיאה: מנוע המבחנים לא נטען. נסה לרענן את העמוד.');
+    }
 }

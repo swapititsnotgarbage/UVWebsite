@@ -275,6 +275,7 @@ function updateStudyToolsVisibility() {
     const flashClearBtn = document.getElementById('btn-flash-clear');
     const randomCardBtn = document.getElementById('btn-random-card');
     const smartQuizBtn = document.getElementById('btn-smart-quiz');
+    const westernQuizBtn = document.getElementById('btn-western-quiz'); // הכפתור החדש
     const mapToggleBtn = document.getElementById('btn-toggle-map'); 
     const studyTools = document.getElementById('study-tools');
     const studyMenu = document.getElementById('study-menu');
@@ -293,30 +294,40 @@ function updateStudyToolsVisibility() {
     studyTools.style.display = 'flex';
     if (studyMenu) studyMenu.style.display = 'none'; 
 
+    // הסתרה של כולם כברירת מחדל
     if (flashTestBtn) flashTestBtn.style.display = 'none';
     if (flashSolveBtn) flashSolveBtn.style.display = 'none';
     if (flashClearBtn) flashClearBtn.style.display = 'none';
     if (randomCardBtn) randomCardBtn.style.display = 'none';
     if (mapToggleBtn) mapToggleBtn.style.display = 'none'; 
     if (smartQuizBtn) smartQuizBtn.style.display = 'none';
+    if (westernQuizBtn) westernQuizBtn.style.display = 'none'; 
     if (bpEmptyBtn) bpEmptyBtn.style.display = 'none';
     if (bpFullBtn) bpFullBtn.style.display = 'none';
     if (bpCheckBtn) bpCheckBtn.style.display = 'none';
 
-    if (currentView === 'article_bigpicture') {
+    // הצגת הכפתורים הרלוונטיים לפי הדף הנוכחי
+    if (currentView.startsWith('western')) {
+        // אנחנו באגף המערבית - נציג רק את מבחן האורתופדיה
+        if (westernQuizBtn) westernQuizBtn.style.display = 'block';
+    } 
+    else if (currentView === 'article_bigpicture') {
         if (bpEmptyBtn) bpEmptyBtn.style.display = 'block';
         if (bpFullBtn) bpFullBtn.style.display = 'block';
         if (bpCheckBtn) bpCheckBtn.style.display = 'block';
-    } else if (currentView === 'pathologies' || currentView === 'fundamentals' || currentView.startsWith('article_')) {
+    } 
+    else if (currentView === 'pathologies' || currentView === 'fundamentals' || currentView.startsWith('article_')) {
+        // בדפי יסודות או פתולוגיות רגילים
         if (smartQuizBtn) smartQuizBtn.style.display = 'block';
-    } else if (data[currentView]) {
+    } 
+    else if (data && data[currentView]) {
+        // בדפי מרידיאנים של נקודות
         if (flashTestBtn) flashTestBtn.style.display = 'block';
         if (flashSolveBtn) flashSolveBtn.style.display = 'block';
         if (flashClearBtn) flashClearBtn.style.display = 'block';
         if (randomCardBtn) randomCardBtn.style.display = 'block';
         if (mapToggleBtn) mapToggleBtn.style.display = 'block'; 
         
-        // בדיקת סטטוס המועדפים לאחר טעינת הכרטיסיות
         if (window.checkFavoritesStatus) {
             setTimeout(window.checkFavoritesStatus, 150);
         }

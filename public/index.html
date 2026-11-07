@@ -13,6 +13,13 @@
     <!-- עיצוב מצב לילה חדש ומותאם למחלקות -->
     <style id="dark-mode-styles">
         /* מחלקת theme-box מחליפה את העיצוב הפנימי המכוער */
+        /* ריווח פנימי למאמרים כדי שלא יידבקו לקצוות הדף */
+        .article-container .article-content, .theory-box, .nature-section {
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+            box-sizing: border-box;
+        }
+        
         .theme-box {
             background-color: #ffffff;
             border: 1px solid #eaeaea;
@@ -216,6 +223,7 @@
                 <button id="btn-flash-clear" class="study-btn-small clear-btn" onclick="clearAllFlashcardInputs()" style="display: none;">🧹 נקה הכל</button>
                 <button id="btn-random-card" class="study-btn-small random-btn" onclick="openRandomCardModal()" style="display: none;">🔀 כרטיסייה אקראית</button>
                 <button id="btn-smart-quiz" class="study-btn-small quiz-btn" onclick="openQuizSetup()" style="display: none;">📝 מבחן חכם</button>
+                <button id="btn-western-quiz" class="study-btn-small quiz-btn" onclick="startWesternQuiz()" style="display: none; background:#e74c3c;">🦴 מבחן אורתופדיה</button>
                 <div class="menu-item" id="btn-bp-empty" onclick="bpEmptyQuiz()" style="display: none;">🔄 מבחן ריק</div>
                 <div class="menu-item" id="btn-bp-full" onclick="bpFullQuiz()" style="display: none;">📖 מבחן מלא (תשובות)</div>
                 <div class="menu-item" id="btn-bp-check" onclick="bpCheckQuiz()" style="display: none;">✅ בדיקה</div>
@@ -287,6 +295,7 @@
             'pathologies_theory.js',
             'pathologies_zang.js',
             'pathologies_fu.js',
+            'exam_western_bank.js',
             'exam_bank.js',
             'exam_generator.js',
             'exam_logic.js',
