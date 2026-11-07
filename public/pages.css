@@ -290,3 +290,38 @@
     opacity: 1;
     bottom: 120%;
 }
+
+/* --- עיצוב מבחן מערבית משופר --- */
+.quiz-container.theme-box {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    background-color: #ffffff;
+    border-top: 5px solid #6c5ce7;
+}
+
+body.dark-mode .quiz-container.theme-box {
+    background-color: #1e1e1e !important;
+    border-top-color: #a29bfe;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.quiz-container #quiz-question {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+body.dark-mode .quiz-container #quiz-question {
+    border-bottom-color: #333;
+}
+
+.quiz-container #quiz-options {
+    max-width: 600px;
+    margin: 0 auto;
+}
