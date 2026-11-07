@@ -4,7 +4,7 @@
 // ==========================================
 
 const westernData = {
-    // --- פתולוגיות של מפרק הכתף ---
+  // --- פתולוגיות של מפרק הכתף ---
     shoulder_pathologies: {
         title: "מפרק הכתף",
         subtitle: "אנטומיה, ביומכניקה, Rotator Cuff, SLAP, Bankart, וכתף קפואה.",
@@ -30,9 +30,10 @@ const westernData = {
                     </div>
 
                     <!-- צד שמאל: תמונה -->
-<div style="flex-shrink: 0;">
-    <img src="images/ortho/sh1.jpeg" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
-</div>
+                    <div style="flex-shrink: 0;">
+                        <!-- הנתיב תוקן כאן להצביע ישירות לתיקיית images -->
+                        <img src="images/sh1.jpeg" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
+                    </div>
 
                 </div>
                 <!-- סוף אזור מפוצל -->
