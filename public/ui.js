@@ -48,6 +48,16 @@ function toggleStudyMenu() {
         menu.style.display = 'none';
     }
 }
+// פונקציה להגדלת תמונות ממוזערות
+function enlargeImage(src) {
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('expanded-image');
+    
+    if (modal && modalImg) {
+        modalImg.src = src;
+        modal.style.display = 'flex';
+    }
+}
 
 function updateStudyToolsVisibility() {
     const flashTestBtn = document.getElementById('btn-flash-test');

@@ -9,18 +9,34 @@ const westernData = {
         title: "מפרק הכתף",
         subtitle: "אנטומיה, ביומכניקה, Rotator Cuff, SLAP, Bankart, וכתף קפואה.",
         icon: "🦴",
-        color1: "#a8c0ff", // כחול-אפור בהיר
-        color2: "#3f2b96", // סגול-כחול עמוק
+        color1: "#a8c0ff", 
+        color2: "#3f2b96", 
         content: `
             <div class="theory-box theme-box">
                 <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">1. אנטומיה וביומכניקה של מפרק הכתף</h2>
-                <p>מפרק הכתף הוא מפרק סינוביאלי מסוג עלי ומכתש (Ball & Socket). מאפשר את טווח התנועה הרחב ביותר בגוף, אך חושף את המפרק לחוסר יציבות.</p>
-                <p><strong>3 עצמות עיקריות:</strong></p>
-                <ul>
-                    <li><strong>Scapula (עצם השכמה):</strong> כוללת את ה-Glenoid Fossa (השקע המפרקי) וה-Acromion.</li>
-                    <li><strong>Humerus (עצם הזרוע):</strong> ראש עצם הזרוע היושב בתוך השקע.</li>
-                    <li><strong>Clavicle (עצם הבריח):</strong> שומרת את הכתף במקומה ומונעת תזוזה מיותרת.</li>
-                </ul>
+                
+                <!-- התחלת אזור מפוצל: טקסט מימין, תמונה משמאל -->
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; margin-top: 15px;">
+                    
+                    <!-- צד ימין: טקסט -->
+                    <div style="flex: 1; min-width: 300px;">
+                        <p>מפרק הכתף הוא מפרק סינוביאלי מסוג עלי ומכתש (Ball & Socket). מאפשר את טווח התנועה הרחב ביותר בגוף, אך חושף את המפרק לחוסר יציבות.</p>
+                        <p><strong>3 עצמות עיקריות:</strong></p>
+                        <ul>
+                            <li><strong>Scapula (עצם השכמה):</strong> כוללת את ה-Glenoid Fossa (השקע המפרקי) וה-Acromion.</li>
+                            <li><strong>Humerus (עצם הזרוע):</strong> ראש עצם הזרוע היושב בתוך השקע.</li>
+                            <li><strong>Clavicle (עצם הבריח):</strong> שומרת את הכתף במקומה ומונעת תזוזה מיותרת.</li>
+                        </ul>
+                    </div>
+
+                    <!-- צד שמאל: תמונה -->
+                    <div style="flex-shrink: 0;">
+                        <!-- שים לב לנתיב התמונה כאן -->
+                        <img src="images/Sh1.jpeg" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
+                    </div>
+
+                </div>
+                <!-- סוף אזור מפוצל -->
 
                 <h3 style="margin-top:20px; color:var(--ink);">שרירי ה-Rotator Cuff (SITS)</h3>
                 <p>4 שרירים הסובבים את המפרק, מניעים ומייצבים אותו:</p>

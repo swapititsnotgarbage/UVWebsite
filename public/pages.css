@@ -328,3 +328,62 @@ body.dark-mode .quiz-container #quiz-question {
     flex-direction: column;
     gap: 12px;
 }
+
+/* --- גלריית תמונות ממוזערות לאורתופדיה --- */
+.ortho-gallery {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px 0 25px 0;
+    justify-content: flex-start;
+}
+
+.ortho-thumb {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ecf0f1;
+    cursor: zoom-in;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.ortho-thumb:hover {
+    transform: translateY(-5px) scale(1.05);
+    border-color: #6c5ce7;
+    box-shadow: 0 8px 15px rgba(108, 92, 231, 0.2);
+}
+
+body.dark-mode .ortho-thumb {
+    border-color: #444;
+}
+body.dark-mode .ortho-thumb:hover {
+    border-color: #a29bfe;
+}
+
+/* --- חלון קופץ לתמונה מוגדלת (Lightbox) --- */
+#image-modal {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); 
+    z-index: 9999; 
+    justify-content: center; 
+    align-items: center;
+    backdrop-filter: blur(5px);
+    cursor: zoom-out;
+}
+
+#image-modal img {
+    max-width: 90%; 
+    max-height: 90%; 
+    border-radius: 10px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    animation: zoomInImg 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomInImg { 
+    from { transform: scale(0.8); opacity: 0; } 
+    to { transform: scale(1); opacity: 1; } 
+}
