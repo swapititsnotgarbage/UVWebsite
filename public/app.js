@@ -91,6 +91,44 @@ function openPage(id) {
 
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
+function openWesternArticle(articleId) {
+    if (typeof westernData === 'undefined' || !westernData[articleId]) {
+        console.error('Western article not found:', articleId);
+        return;
+    }
+    
+    const article = westernData[articleId];
+    saveCurrentScroll();
+    currentView = 'western_' + articleId;
+    
+    document.getElementById('welcome-view').style.display = 'none';
+    document.getElementById('pointsDisplay').innerHTML = '';
+    document.getElementById('globalSearch').value = '';
+    document.getElementById('filterBtn').style.display = 'none';
+    
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
+    
+    const specificBtn = document.getElementById('btn-' + articleId);
+    if (specificBtn) {
+        specificBtn.classList.add('active-menu');
+    }
+    
+    document.getElementById('content-area').innerHTML = `
+        <div class="article-container theme-box">
+            <div style="background: linear-gradient(135deg, ${article.color1} 0%, ${article.color2} 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; color: white; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div style="font-size: 3rem; margin-bottom: 10px;">${article.icon}</div>
+                <h1 style="margin: 0 0 10px 0; font-size: 2.2rem; color: white;">${article.title}</h1>
+                <p style="margin: 0; font-size: 1.1rem; opacity: 0.9;">${article.subtitle}</p>
+            </div>
+            <div class="article-content" style="font-size: 1.1rem; line-height: 1.7; color: var(--ink);">
+                ${article.content}
+            </div>
+        </div>
+    `;
+    
+    window.scrollTo(0, 0);
+    if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
+}
 
 function openPathologies() {
     saveCurrentScroll();
