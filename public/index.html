@@ -299,9 +299,9 @@
             'exam_bank.js',
             'exam_generator.js',
             'exam_logic.js',
-            'app_core.js',       // הקובץ המפוצל הראשון
-            'app_western.js',    // הקובץ המפוצל השני
-            'app_theory.js',     // הקובץ המפוצל השלישי
+            'app_core.js',
+            'app_western.js',
+            'app_theory.js',
             'profile.js',
             'chat.js',
             'ui.js',
@@ -314,17 +314,18 @@
         scriptsToLoad.forEach(script => {
             const scriptTag = document.createElement('script');
             scriptTag.src = `${script}?v=${version}`;
+            scriptTag.async = false; // <--- הפקודה הקריטית ששומרת על סדר הטעינה!
             scriptTag.onload = () => {
                 loadedCount++;
                 if(loadedCount === scriptsToLoad.length && typeof goHome === 'function') {
-                    // הפעלת האתר רק לאחר שכל הקבצים נטענו בהצלחה
+                    // הפעלת האתר רק לאחר שכל הקבצים נטענו בהצלחה לפי הסדר
                     if (currentView === 'home') goHome();
                 }
             };
             document.body.appendChild(scriptTag);
         });
     </script>
-    <script type="module" src="firebase-manager.js?v=23"></script>
+    <script type="module" src="firebase-manager.js?v=24"></script>
 </body>
 </html>
 </body>
