@@ -324,4 +324,7 @@ body.dark-mode .quiz-container #quiz-question {
 .quiz-container #quiz-options {
     max-width: 600px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
