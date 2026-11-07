@@ -30,10 +30,9 @@ const westernData = {
                     </div>
 
                     <!-- צד שמאל: תמונה -->
-                    <div style="flex-shrink: 0;">
-                        <!-- שים לב לנתיב התמונה כאן -->
-                        <img src="images/Sh1.jpeg" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
-                    </div>
+<div style="flex-shrink: 0;">
+    <img src="images/ortho/sh1.jpeg" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
+</div>
 
                 </div>
                 <!-- סוף אזור מפוצל -->
