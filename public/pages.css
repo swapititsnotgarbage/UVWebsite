@@ -388,11 +388,13 @@ body.dark-mode .ortho-thumb:hover {
     to { transform: scale(1); opacity: 1; } 
 }
 
-/* --- מנגנון תמונה צפה במעבר עכבר (Hover Image Tooltip) --- */
+/* --- מילה לחיצה לפתיחת תמונה עם קו תחתון ברור --- */
 .img-hover-term {
     color: #5f27cd;
     font-weight: 700;
-    border-bottom: 2px dashed #5f27cd;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
     cursor: pointer;
     padding: 0 3px;
     border-radius: 4px;
@@ -405,34 +407,22 @@ body.dark-mode .ortho-thumb:hover {
 .img-hover-term::after {
     content: '🖼️';
     font-size: 0.85em;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .img-hover-term:hover {
     background-color: rgba(108, 92, 231, 0.12);
+    color: #341f97;
 }
 
 body.dark-mode .img-hover-term {
     color: #a29bfe;
-    border-bottom-color: #a29bfe;
 }
 
-#hover-img-popup {
-    display: none;
-    position: fixed;
-    z-index: 9998;
-    background: #ffffff;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.22);
-    border: 1px solid #e0e0e0;
-    pointer-events: none; /* מונע מהחלונית להפריע לעכבר */
-    max-width: 340px;
-}
-
-body.dark-mode #hover-img-popup {
-    background: #252525;
-    border-color: #444;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+body.dark-mode .img-hover-term:hover {
+    background-color: rgba(162, 155, 254, 0.15);
+    color: #dfe6e9;
 }
 
 #hover-img-popup img {
