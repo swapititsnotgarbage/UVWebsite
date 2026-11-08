@@ -55,32 +55,23 @@ const westernData = {
             <div class="theory-box theme-box">
                 <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">1. אנטומיה וביומכניקה של מפרק הכתף</h2>
                 
-                <!-- התחלת אזור מפוצל: טקסט מימין, תמונה משמאל -->
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; margin-top: 15px;">
-                    
-                    <!-- צד ימין: טקסט -->
-                    <div style="flex: 1; min-width: 300px;">
-                        <p>מפרק הכתף הוא מפרק סינוביאלי מסוג עלי ומכתש (Ball & Socket). מאפשר את טווח התנועה הרחב ביותר בגוף, אך חושף את המפרק לחוסר יציבות.</p>
-                        <p><strong>3 עצמות עיקריות:</strong></p>
-                        <ul>
-                            <li><strong>Scapula (עצם השכמה):</strong> כוללת את ה-Glenoid Fossa (השקע המפרקי) וה-Acromion.</li>
-                            <li><strong>Humerus (עצם הזרוע):</strong> ראש עצם הזרוע היושב בתוך השקע.</li>
-                            <li><strong>Clavicle (עצם הבריח):</strong> שומרת את הכתף במקומה ומונעת תזוזה מיותרת.</li>
-                        </ul>
-                    </div>
+                <p>
+                    <span class="img-hover-term" 
+                          onmouseenter="showHoverImage(event, 'images/ortho/sh1.jpeg')" 
+                          onmousemove="moveHoverImage(event)" 
+                          onmouseleave="hideHoverImage()" 
+                          onclick="enlargeImage('images/ortho/sh1.jpeg')">מפרק הכתף (Ball & Socket)</span>
+                    הוא מפרק סינוביאלי מסוג עלי ומכתש. מאפשר את טווח התנועה הרחב ביותר בגוף, אך חושף את המפרק לחוסר יציבות.
+                </p>
+                
+                <p><strong>3 עצמות עיקריות:</strong></p>
+                <ul>
+                    <li><strong>Scapula (עצם השכמה):</strong> כוללת את ה-Glenoid Fossa (השקע המפרקי) וה-Acromion.</li>
+                    <li><strong>Humerus (עצם הזרוע):</strong> ראש עצם הזרוע היושב בתוך השקע.</li>
+                    <li><strong>Clavicle (עצם הבריח):</strong> שומרת את הכתף במקומה ומונעת תזוזה מיותרת.</li>
+                </ul>
 
-                    <!-- צד שמאל: תמונה עם זיהוי סיומת אוטומטי -->
-                    <div style="flex-shrink: 0;">
-                        <img src="images/ortho/sh1.jpeg?v=5" 
-                             onerror="if (!this.dataset.try1) { this.dataset.try1 = true; this.src = 'images/ortho/sh1.jpg?v=5'; } else if (!this.dataset.try2) { this.dataset.try2 = true; this.src = 'images/ortho/Sh1.jpeg?v=5'; } else if (!this.dataset.try3) { this.dataset.try3 = true; this.src = 'images/ortho/Sh1.jpg?v=5'; }"
-                             class="ortho-thumb" 
-                             style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" 
-                             onclick="enlargeImage(this.src)" 
-                             alt="אנטומיה של הכתף">
-                    </div>
-                <!-- סוף אזור מפוצל -->
-
-                <h3 style="margin-top:20px; color:var(--ink);">שרירי ה-Rotator Cuff (SITS)</h3>
+                <h3 style="margin-top:25px; color:var(--ink);">שרירי ה-Rotator Cuff (SITS)</h3>
                 <p>4 שרירים הסובבים את המפרק, מניעים ומייצבים אותו:</p>
                 <table class="theory-table">
                     <tr><th>שריר</th><th>תחל (Origin)</th><th>אחז (Insertion)</th><th>פעולה עיקרית</th></tr>
