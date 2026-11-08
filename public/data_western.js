@@ -55,12 +55,10 @@ const westernData = {
             <div class="theory-box theme-box">
                 <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">1. אנטומיה וביומכניקה של מפרק הכתף</h2>
                 
-                <p>
+               <p>
                     <span class="img-hover-term" 
-                          onmouseenter="showHoverImage(event, 'images/ortho/sh1.jpeg')" 
-                          onmousemove="moveHoverImage(event)" 
-                          onmouseleave="hideHoverImage()" 
-                          onclick="enlargeImage('images/ortho/sh1.jpeg')">מפרק הכתף (Ball & Socket)</span>
+                          onclick="enlargeImage('images/ortho/sh1.jpeg')" 
+                          title="לחץ להגדלת התמונה">מפרק הכתף (Ball & Socket)</span>
                     הוא מפרק סינוביאלי מסוג עלי ומכתש. מאפשר את טווח התנועה הרחב ביותר בגוף, אך חושף את המפרק לחוסר יציבות.
                 </p>
                 
