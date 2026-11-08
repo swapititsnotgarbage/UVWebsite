@@ -69,12 +69,15 @@ const westernData = {
                         </ul>
                     </div>
 
-                    <!-- צד שמאל: תמונה -->
+                    <!-- צד שמאל: תמונה עם זיהוי סיומת אוטומטי -->
                     <div style="flex-shrink: 0;">
-                        <!-- הנתיב תוקן בהתאם לצילום המסך: בתוך תיקיית ortho ועם אות קטנה -->
-                        <img src="images/ortho/sh1.jpeg?v=4" class="ortho-thumb" style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" onclick="enlargeImage(this.src)" alt="אנטומיה של הכתף">
+                        <img src="images/ortho/sh1.jpeg?v=5" 
+                             onerror="if (!this.dataset.try1) { this.dataset.try1 = true; this.src = 'images/ortho/sh1.jpg?v=5'; } else if (!this.dataset.try2) { this.dataset.try2 = true; this.src = 'images/ortho/Sh1.jpeg?v=5'; } else if (!this.dataset.try3) { this.dataset.try3 = true; this.src = 'images/ortho/Sh1.jpg?v=5'; }"
+                             class="ortho-thumb" 
+                             style="width: 250px; height: auto; object-fit: contain; border-radius: 10px;" 
+                             onclick="enlargeImage(this.src)" 
+                             alt="אנטומיה של הכתף">
                     </div>
-                </div>
                 <!-- סוף אזור מפוצל -->
 
                 <h3 style="margin-top:20px; color:var(--ink);">שרירי ה-Rotator Cuff (SITS)</h3>
