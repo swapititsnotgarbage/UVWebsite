@@ -48,15 +48,95 @@ function toggleStudyMenu() {
         menu.style.display = 'none';
     }
 }
-// פונקציה להגדלת תמונות ממוזערות
+// === מנגנון חכם לטעינת תמונות (מוצא אוטומטית סיומת ותיקייה) ===
+function setSmartImageSrc(imgElement, rawPath) {
+    const cleanPath = rawPath.split('?')[0];
+    const fileName = cleanPath.split('/').pop(); 
+    const baseName = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
+    const capName = baseName.charAt(0).toUpperCase() + baseName.slice(1);
+    const lowName = baseName.toLowerCase();
+
+    // רשימת כל הנתיבים והסיומות האפשריים לבדיקה אוטומטית
+    const candidates = [
+        cleanPath,
+        `images/ortho/${lowName}.jpeg`,
+        `images/ortho/${lowName}.jpg`,
+        `images/ortho/${capName}.jpeg`,
+        `images/ortho/${capName}.jpg`,
+        `images/ortho/${lowName}.png`,
+        `images/${lowName}.jpeg`,
+        `images/${lowName}.jpg`,
+        `images/${capName}.jpeg`,
+        `images/${capName}.jpg`,
+        `images/${lowName}.png`
+    ];
+
+    let index = 0;
+    imgElement.onerror = function() {
+        index++;
+        if (index < candidates.length) {
+            imgElement.src = candidates[index] + '?v=7';
+        } else {
+            imgElement.onerror = null;
+        }
+    };
+
+    imgElement.src = candidates[0] + '?v=7';
+}
+
+// פונקציה להגדלת תמונות בלחיצה (Lightbox)
 function enlargeImage(src) {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('expanded-image');
     
     if (modal && modalImg) {
-        modalImg.src = src;
+        setSmartImageSrc(modalImg, src);
         modal.style.display = 'flex';
     }
+}
+
+// ניהול חלונית תמונה צפה במעבר עכבר (Hover Preview)
+function showHoverImage(event, src) {
+    let popup = document.getElementById('hover-img-popup');
+    if (!popup) {
+        popup = document.createElement('div');
+        popup.id = 'hover-img-popup';
+        popup.innerHTML = '<img id="hover-img-element" src="" alt="תצוגה מקדימה">';
+        document.body.appendChild(popup);
+    }
+    
+    const img = document.getElementById('hover-img-element');
+    if (img.dataset.rawSrc !== src) {
+        img.dataset.rawSrc = src;
+        setSmartImageSrc(img, src);
+    }
+    
+    popup.style.display = 'block';
+    moveHoverImage(event);
+}
+
+function moveHoverImage(event) {
+    const popup = document.getElementById('hover-img-popup');
+    if (!popup || popup.style.display === 'none') return;
+
+    const offset = 18;
+    let left = event.clientX - popup.offsetWidth - offset;
+    let top = event.clientY + offset;
+
+    if (left < 15) {
+        left = event.clientX + offset;
+    }
+    if (top + popup.offsetHeight > window.innerHeight - 15) {
+        top = event.clientY - popup.offsetHeight - offset;
+    }
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+}
+
+function hideHoverImage() {
+    const popup = document.getElementById('hover-img-popup');
+    if (popup) popup.style.display = 'none';
 }
 
 function updateStudyToolsVisibility() {
