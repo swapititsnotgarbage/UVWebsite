@@ -84,15 +84,35 @@ function setSmartImageSrc(imgElement, rawPath) {
     imgElement.src = candidates[0] + '?v=7';
 }
 
-// פונקציה להגדלת תמונות בלחיצה (Lightbox)
-function enlargeImage(src) {
+// === פונקציה חכמה להגדלת תמונות בלחיצה (Lightbox) ===
+function enlargeImage(rawPath) {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('expanded-image');
-    
-    if (modal && modalImg) {
-        setSmartImageSrc(modalImg, src);
-        modal.style.display = 'flex';
-    }
+    if (!modal || !modalImg) return;
+
+    const cleanPath = rawPath.split('?')[0];
+    const hasExtension = /\.(jpeg|jpg|png|webp)$/i.test(cleanPath);
+    const basePath = hasExtension ? cleanPath.replace(/\.(jpeg|jpg|png|webp)$/i, '') : cleanPath;
+
+    const candidates = [
+        `${basePath}.jpeg`,
+        `${basePath}.jpg`,
+        `${basePath}.png`,
+        `${basePath}.webp`
+    ];
+
+    let index = 0;
+    modalImg.onerror = function() {
+        index++;
+        if (index < candidates.length) {
+            modalImg.src = candidates[index] + '?v=10';
+        } else {
+            modalImg.onerror = null;
+        }
+    };
+
+    modalImg.src = candidates[0] + '?v=10';
+    modal.style.display = 'flex';
 }
 
 

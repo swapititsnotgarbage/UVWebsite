@@ -181,17 +181,37 @@ const westernData = {
                 
                 <p>
                     <span class="img-hover-term" 
-                          onclick="enlargeImage('images/ortho/sh1.jpeg')" 
+                          onclick="enlargeImage('images/ortho/sh1')" 
                           title="לחץ להגדלת התמונה">מפרק הכתף (Ball & Socket)</span>
                     הוא מפרק סינוביאלי מסוג עלי ומכתש. מאפשר את טווח התנועה הרחב ביותר בגוף, אך בשל המבנה הרדוד של השקע המפרקי הוא חשוף לחוסר יציבות ולפריקות.
                 </p>
                 
                 <p><strong>3 עצמות עיקריות ורכיבי ייצוב:</strong></p>
                 <ul>
-                    <li><strong>Scapula (עצם השכמה):</strong> כוללת את ה-Glenoid Fossa (השקע המפרקי הרדוד), ה-Acromion (שיא השכמה) וה-Coracoid Process.</li>
-                    <li><strong>Humerus (עצם הזרוע):</strong> ראש עצם הזרוע היושב בתוך השקע המפרקי וכולל את הגבשושית הגדולה והקטנה (Greater & Lesser Tuberosity).</li>
-                    <li><strong>Clavicle (עצם הבריח):</strong> שומרת את הכתף במקומה, מחברת בין הסטרנום לאקרומיון ומונעת תזוזה מיותרת.</li>
-                    <li><strong>הלברום (Glenoid Labrum):</strong> טבעת סחוסית סיבית המעמיקה את שקע הגלנואיד ב-50% ומשמשת נקודת אחיזה לרצועות ולגיד ה-Biceps הארוך.</li>
+                    <li>
+                        <span class="img-hover-term" 
+                              onclick="enlargeImage('images/ortho/scapula')" 
+                              title="לחץ להגדלת התמונה">Scapula (עצם השכמה)</span>: 
+                        כוללת את ה-Glenoid Fossa (השקע המפרקי הרדוד), ה-Acromion (שיא השכמה) וה-Coracoid Process.
+                    </li>
+                    <li>
+                        <span class="img-hover-term" 
+                              onclick="enlargeImage('images/ortho/Humerus')" 
+                              title="לחץ להגדלת התמונה">Humerus (עצם הזרוע)</span>: 
+                        ראש עצם הזרוע היושב בתוך השקע המפרקי וכולל את הגבשושית הגדולה והקטנה (Greater & Lesser Tuberosity).
+                    </li>
+                    <li>
+                        <span class="img-hover-term" 
+                              onclick="enlargeImage('images/ortho/Clavicle')" 
+                              title="לחץ להגדלת התמונה">Clavicle (עצם הבריח)</span>: 
+                        שומרת את הכתף במקומה, מחברת בין הסטרנום לאקרומיון ומונעת תזוזה מיותרת.
+                    </li>
+                    <li>
+                        <span class="img-hover-term" 
+                              onclick="enlargeImage('images/ortho/Glenoid Labrum')" 
+                              title="לחץ להגדלת התמונה">הלברום (Glenoid Labrum)</span>: 
+                        טבעת סחוסית סיבית המעמיקה את שקע הגלנואיד ב-50% ומשמשת נקודת אחיזה לרצועות ולגיד ה-Biceps הארוך.
+                    </li>
                 </ul>
 
                 <h3 style="margin-top:25px; color:var(--ink);">שרירי ה-Rotator Cuff (שרוול המסובבים - SITS)</h3>
