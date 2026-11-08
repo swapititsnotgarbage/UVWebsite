@@ -95,49 +95,6 @@ function enlargeImage(src) {
     }
 }
 
-// ניהול חלונית תמונה צפה במעבר עכבר (Hover Preview)
-function showHoverImage(event, src) {
-    let popup = document.getElementById('hover-img-popup');
-    if (!popup) {
-        popup = document.createElement('div');
-        popup.id = 'hover-img-popup';
-        popup.innerHTML = '<img id="hover-img-element" src="" alt="תצוגה מקדימה">';
-        document.body.appendChild(popup);
-    }
-    
-    const img = document.getElementById('hover-img-element');
-    if (img.dataset.rawSrc !== src) {
-        img.dataset.rawSrc = src;
-        setSmartImageSrc(img, src);
-    }
-    
-    popup.style.display = 'block';
-    moveHoverImage(event);
-}
-
-function moveHoverImage(event) {
-    const popup = document.getElementById('hover-img-popup');
-    if (!popup || popup.style.display === 'none') return;
-
-    const offset = 18;
-    let left = event.clientX - popup.offsetWidth - offset;
-    let top = event.clientY + offset;
-
-    if (left < 15) {
-        left = event.clientX + offset;
-    }
-    if (top + popup.offsetHeight > window.innerHeight - 15) {
-        top = event.clientY - popup.offsetHeight - offset;
-    }
-
-    popup.style.left = left + 'px';
-    popup.style.top = top + 'px';
-}
-
-function hideHoverImage() {
-    const popup = document.getElementById('hover-img-popup');
-    if (popup) popup.style.display = 'none';
-}
 
 function updateStudyToolsVisibility() {
     const flashTestBtn = document.getElementById('btn-flash-test');
