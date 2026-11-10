@@ -1,6 +1,5 @@
 /* ========================================== */
-/* === קובץ pages_herbs.css (חלק 4 מתוך 4) === */
-/* עיצוב כרטיסיות צמחי מרפא בודדים */
+/* === עיצוב כרטיסיות צמחי מרפא בודדים === */
 /* ========================================== */
 
 .herbs-cards-grid {
@@ -10,6 +9,59 @@
     margin-bottom: 40px;
 }
 
+/* עיצוב כרטיסיית הקטגוריה (במסך הראשי של הצמחים) */
+.topics-grid .topic-card {
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.topics-grid .topic-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.topics-grid .topic-gradient-header {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topics-grid .topic-icon-floating {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+}
+
+.topics-grid .topic-card-content {
+    padding: 20px;
+    text-align: right;
+    flex-grow: 1;
+    direction: rtl;
+}
+
+.topics-grid .topic-card-content h3 {
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    font-size: 1.3rem;
+}
+
+.topics-grid .topic-card-content p {
+    margin: 0;
+    color: #636e72;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    unicode-bidi: plaintext; /* מסדר אוטומטית שמות באנגלית בתוך עברית */
+}
+
+/* עיצוב כרטיסיית הצמח הבודד */
 .herb-point-card {
     background: #ffffff;
     border-radius: 22px;
@@ -17,6 +69,8 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.04);
     border-right: 10px solid #00b894;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    direction: rtl;
+    text-align: right;
 }
 
 .herb-point-card:hover {
@@ -57,6 +111,8 @@
     margin: 0 0 4px 0;
     font-size: 1.25rem;
     color: var(--ink);
+    direction: ltr;
+    text-align: right;
 }
 
 .herb-hebrew-part {
@@ -101,6 +157,7 @@
 .herb-meta-item strong {
     font-size: 1.1rem;
     color: var(--ink);
+    unicode-bidi: plaintext;
 }
 
 .herb-summary-banner {
@@ -127,6 +184,7 @@
 
 .herb-list li {
     margin-bottom: 8px;
+    unicode-bidi: plaintext;
 }
 
 .herb-two-cols {
@@ -153,6 +211,7 @@
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.5;
+    unicode-bidi: plaintext;
 }
 
 .herb-combo-box {
@@ -173,6 +232,7 @@
     padding-right: 18px;
     font-size: 0.95rem;
     line-height: 1.5;
+    unicode-bidi: plaintext;
 }
 
 .herb-enrichment-box {
@@ -183,10 +243,12 @@
     border-radius: 10px;
     font-size: 0.95rem;
     color: #7f6000;
+    unicode-bidi: plaintext;
 }
 
-body.dark-mode .herb-point-card {
-    background: #1e1e1e;
+body.dark-mode .herb-point-card,
+body.dark-mode .topics-grid .topic-card {
+    background: #1e1e1e !important;
 }
 
 body.dark-mode .herb-meta-bar {
