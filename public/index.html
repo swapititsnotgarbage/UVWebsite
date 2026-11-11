@@ -6,9 +6,9 @@
     <title>UV Website - אינדקס רפואה סינית</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&display=swap" rel="stylesheet">
     
-   <link rel="stylesheet" href="base.css?v=35">
-    <link rel="stylesheet" href="cards.css?v=35">
-    <link rel="stylesheet" href="pages.css?v=35">
+    <link rel="stylesheet" href="base.css?v=37">
+    <link rel="stylesheet" href="cards.css?v=37">
+    <link rel="stylesheet" href="pages.css?v=37">
 
     <!-- עיצוב מצב לילה חדש ומותאם למחלקות -->
     <style id="dark-mode-styles">
@@ -143,12 +143,12 @@
                     <div class="menu-item" id="btn-REN" onclick="openPage('REN')">Ren Mai (RN \ CV)</div>
                     <div class="menu-item" id="btn-DU" onclick="openPage('DU')">Du Mai (GV)</div>
                 </div>
+            </div>
 
-                <div class="menu-section">
-                    <h2>מבחנים - נקודות דיקור</h2>
-                    <div class="menu-item" id="btn-theoretical_exam" onclick="window.openTheoreticalExamSetup()">מבחן עיוני</div>
-                    <div class="menu-item" id="btn-practical_exam" onclick="openArticle('practical_exam')">מבחן מעשי</div>
-                </div>
+            <div class="menu-section">
+                <h2>מבחנים - נקודות דיקור</h2>
+                <div class="menu-item" id="btn-theoretical_exam" onclick="window.openTheoreticalExamSetup()">מבחן עיוני</div>
+                <div class="menu-item" id="btn-practical_exam" onclick="openArticle('practical_exam')">מבחן מעשי</div>
             </div>
 
             <div class="menu-section">
@@ -169,7 +169,6 @@
                <div class="menu-item" id="btn-pathologies" onclick="openPathologies()">סינדרומים ופתולוגיות</div>
             </div>
 
-            <!-- קטגוריית צמחים עם כותרת h2 מודגשת זהה לשאר התפריט -->
             <div class="menu-section">
                <h2>צמחים</h2>
                <div class="menu-item" id="btn-herbs_index" onclick="openHerbsIndex()">צמחי מרפא בודדים 🌿</div>
@@ -237,6 +236,7 @@
             <button id="btn-main-study" class="study-btn" onclick="toggleStudyMenu()" title="פתיחת אפשרויות מבחן">🎓 תפריט בחינה</button>
         </div>
 
+        <!-- מודל הגדרת מבחן חכם -->
         <div id="quiz-setup-modal" class="quiz-overlay" style="display: none;">
             <div class="quiz-box theme-box">
                 <button class="close-quiz-btn" onclick="closeQuizSetup()">✖</button>
@@ -249,7 +249,37 @@
             </div>
         </div>
 
-        <!-- מודל דיווח על טעות מעוצב מחדש -->
+        <!-- מודל מבחן חכם פעיל (היה חסר ב-HTML) -->
+        <div id="active-quiz-modal" class="quiz-overlay" style="display: none;">
+            <div id="quiz-container" class="quiz-box theme-box" style="max-width: 650px; padding: 0; overflow: hidden;">
+                <div class="quiz-header-active" style="background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <span id="quiz-progress" style="font-weight: bold; color: white; font-size: 1.2rem;">שאלה 1 מתוך 20</span>
+                    <button class="close-quiz-btn" style="position: static; color: rgba(255,255,255,0.7);" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'" onclick="quitQuiz()">✖ סיום מבחן</button>
+                </div>
+                
+                <div class="quiz-body" style="padding: 30px;">
+                    <h3 id="quiz-question-text" style="color: var(--ink); line-height: 1.5; margin-bottom: 25px; font-size: 1.4rem; border-right: 5px solid #8b1c31; padding-right: 15px;">טוען שאלה...</h3>
+                    <div id="quiz-options-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    <div style="text-align: left; margin-top: 30px;">
+                        <button id="quiz-next-btn" class="start-quiz-btn" style="display: none; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #8b1c31 0%, #5a0d1d 100%); box-shadow: 0 5px 15px rgba(139, 28, 49, 0.3); color: white;" onclick="nextQuizQuestion()">לשאלה הבאה ⬅️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- מודל כרטיסייה אקראית (היה חסר ב-HTML) -->
+        <div id="random-card-modal" class="quiz-overlay" style="display: none;">
+            <div class="quiz-box theme-box" style="max-width: 500px; background: transparent; box-shadow: none; border: none; padding: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 15px;">
+                    <strong style="color: var(--ink); font-size: 1.2rem;">🔀 תרגול כרטיסייה אקראית</strong>
+                    <button class="close-quiz-btn" style="position: static;" onclick="closeRandomCardModal()">✖ סגור</button>
+                </div>
+                <div id="random-card-container"></div>
+                <button id="random-next-btn" class="start-quiz-btn" style="display: none; margin-top: 15px;" onclick="showNextRandomCard()">הכרטיסייה הבאה ⬅️</button>
+            </div>
+        </div>
+
+        <!-- מודל דיווח על טעות -->
         <div id="report-modal" class="quiz-overlay" style="display: none; justify-content: center; align-items: center; background: rgba(0,0,0,0.5);">
             <div class="quiz-box theme-box" style="text-align: center; max-width: 550px; width: 90%; padding: 40px 35px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); position: relative; border: none;">
                 <button class="close-quiz-btn" onclick="document.getElementById('report-modal').style.display='none'" style="position: absolute; top: 20px; left: 20px; background: #f0f2f5; color: #7f8c8d; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#e4e6eb'; this.style.color='#2c3e50';" onmouseout="this.style.background='#f0f2f5'; this.style.color='#7f8c8d';">✖</button>
@@ -281,19 +311,19 @@
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('darkMode', isDark);
             const btn = document.getElementById('darkModeBtn');
-            if (btn) btn.innerText = isDark ? '☀️ מצב יום' : '🌙 מצב לילה';
+            if (btn) btn.innerText = isDark ? 'מצב יום ☀️' : 'מצב לילה 🌙';
         }
         
         document.addEventListener('DOMContentLoaded', () => {
             if(localStorage.getItem('darkMode') === 'true') {
                 document.body.classList.add('dark-mode');
                 const btn = document.getElementById('darkModeBtn');
-                if (btn) btn.innerText = '☀️ מצב יום';
+                if (btn) btn.innerText = 'מצב יום ☀️';
             }
         });
     </script>
 
-    <!-- מערכת Cache Busting אוטומטית - טוענת תמיד את הגרסה החדשה ביותר מהשרת -->
+    <!-- מערכת Cache Busting אוטומטית -->
     <script>
         const version = Date.now();
         const scriptsToLoad = [
@@ -301,10 +331,10 @@
             'data_points_yang.js',
             'data_points_core.js',
             'data_theory.js',
-            'data_western_spine.js',  // 1. עמוד השדרה (מגדיר את westernData)
-            'data_western_upper.js',  // 2. גפה עליונה (כתף, מרפק, כף יד)
-            'data_western_lower.js',  // 3. גפה תחתונה (ברך, קרסול, כף רגל)
-            'data_herbs.js',          // 4. מאגר צמחי מרפא בודדים
+            'data_western_spine.js',
+            'data_western_upper.js',
+            'data_western_lower.js',
+            'data_herbs.js',
             'pathologies_theory.js',
             'pathologies_zang.js',
             'pathologies_fu.js',
@@ -314,7 +344,7 @@
             'exam_logic.js',
             'app_core.js',
             'app_western.js',
-            'app_herbs.js',           // 5. תצוגת צמחי מרפא בודדים
+            'app_herbs.js',
             'app_theory.js',
             'profile.js',
             'chat.js',
@@ -340,6 +370,6 @@
             document.body.appendChild(scriptTag);
         });
     </script>
-    <script type="module" src="firebase-manager.js?v=25"></script>
+    <script type="module" src="firebase-manager.js?v=26"></script>
 </body>
 </html>

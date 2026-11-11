@@ -10,17 +10,17 @@ function saveCurrentScroll() {
     if (currentView !== 'search') {
         scrollPositions[currentView] = window.scrollY;
     }
-}
-
-function goHome() {
-    currentView = 'home';
-    
+    // איפוס אוטומטי של המפה האינטראקטיבית בכל מעבר עמוד
     const mapArea = document.getElementById('interactive-map-area');
     const pointsDisplay = document.getElementById('pointsDisplay');
     if (mapArea) mapArea.style.display = 'none';
     if (pointsDisplay) pointsDisplay.style.display = 'grid';
-
     if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
+}
+
+function goHome() {
+    saveCurrentScroll();
+    currentView = 'home';
 
     const mapToggleBtn = document.getElementById('btn-toggle-map');
     if (mapToggleBtn) {
@@ -34,10 +34,11 @@ function goHome() {
     document.getElementById('pointsDisplay').innerHTML = '';
     document.getElementById('globalSearch').value = '';
     document.getElementById('filterBtn').style.display = 'none';
-    document.getElementById('globalSearch').placeholder = 'חיפוש חומר עיוני ופתולוגיות...';
+    document.getElementById('globalSearch').placeholder = 'חיפוש חופשי בכל האתר...';
 
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-    document.getElementById('btn-home').classList.add('active-menu');
+    const homeBtn = document.getElementById('btn-home');
+    if (homeBtn) homeBtn.classList.add('active-menu');
     
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
@@ -46,13 +47,6 @@ function openPage(id) {
     saveCurrentScroll();
     currentView = id;
 
-    const mapArea = document.getElementById('interactive-map-area');
-    const pointsDisplay = document.getElementById('pointsDisplay');
-    if (mapArea) mapArea.style.display = 'none';
-    if (pointsDisplay) pointsDisplay.style.display = 'grid';
-
-    if (typeof removeCoordinateTracker === 'function') removeCoordinateTracker();
-
     const mapToggleBtn = document.getElementById('btn-toggle-map');
     if (mapToggleBtn) {
         mapToggleBtn.innerText = '🗺️ מפה אינטראקטיבית';
@@ -60,14 +54,30 @@ function openPage(id) {
     }
 
     document.getElementById('globalSearch').value = '';
-    document.getElementById('filterBtn').style.display = 'inline-block';
-    document.getElementById('globalSearch').placeholder = 'חיפוש נקודות דיקור...';
-
-    const m = data[id];
+    document.getElementById(' welcome-view')?.style && (document.getElementById('welcome-view').style.display = 'none');
     document.getElementById('welcome-view').style.display = 'none';
     document.getElementById('pointsDisplay').innerHTML = '';
+
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-    document.getElementById('btn-' + id).classList.add('active-menu');
+    const activeBtn = document.getElementById('btn-' + id);
+    if (activeBtn) activeBtn.classList.add('active-menu');
+
+    const m = data[id];
+    // הגנה למקרה שהמרידיאן (למשל GB, PC, TW) טרם הוזן לקובץ הנתונים
+    if (!m) {
+        document.getElementById('filterBtn').style.display = 'none';
+        document.getElementById('content-area').innerHTML = `
+            <div class="theory-box theme-box" style="text-align: center; padding: 50px 20px;">
+                <h2 style="color: var(--ink); font-size: 2rem;">מרידיאן ${id} בבנייה 🚧</h2>
+                <p style="font-size: 1.15rem; color: #666;">נקודות המרידיאן יעלו בקרוב בהתאם לסילבוס הלימודים.</p>
+            </div>
+        `;
+        if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
+        return;
+    }
+
+    document.getElementById('filterBtn').style.display = 'inline-block';
+    document.getElementById('globalSearch').placeholder = 'חיפוש נקודות דיקור...';
     
     document.getElementById('content-area').innerHTML = `
         <div class="id-badge theme-box">

@@ -1,5 +1,5 @@
 // === קובץ search.js ===
-// ריכוז כל פונקציות החיפוש, הסינון והניווט מתוך תוצאות החיפוש
+// ריכוז כל פונקציות החיפוש, הסינון והניווט מתוך תוצאות החיפוש והמועדפים
 
 function toggleFilterMenu() {
     const menu = document.getElementById('filterMenu');
@@ -46,7 +46,7 @@ function filterBy(term) {
             if (clearBtn) clearBtn.style.display = 'block';
             
             const randomBtn = document.getElementById('btn-random-card');
-            if (randomBtn) randomBtn.style.display = 'none'; // רנדומלי עובד רק במרידיאן מלא
+            if (randomBtn) randomBtn.style.display = 'none';
             
             document.getElementById('btn-smart-quiz').style.display = 'none';
         } else {
@@ -56,7 +56,7 @@ function filterBy(term) {
 }
 
 function handleSearch() {
-    const query = document.getElementById('globalSearch').value.toLowerCase();
+    const query = document.getElementById('globalSearch').value.toLowerCase().trim();
     
     if (query.length < 2) {
         if (currentView === 'search') {
@@ -70,7 +70,7 @@ function handleSearch() {
         if (data[currentView]) {
             currentSearchMode = 'points_only'; 
         } else {
-            currentSearchMode = 'theory_only'; 
+            currentSearchMode = 'global'; 
         }
         currentView = 'search';
     }
@@ -81,53 +81,118 @@ function handleSearch() {
     let pointResults = [];
     let theoryResults = [];
     let pathologyResults = [];
+    let westernResults = [];
+    let herbsResults = [];
     
-    if (currentSearchMode === 'points_only') {
-        Object.keys(data).forEach(k => {
-            data[k].points.forEach(p => {
-                const searchString = `${p.id} ${p.name} ${p.func || ''} ${p.ind || ''} ${(p.tags || []).join(' ')}`.toLowerCase();
-                if (searchString.includes(query)) pointResults.push(p);
+    // 1. חיפוש בנקודות דיקור
+    Object.keys(data).forEach(k => {
+        data[k].points.forEach(p => {
+            const searchString = `${p.id} ${p.name} ${p.func || ''} ${p.ind || ''} ${(p.tags || []).join(' ')}`.toLowerCase();
+            if (searchString.includes(query)) pointResults.push(p);
+        });
+    });
+    
+    // 2. חיפוש בשאר המדורים (כאשר לא נמצאים בתוך מרידיאן ספציפי)
+    if (currentSearchMode !== 'points_only') {
+        // מאמרי תיאוריה
+        if (typeof theoryData !== 'undefined') {
+            Object.keys(theoryData).forEach(key => {
+                const item = theoryData[key];
+                const searchString = `${item.title} ${item.subtitle} ${item.content}`.toLowerCase();
+                if (searchString.includes(query)) {
+                    theoryResults.push({ key: key, item: item });
+                }
             });
-        });
-    }
-    
-    if (currentSearchMode === 'theory_only') {
-        Object.keys(theoryData).forEach(key => {
-            const item = theoryData[key];
-            const searchString = `${item.title} ${item.subtitle} ${item.content}`.toLowerCase();
-            if (searchString.includes(query)) {
-                theoryResults.push({ key: key, item: item });
-            }
-        });
+        }
         
-        Object.keys(pathologiesData).forEach(elementKey => {
-            const element = pathologiesData[elementKey];
-            Object.keys(element.organs).forEach(organKey => {
-                const organ = element.organs[organKey];
-                organ.syndromes.forEach(syn => {
-                    const searchString = `${syn.name} ${syn.etiology} ${syn.symptoms} ${syn.treatment || ''}`.toLowerCase();
+        // פתולוגיות וסינדרומים סיניים
+        if (typeof pathologiesData !== 'undefined') {
+            Object.keys(pathologiesData).forEach(elementKey => {
+                const element = pathologiesData[elementKey];
+                Object.keys(element.organs).forEach(organKey => {
+                    const organ = element.organs[organKey];
+                    organ.syndromes.forEach(syn => {
+                        const searchString = `${syn.name} ${syn.etiology} ${syn.symptoms} ${syn.treatment || ''}`.toLowerCase();
+                        if (searchString.includes(query)) {
+                            pathologyResults.push({
+                                elementKey: elementKey,
+                                organKey: organKey,
+                                organTitle: organ.shortName,
+                                syn: syn
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        // רפואה מערבית - אורתופדיה
+        if (typeof westernData !== 'undefined') {
+            Object.keys(westernData).forEach(key => {
+                const item = westernData[key];
+                const searchString = `${item.title} ${item.subtitle} ${item.content}`.toLowerCase();
+                if (searchString.includes(query)) {
+                    westernResults.push({ key: key, item: item });
+                }
+            });
+        }
+
+        // צמחי מרפא בודדים
+        if (typeof herbsCategoriesData !== 'undefined') {
+            Object.keys(herbsCategoriesData).forEach(catKey => {
+                const cat = herbsCategoriesData[catKey];
+                cat.herbs.forEach(herb => {
+                    const searchString = `${herb.name} ${herb.latin} ${herb.hebrewPart} ${herb.summary} ${herb.functions.join(' ')}`.toLowerCase();
                     if (searchString.includes(query)) {
-                        pathologyResults.push({
-                            elementKey: elementKey,
-                            organKey: organKey,
-                            organTitle: organ.shortName,
-                            syn: syn
-                        });
+                        herbsResults.push({ catKey: catKey, catTitle: cat.title, herb: herb });
                     }
                 });
             });
-        });
+        }
     }
 
     let html = `<h2 style="text-align:center; color: var(--ink); margin-bottom: 30px;">תוצאות חיפוש עבור: "${query}"</h2>`;
     
+    if (herbsResults.length > 0) {
+        html += `<h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">צמחי מרפא בודדים (${herbsResults.length})</h3>
+                 <div style="margin-bottom: 40px;">`;
+        herbsResults.forEach(res => {
+            html += `
+                <div class="patho-card theme-box" style="cursor: pointer; border-right-color: #00b894;" onclick="openHerbsCategory('${res.catKey}')">
+                    <div class="patho-title"><strong>🌿 ${res.herb.name} (${res.herb.latin})</strong> <span style="font-size:0.85rem; color:#777;">(${res.catTitle})</span></div>
+                    <p style="margin-bottom: 5px;"><strong>טעם וטמפ':</strong> ${res.herb.tasteTemp} | <strong>איברים:</strong> ${res.herb.organs}</p>
+                    <p><strong>לסיכום:</strong> ${res.herb.summary}</p>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    if (westernResults.length > 0) {
+        html += `<h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">רפואה מערבית - אורתופדיה (${westernResults.length})</h3>
+                 <div class="topics-grid" style="margin-bottom: 40px;">`;
+        westernResults.forEach(res => {
+            const gradientStyle = `background: linear-gradient(135deg, ${res.item.color1} 0%, ${res.item.color2} 100%);`;
+            html += `
+                <div class="topic-card theme-box" onclick="openWesternArticle('${res.key}')">
+                    <div class="topic-gradient-header" style="${gradientStyle}">
+                        <div class="topic-icon-floating">${res.item.icon || '🦴'}</div>
+                    </div>
+                    <div class="topic-card-content">
+                        <h3>${res.item.title}</h3>
+                        <p>${res.item.subtitle}</p>
+                    </div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
     if (theoryResults.length > 0) {
         html += `<h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">מאמרים ותיאוריה (${theoryResults.length})</h3>
                  <div class="topics-grid" style="margin-bottom: 40px;">`;
         theoryResults.forEach(res => {
             const gradientStyle = `background: linear-gradient(135deg, ${res.item.color1} 0%, ${res.item.color2} 100%);`;
             html += `
-                <div class="topic-card" onclick="openArticle('${res.key}')">
+                <div class="topic-card theme-box" onclick="openArticle('${res.key}')">
                     <div class="topic-gradient-header" style="${gradientStyle}">
                         <div class="topic-icon-floating">${res.item.icon || '📜'}</div>
                     </div>
@@ -145,7 +210,7 @@ function handleSearch() {
                  <div style="margin-bottom: 40px;">`;
         pathologyResults.forEach(res => {
             html += `
-                <div class="patho-card" style="cursor: pointer;" onclick="jumpToPathology('${res.elementKey}', '${res.organKey}')">
+                <div class="patho-card theme-box" style="cursor: pointer;" onclick="jumpToPathology('${res.elementKey}', '${res.organKey}')">
                     <div class="patho-title"><strong>${res.syn.name}</strong> <span style="font-size:0.8rem; color:#777;">(שייך ל-${res.organTitle})</span></div>
                     <p style="margin-bottom: 5px;"><strong>אטיולוגיה:</strong> ${res.syn.etiology}</p>
                     <p><strong>קליניקה:</strong> ${res.syn.symptoms}</p>
@@ -161,8 +226,8 @@ function handleSearch() {
         html += `</div>`;
     }
     
-    if (pointResults.length === 0 && theoryResults.length === 0 && pathologyResults.length === 0) {
-        html += `<p style="text-align:center; color:#777; font-size: 1.2rem;">לא נמצאו תוצאות במדור זה.</p>`;
+    if (pointResults.length === 0 && theoryResults.length === 0 && pathologyResults.length === 0 && westernResults.length === 0 && herbsResults.length === 0) {
+        html += `<p style="text-align:center; color:#777; font-size: 1.2rem;">לא נמצאו תוצאות לחיפוש זה.</p>`;
     }
 
     document.getElementById('content-area').innerHTML = html;
@@ -204,3 +269,20 @@ function jumpToPathology(elementKey, organKey) {
         }, 10); 
     }, 10);
 }
+
+// פונקציה חדשה לקפיצה ישירה לנקודה מתוך רשימת המועדפים בפרופיל
+window.jumpToFavoritePoint = function(pointId) {
+    if (!pointId) return;
+    const prefix = pointId.split('-')[0];
+    if (typeof data !== 'undefined' && data[prefix]) {
+        openPage(prefix);
+        setTimeout(() => {
+            const card = document.getElementById(`container-${pointId}`);
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.style.boxShadow = '0 0 25px rgba(241, 196, 15, 0.9)';
+                setTimeout(() => { card.style.boxShadow = ''; }, 1800);
+            }
+        }, 150);
+    }
+};

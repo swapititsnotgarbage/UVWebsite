@@ -251,12 +251,12 @@ window.loadUserProfileData = async function() {
                 favSnapshot.forEach((doc) => {
                     const data = doc.data();
                     favHtml += `
-                        <div style="background: #f8f9fa; padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; margin-bottom: 8px;">
+                        <div class="theme-box" onclick="if(window.jumpToFavoritePoint) window.jumpToFavoritePoint('${data.itemId}')" style="background: #f8f9fa; padding: 15px 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; margin-bottom: 8px; cursor: pointer; transition: 0.2s;">
                             <div style="display: flex; flex-direction: column; text-align: right;">
-                                <span style="font-weight: bold; color: #2c3e50; font-size: 1.1rem;">${data.itemTitle}</span>
-                                <span style="font-size: 0.85rem; color: #7f8c8d;">${data.itemId}</span>
+                                <span style="font-weight: bold; color: var(--ink); font-size: 1.1rem;">${data.itemTitle}</span>
+                                <span style="font-size: 0.85rem; color: #7f8c8d;">לחץ למעבר מהיר לנקודה ${data.itemId} ⬅️</span>
                             </div>
-                            <button class="fav-btn" data-id="${data.itemId}" onclick="toggleFavorite('${data.itemId}', '${data.itemTitle}', '${data.itemType}', this)" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #f1c40f; transition: 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">⭐</button>
+                            <button class="fav-btn" data-id="${data.itemId}" onclick="event.stopPropagation(); toggleFavorite('${data.itemId}', '${data.itemTitle}', '${data.itemType}', this)" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #f1c40f; transition: 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">⭐</button>
                         </div>
                     `;
                 });

@@ -3,7 +3,6 @@
 // ניהול המפה האינטראקטיבית של המרידיאנים
 // ==========================================
 
-// קואורדינטות לנקודות על המפה. 
 const mapCoordinates = {
     // --- מרידיאן הריאות (LU) ---
     'LU-1':  [{ x: 53.5, y: 12 }, { x: 53.5, y: 62 }],
@@ -40,6 +39,8 @@ const mapCoordinates = {
     'SP-21': [{ x: 25.8, y: 16.8 }, ]
 };
 
+let mapListenersAttached = false;
+
 function toggleMapMode() {
     const mapArea = document.getElementById('interactive-map-area');
     const cardsArea = document.getElementById('pointsDisplay');
@@ -49,21 +50,16 @@ function toggleMapMode() {
     if(menu) menu.style.display = 'none';
 
     if (mapArea.style.display === 'block') {
-        // --- חזרה למצב כרטיסיות ---
         mapArea.style.display = 'none';
         cardsArea.style.display = 'grid';
         toggleBtn.innerText = '🗺️ מפה אינטראקטיבית';
         toggleBtn.style.background = 'linear-gradient(135deg, #16a085 0%, #1abc9c 100%)';
-        
-        removeCoordinateTracker(); // ניקוי הכלי
-    } 
-    else {
-        // --- מעבר למצב מפה ---
+        removeCoordinateTracker();
+    } else {
         cardsArea.style.display = 'none';
         mapArea.style.display = 'block';
         toggleBtn.innerText = '🔙 חזור לכרטיסיות';
         toggleBtn.style.background = 'linear-gradient(135deg, #7f8c8d 0%, #95a5a6 100%)';
-        
         loadMapPoints(currentView); 
         enableCoordinateFinder(); 
     }
@@ -106,10 +102,6 @@ function createPointElement(point, coords, layer, meridianId) {
     layer.appendChild(pointEl);
 }
 
-/// ==========================================
-// כלי עזר למציאת קואורדינטות (מצב מפתח)
-// ==========================================
-
 function removeCoordinateTracker() {
     const tracker = document.getElementById('coord-tracker');
     if (tracker) tracker.remove();
@@ -117,7 +109,7 @@ function removeCoordinateTracker() {
 
 function enableCoordinateFinder() {
     const wrapper = document.querySelector('.body-map-wrapper');
-    const layer = document.getElementById('map-points-layer'); // המדידה מתבצעת כעת נטו על שכבת הנקודות!
+    const layer = document.getElementById('map-points-layer');
     if (!wrapper || !layer) return;
 
     let tracker = document.getElementById('coord-tracker');
@@ -140,34 +132,46 @@ function enableCoordinateFinder() {
         document.body.appendChild(tracker);
     }
 
+    // חיבור המאזינים פעם אחת בלבד למניעת דליפת זיכרון
+    if (mapListenersAttached) return;
+    mapListenersAttached = true;
+
     wrapper.addEventListener('mousemove', function(e) {
-        const rect = layer.getBoundingClientRect(); // מדידה מדויקת של שכבת התמונה
+        const currentTracker = document.getElementById('coord-tracker');
+        const currentLayer = document.getElementById('map-points-layer');
+        if (!currentTracker || !currentLayer) return;
+
+        const rect = currentLayer.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        // מוודא שהאחוזים לא חורגים מ-0 עד 100 (במקרה שמרחפים על השוליים הלבנים)
         const xPercent = Math.max(0, Math.min(100, (x / rect.width) * 100)).toFixed(1);
         const yPercent = Math.max(0, Math.min(100, (y / rect.height) * 100)).toFixed(1);
         
-        tracker.innerHTML = `X: ${xPercent} | Y: ${yPercent}<br><span style="font-size:0.7rem;color:#bdc3c7;">Click image to copy code</span>`;
+        currentTracker.innerHTML = `X: ${xPercent} | Y: ${yPercent}<br><span style="font-size:0.7rem;color:#bdc3c7;">Click image to copy code</span>`;
     });
 
     wrapper.addEventListener('click', function(e) {
-        if(e.target.classList.contains('map-point') || e.target.classList.contains('tooltip')) return; 
+        const currentTracker = document.getElementById('coord-tracker');
+        const currentLayer = document.getElementById('map-points-layer');
+        if (!currentTracker || !currentLayer) return;
+        if (e.target.classList.contains('map-point') || e.target.classList.contains('tooltip')) return; 
 
-        const rect = layer.getBoundingClientRect(); // מדידה מדויקת להעתקה
+        const rect = currentLayer.getBoundingClientRect();
         const xPercent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)).toFixed(1);
         const yPercent = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100)).toFixed(1);
         
         const coordString = `{ x: ${xPercent}, y: ${yPercent} }`;
         
         navigator.clipboard.writeText(coordString).then(() => {
-            tracker.style.background = '#27ae60';
-            tracker.style.color = 'white';
-            tracker.innerHTML = `Copied!<br>${coordString}`;
+            currentTracker.style.background = '#27ae60';
+            currentTracker.style.color = 'white';
+            currentTracker.innerHTML = `Copied!<br>${coordString}`;
             setTimeout(() => {
-                tracker.style.background = 'rgba(0,0,0,0.85)';
-                tracker.style.color = '#2ecc71';
+                if (currentTracker) {
+                    currentTracker.style.background = 'rgba(0,0,0,0.85)';
+                    currentTracker.style.color = '#2ecc71';
+                }
             }, 800);
         });
     });
