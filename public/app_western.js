@@ -45,6 +45,113 @@ function openWesternIndex() {
     if (typeof updateStudyToolsVisibility === 'function') updateStudyToolsVisibility();
 }
 
+// מילון אוטומטי של עצמות, שרירים, רצועות ומפרקים -> שם קובץ התמונה בתיקיית images/ortho/
+const orthoAnatomyImageMap = {
+    // כתף וגפה עליונה
+    'Scapula': 'scapula',
+    'Humerus': 'Humerus',
+    'Clavicle': 'Clavicle',
+    'Glenoid Labrum': 'Glenoid Labrum',
+    'Supraspinatus': 'Supraspinatus',
+    'Infraspinatus': 'Infraspinatus',
+    'Teres Minor': 'Teres Minor',
+    'Subscapularis': 'Subscapularis',
+    'Ulna': 'Ulna',
+    'Radius': 'Radius',
+    'Olecranon': 'Olecranon',
+    'ECRB': 'ECRB',
+    'Carpal Bones': 'Carpal Bones',
+    'Metacarpals': 'Metacarpals',
+    'Phalanges': 'Phalanges',
+    'Median Nerve': 'Median Nerve',
+    'Ulnar Nerve': 'Ulnar Nerve',
+    'Radial Nerve': 'Radial Nerve',
+
+    // עמוד שדרה, אגן וירך
+    'Atlas': 'Atlas',
+    'Axis': 'Axis',
+    'Sacrum': 'Sacrum',
+    'Coccyx': 'Coccyx',
+    'SCM': 'SCM',
+    'Sternocleidomastoid': 'SCM',
+    'Iliopsoas': 'Iliopsoas',
+    'Ligamentum Flavum': 'Ligamentum Flavum',
+    'Ilium': 'Ilium',
+    'Ischium': 'Ischium',
+    'Pubis': 'Pubis',
+    'ASIS': 'ASIS',
+    'PSIS': 'PSIS',
+    'Sacro-Iliac Joint': 'Sacro-Iliac Joint',
+    'Pubic Symphysis': 'Pubic Symphysis',
+    'Acetabulum': 'Acetabulum',
+    'Femoral Head': 'Femoral Head',
+    'Femoral Neck': 'Femoral Neck',
+    'Greater Trochanter': 'Greater Trochanter',
+    'Lesser Trochanter': 'Lesser Trochanter',
+    'Acetabular Labrum': 'Acetabular Labrum',
+    'Gluteus Medius': 'Gluteus Medius',
+    'Gluteus Minimus': 'Gluteus Minimus',
+    'Gluteus Maximus': 'Gluteus Maximus',
+    'Trendelenburg': 'Trendelenburg',
+
+    // ברך, קרסול וכף רגל
+    'Femur': 'Femur',
+    'Tibia': 'Tibia',
+    'Fibula': 'Fibula',
+    'Patella': 'Patella',
+    'Quadriceps': 'Quadriceps',
+    'Hamstrings': 'Hamstrings',
+    'Hamstring': 'Hamstrings',
+    'ACL': 'ACL',
+    'PCL': 'PCL',
+    'MCL': 'MCL',
+    'LCL': 'LCL',
+    'Iliotibial Band': 'ITB',
+    'Talus': 'Talus',
+    'Calcaneus': 'Calcaneus',
+    'Navicular': 'Navicular',
+    'Cuboid': 'Cuboid',
+    'Cuneiforms': 'Cuneiforms',
+    'Metatarsals': 'Metatarsals',
+    'ATFL': 'ATFL',
+    'Deltoid Ligament': 'Deltoid Ligament',
+    'Gastrocnemius': 'Gastrocnemius',
+    'Soleus': 'Soleus',
+    'Tibialis Anterior': 'Tibialis Anterior',
+    'Tibialis Posterior': 'Tibialis Posterior',
+    'Peroneus Longus': 'Peroneus Longus',
+    'Peroneus Brevis': 'Peroneus Brevis',
+    'Plantar Fascia': 'Plantar Fascia'
+};
+
+function autoLinkAnatomyTerms(htmlContent) {
+    const container = document.createElement('div');
+    container.innerHTML = htmlContent;
+
+    const terms = Object.keys(orthoAnatomyImageMap).sort((a, b) => b.length - a.length);
+    const escapedTerms = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const regex = new RegExp(`\\b(${escapedTerms.join('|')})\\b`, 'g');
+
+    function walkTextNodes(node) {
+        if (node.nodeType === 3) { // Text node
+            const text = node.nodeValue;
+            if (regex.test(text)) {
+                const spanWrapper = document.createElement('span');
+                spanWrapper.innerHTML = text.replace(regex, (match) => {
+                    const imgFile = orthoAnatomyImageMap[match];
+                    return `<span class="img-hover-term" onclick="enlargeImage('images/ortho/${imgFile}')" title="לחץ להצגת תמונה של ${match}">${match}</span>`;
+                });
+                node.replaceWith(...spanWrapper.childNodes);
+            }
+        } else if (node.nodeType === 1 && !node.classList.contains('img-hover-term') && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+            Array.from(node.childNodes).forEach(walkTextNodes);
+        }
+    }
+
+    walkTextNodes(container);
+    return container.innerHTML;
+}
+
 function openWesternArticle(articleId) {
     if (typeof westernData === 'undefined' || !westernData[articleId]) {
         console.error('Western article not found:', articleId);
@@ -63,6 +170,9 @@ function openWesternArticle(articleId) {
     document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
     const specificBtn = document.getElementById('btn-western_index');
     if (specificBtn) specificBtn.classList.add('active-menu');
+
+    // הפעלת הקישור האוטומטי של כל השרירים והעצמות לתמונות
+    const linkedContent = autoLinkAnatomyTerms(article.content);
     
     document.getElementById('content-area').innerHTML = `
         <button onclick="openWesternIndex()" style="background: var(--ink); color: #fff; padding: 10px 20px; border: none; border-radius: 8px; margin-bottom: 20px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">⬅ חזור לאינדקס מערבית</button>
@@ -74,7 +184,7 @@ function openWesternArticle(articleId) {
             </div>
             
             <div class="article-content" style="font-size: 1.1rem; line-height: 1.7; color: var(--ink);">
-                ${article.content}
+                ${linkedContent}
             </div>
         </div>
     `;

@@ -249,5 +249,106 @@ Object.assign(westernData, {
                 </ul>
             </div>
         `
+    },
+    // ==========================================
+    // 8. יציבה, אגן ומפרק הירך (שיעור 9)
+    // ==========================================
+    posture_pelvis_hip_pathologies: {
+        title: "יציבה, אגן ומפרק הירך",
+        subtitle: "יציבה נכונה ולקויות יציבה, הבדלים באורך הרגליים (LLD), מפרק ה-Sacro-Iliac, שברי צוואר הירך, קרע בלברום וצליעת Trendelenburg.",
+        icon: "🧍‍♂️",
+        color1: "#a29bfe", 
+        color2: "#6c5ce7",
+        content: `
+            <div class="theory-box theme-box">
+                <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">1. יציבה נכונה והערכת יציבה ב-3 מבטים</h2>
+                <p><strong>לקויות יציבה (Postural Disorders):</strong> מתייחסות למצב שבו הגוף אינו נמצא במיקום האנטומי האופטימלי בעת עמידה, ישיבה או תנועה. מדובר בא-סימטריה המשפיעה על מערכת התנועה והשרירים, ועלולה להיות <strong>סטטית או דינמית, מולדת או נרכשת</strong>.</p>
+
+                <h3 style="margin-top:20px; color:var(--ink);">קריטריונים ליציבה נכונה לפי זווית ההסתכלות</h3>
+                <table class="theory-table">
+                    <tr><th>מבט אנטריורי (קדמי)</th><th>מבט לטרלי (צידי)</th><th>מבט פוסטריורי (אחורי)</th></tr>
+                    <tr>
+                        <td>
+                            • גובה הכתפיים סימטרי.<br>
+                            • גובה ה-<strong>ASIS</strong> (Anterior Superior Iliac Spine) סימטרי.<br>
+                            • מנח מפרקי הירך תקין וסימטרי.<br>
+                            • מנח הברכיים תקין (ללא Varus/Valgus).<br>
+                            • מנח כפות הרגליים מאוזן.
+                        </td>
+                        <td>
+                            • עקומות (קמרים וקערים) עמוד השדרה מאוזנות.<br>
+                            • מנח הראש מעל בית החזה (ללא Forward Head).<br>
+                            • מנח האגן בניטרל (Neutral Pelvic Tilt - ללא APT או PPT מוגזמים).
+                        </td>
+                        <td>
+                            • מנח הראש סימטרי בקו האמצע.<br>
+                            • גובה הכתפיים והשכמות (Acromion & Inferior Angle of Scapula) סימטרי.<br>
+                            • גובה ה-<strong>PSIS</strong> (Posterior Superior Iliac Spine) סימטרי.<br>
+                            • גובה ה-<strong>Malleolus</strong> (פטישוני הקרסול) סימטרי.
+                        </td>
+                    </tr>
+                </table>
+
+                <h3 style="margin-top:20px; color:var(--ink);">אטיולוגיות ותלונות עיקריות בלקויות יציבה</h3>
+                <ul>
+                    <li><strong>סיבות אפשריות:</strong> חולשה או מתח בשרירים (חוסר איזון שרירי ו<strong>חולשת שרירי ליבה - Core</strong>), הרגלים לקויים (ישיבה ממושכת או עמידה לא טבעית), פגיעות או טראומות (בעמוד השדרה, באגן או ברגליים), וגורמים אנטומיים/גנטיים.</li>
+                    <li><strong>תלונות קליניות אופייניות:</strong> כאבי גב, אגן, ירך, ברך וקרסול; הגבלת טווחי תנועה בגב; הגבלה תפקודית; והיווצרות עקומות מפצות כגון <strong>היפר-לורדוזה מותנית, היפר-קיפוזה טורקלית, היפר-לורדוזה צווארית ויציבת Sway Back</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="theory-box theme-box" style="margin-top: 30px; border-top-color: #0984e3;">
+                <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">2. לקויות יציבה במצב סטטי ממקור מבני ושרירי</h2>
+
+                <h3 style="margin-top:20px; color:var(--ink);">א. סקוליוזיס (Scoliosis) כלקות יציבה סטטית</h3>
+                <ul>
+                    <li><strong>דפורמציה תלת-ממדית:</strong> במישור הקורונלי/פרונטלי – עקמת של <strong>מעל 10 מעלות</strong>; במישור ההוריזונטלי/טרנסוורסלי – <strong>רוטציה של החוליות</strong>; במישור הסגיטלי – <strong>ירידה בקיפוזה הטורקלית</strong>.</li>
+                    <li><strong>אטיולוגיה:</strong> <strong>85% מהמקרים אידיופטיים</strong>. יתר המקרים נובעים מליקויים מולדים בחוליות, ליקוי נוירו-מוסקולרי ביציבות השרירים (כגון שיתוק מוחין CP, מחלות ניוון שרירים או פגיעות חוט שדרה), או ליקוי במייצבים הפאסיביים (דיסק, רצועות, קפסולה).</li>
+                    <li><strong>קליניקה (מבחן התכופפות קדימה - Adam's Forward Bend Test):</strong> הבדל בגובה השכמות והכתפיים, אגן לא מאוזן, עקומת <strong>S-Curve או C-Curve</strong> בצילום רנטגן, כאבי גב, ובמצבים חמורים קשיי נשימה עקב עיוות בית החזה. <strong>טיפול:</strong> פיזיותרפיה, גירויים חשמליים, מחוך (Bracing) או ניתוח.</li>
+                </ul>
+
+                <h3 style="margin-top:25px; color:var(--ink);">ב. הבדלים באורך הרגליים (LLD - Leg Length Discrepancy)</h3>
+                <ul>
+                    <li><strong>אפידמיולוגיה וערכי סף:</strong> מצב נפוץ מאוד הקיים אצל <strong>90% מהאוכלוסייה!</strong> ההבדל הממוצע באוכלוסייה הוא <strong>5.2 מ"מ</strong>. <strong>מצב פתולוגי מוגדר כהבדל הגדול מ-1 ס"מ (10 מ"מ)</strong>.</li>
+                    <li><strong>שיטות מדידה קליניות + הדמיה:</strong>
+                        <ol>
+                            <li><strong>מדידת אורך אמיתי (True Leg Length):</strong> מדידה מנקודת ה-<strong>ASIS עד ה-Medial Malleolus</strong>.</li>
+                            <li><strong>מדידת אורך גלוי לעין / תפקודי (Apparent Leg Length):</strong> מדידה מ<strong>הטבור (Umbilicus) עד ה-Medial Malleolus</strong>.</li>
+                        </ol>
+                    </li>
+                    <li><strong>הבחנה בין שוני אמיתי לשוני תפקודי (פונקציונלי):</strong>
+                        <ul>
+                            <li><strong>שוני באורך האמיתי (מבני/גרמי):</strong> פגיעה בלוחית הגדילה לפני סיום צמיחת העצם, בעיה התפתחותית אידיופטית, שבר בעצם, זיהום, או שינוי ניווני ב-Femur כגון <strong>מחלת Legg-Calvé-Perthes</strong> (נמק בראש הפמור עקב פגיעה באספקת הדם).</li>
+                            <li><strong>שוני תפקודי (פונקציונלי - ללא קיצור גרמי של העצם):</strong> חולשת שרירים (כגון חולשת שריר ה-<strong>Gluteus Medius</strong> המתבטאת ב-Trendelenburg Sign), קיצור רקמות רכות (שריר/גיד/רצועה), הידבקויות מפרקיות, גמישות יתר של רצועות, או לקויות יציבה וביומכניקה בברכיים (<strong>Bowleggedness - Varus / Knock Knees - Valgus</strong>) ובכפות הרגליים.</li>
+                        </ul>
+                    </li>
+                    <li><strong>טיפול:</strong> <strong>שמרני:</strong> מדרס/הגבהה או הנעלה מתאימה, חיזוקי שרירים מייצבים. <strong>ניתוחי:</strong> הארכה או קיצור של העצם, או התערבות בתהליך הגדילה של העצם והאטתו ברגל הארוכה.</li>
+                </ul>
+            </div>
+
+            <div class="theory-box theme-box" style="margin-top: 30px; border-top-color: #d63031;">
+                <h2 style="color: var(--ink); border-bottom: 2px solid #eee; padding-bottom: 10px;">3. לקויות יציבה נרכשות באגן ובמפרק הירך + יציבה דינמית</h2>
+
+                <h3 style="margin-top:20px; color:var(--ink);">א. אנטומיה ופתולוגיות של מפרק האגן (Sacro-Iliac Joint Syndrome)</h3>
+                <ul>
+                    <li><strong>אנטומיה של עצמות ומפרקי האגן:</strong> לכל אדם 2 עצמות אגן (אחת בכל צד). כל עצם אגן מורכבת מ-<strong>3 עצמות המחוברות בלידה במפרק סחוסי ומתמזגות עם ההתבגרות: Ilium, Ischium ו-Pubis</strong>. כל עצם אגן יוצרת <strong>2 מפרקים</strong>: מאחור עם ה-Sacrum את מפרק ה-<strong>Sacro-Iliac Joint (SIJ)</strong>, ומלפנים עם עצם האגן השנייה את מפרק ה-<strong>Pubic Symphysis</strong>.</li>
+                    <li><strong>תסמונת מפרק הכסל-עצה (Sacro-Iliac Joint Syndrome / Sacroiliitis):</strong> קבוצת סימפטומים הנובעת מבעיות במפרק ה-SIJ (בין ה-Sacrum ל-Ilium), החיוני ליציבות ולתנועת האגן והגף התחתון. הפגיעה היא לרוב <strong>קרע או מתיחה ברצועות המפרק או דלקת במפרק</strong>.</li>
+                    <li><strong>אטיולוגיות:</strong> טראומה, דלקת פרקים (אוסטאוארתריטיס), ו<strong>היריון:</strong> הפרשת הורמונים בהיריון (רלקסין) גורמת להיחלשות והתרופפות רצועות האגן – <strong>20% מהנשים סובלות מכאבים באגן במהלך ההיריון, והסימפטומים עלולים להימשך עד שנתיים לאחר הלידה!</strong> (בנוסף ייתכנו השפעות ממערכות השלד-שריר, הנוירולוגית, האורו-גניטלית, העיכול והאנדוקרינית).</li>
+                    <li><strong>טיפול:</strong> הורדת כאב, חיזוק שרירים ושיפור פונקציה באמצעות פיזיותרפיה, דיקור, טייפינג או חגורת/מחוך אגן.</li>
+                </ul>
+
+                <h3 style="margin-top:30px; color:var(--ink);">ב. מפרק הירך (Hip Joint): אנטומיה, שברים וקרע ב-Labrum</h3>
+                <ul>
+                    <li><strong>אנטומיה של מפרק הירך:</strong> מפגש בין עצם הירך (<strong>Femur</strong>) לבין שקע ה-<strong>Acetabulum</strong> באגן (השקע שבו נפגשות שלוש עצמות האגן: Ilium, Ischium, Pubis). המבנים המרכזיים בחלק הפרוקסימלי של ה-Femur הם: <strong>Femoral Head</strong> (ראש הירך), <strong>Femoral Neck</strong> (צוואר הירך), והגבשושיות <strong>Greater Trochanter & Lesser Trochanter</strong>.</li>
+                    <li><strong>שברים בצוואר הירך (Hip Fractures):</strong> מתחלקים ל-3 מיקומים אנטומיים: 1. <strong>שבר בצוואר הירך (Femoral Neck Fracture)</strong>; 2. <strong>שבר בין הטרוכנטרים (Intertrochanteric Fracture)</strong>; 3. <strong>שבר מתחת לטרוכנטרים (Subtrochanteric Fracture)</strong>. <strong>הטיפול:</strong> ניתוח לקיבוע פנימי (מסמרים/פלטה) או החלפת מפרק ירך (בהתאם למיקום השבר), ולאחריו שיקום פיזיותרפי וטיפול תרופתי.</li>
+                    <li><strong>פגיעה בלברום של הירך (Acetabular Labral Tear):</strong> ה-Labrum הוא טבעת סחוסית המקיפה את ה-Acetabulum ותפקידה לבלום זעזועים, להגן על המפרק ולשמור על יציבותו. <strong>סימפטומים של קרע בלברום:</strong> כאב בירך או במפשעה (Groin pain), נוקשות והגבלת טווחי תנועה, ו<strong>תחושת "נעילה" או "היתפסות" במפרק</strong>. <strong>טיפול:</strong> שמרני (פיזיותרפיה לחיזוק שרירי האגן והירך, NSAIDs) או ניתוחי (ארתרוסקופיה לתיקון הקרע - Repaired Tear).</li>
+                </ul>
+
+                <h3 style="margin-top:30px; color:var(--ink);">ג. לקויות יציבה במצב דינמי: חולשת שרירי העכוז וצליעת Trendelenburg</h3>
+                <ul>
+                    <li><strong>השרירים המעורבים:</strong> חולשה של <strong>Gluteus Medius ו-Gluteus Minimus</strong> (שניים משלושת שרירי העכוז, האחראים על הרחקת הירך וייצוב האגן במישור הקורונלי בעת עמידה על רגל אחת).</li>
+                    <li><strong>המנגנון הביומכני (Positive Trendelenburg Sign & Gait):</strong> כאשר המטופל עומד על הרגל שבה שרירי ה-Gluteus Medius/Minimus חלשים, השריר אינו מצליח להחזיק את האגן מאוזן, ו<strong>נוצרת קריסה (צניחה) של האגן בצד הנגדי לשריר החלש</strong> (הרגל המורמת באוויר). בהליכה הדבר מתבטא בצליעה אופיינית הנקראת <strong>Trendelenburg Gait</strong> (או בפיצוי שבו הגו נוטה חזק לכיוון הרגל החלשה - Compensated Trendelenburg).</li>
+                </ul>
+            </div>
+        `
     }
 });
