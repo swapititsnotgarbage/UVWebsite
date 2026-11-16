@@ -85,33 +85,47 @@ function setSmartImageSrc(imgElement, rawPath) {
 }
 
 // === פונקציה חכמה להגדלת תמונות בלחיצה (Lightbox) ===
+// === פונקציה חכמה להגדלת תמונות בלחיצה (Lightbox) - תומכת ב-ortho וב-herbs ===
 function enlargeImage(rawPath) {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('expanded-image');
     if (!modal || !modalImg) return;
 
-    const cleanPath = rawPath.split('?')[0];
+    const cleanPath = rawPath.split('?')[0].trim();
     const hasExtension = /\.(jpeg|jpg|png|webp)$/i.test(cleanPath);
     const basePath = hasExtension ? cleanPath.replace(/\.(jpeg|jpg|png|webp)$/i, '') : cleanPath;
 
-    const candidates = [
-        `${basePath}.jpeg`,
-        `${basePath}.jpg`,
-        `${basePath}.png`,
-        `${basePath}.webp`
-    ];
+    const parts = basePath.split('/');
+    const fileName = parts.pop();
+    const folder = parts.join('/');
+
+    const lowName = fileName.toLowerCase();
+    const noSpaceLow = lowName.replace(/\s+/g, '_');
+    const noSpaceOrig = fileName.replace(/\s+/g, '_');
+
+    const nameVariants = [...new Set([fileName, lowName, noSpaceOrig, noSpaceLow])];
+    const exts = ['jpg', 'jpeg', 'png', 'webp'];
+
+    const candidates = [];
+    nameVariants.forEach(name => {
+        exts.forEach(ext => {
+            candidates.push(`${folder}/${name}.${ext}`);
+        });
+    });
 
     let index = 0;
     modalImg.onerror = function() {
         index++;
         if (index < candidates.length) {
-            modalImg.src = candidates[index] + '?v=10';
+            modalImg.src = candidates[index] + '?v=12';
         } else {
             modalImg.onerror = null;
+            modal.style.display = 'none';
+            alert(`עדיין לא הועלתה תמונה עבור: "${fileName}"\nשמור תמונה בתיקייה: public/${folder}/${fileName}.jpg`);
         }
     };
 
-    modalImg.src = candidates[0] + '?v=10';
+    modalImg.src = candidates[0] + '?v=12';
     modal.style.display = 'flex';
 }
 

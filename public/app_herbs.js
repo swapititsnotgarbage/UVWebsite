@@ -85,11 +85,20 @@ function openHerbsCategory(categoryKey) {
                 <!-- כותרת הכרטיסייה כמו בנקודות דיקור -->
                 <div class="herb-card-header">
                     <div class="herb-title-wrap">
-                        <span class="herb-code-badge">${herb.name}</span>
+                        <span class="herb-code-badge" 
+                              onclick="enlargeImage('images/herbs/${herb.name.split('(')[0].split('/')[0].trim()}')" 
+                              title="לחץ להצגת תמונת הצמח ${herb.name}"
+                              style="cursor: zoom-in; display: inline-flex; align-items: center; gap: 8px;">
+                            ${herb.name} <span style="font-size: 0.95rem;">🖼️</span>
+                        </span>
                         <div>
-                            <h3 class="herb-latin-name">${herb.latin}</h3>
+                            <h3 class="herb-latin-name" 
+                                onclick="enlargeImage('images/herbs/${herb.name.split('(')[0].split('/')[0].trim()}')" 
+                                title="לחץ להצגת תמונת הצמח"
+                                style="cursor: zoom-in;">${herb.latin}</h3>
                             <span class="herb-hebrew-part">${herb.hebrewPart} (${herb.meaning})</span>
                         </div>
+                    </div>
                     </div>
                     <span class="herb-rank-badge ${rankClass}" title="דרגת חשיבות למבחן">דרגה ${herb.rank}</span>
                 </div>
