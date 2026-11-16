@@ -99,7 +99,6 @@ function openHerbsCategory(categoryKey) {
                             <span class="herb-hebrew-part">${herb.hebrewPart} (${herb.meaning})</span>
                         </div>
                     </div>
-                    </div>
                     <span class="herb-rank-badge ${rankClass}" title="דרגת חשיבות למבחן">דרגה ${herb.rank}</span>
                 </div>
 
