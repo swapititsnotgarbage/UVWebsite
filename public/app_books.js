@@ -44,7 +44,7 @@ function openMaciociaIndex() {
 
     document.getElementById('content-area').innerHTML = `
         <div style="text-align: center; margin-bottom: 35px;">
-            <span style="background: #6c5ce7; color: white; padding: 4px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: bold;">גרסת בטא • חלק 1: תיאוריה כללית</span>
+            <span style="background: #6c5ce7; color: white; padding: 4px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: bold;">הספר המלא • פרקים 1–70 (חלקים 1–8)</span>
             <h1 style="color: var(--ink); margin: 12px 0 8px 0;">The Foundations of Chinese Medicine</h1>
             <p style="color: #636e72; font-size: 1.1rem; margin: 0;">סיכומי עומק בעברית מתוך ספרו של Giovanni Maciocia (מהדורה שלישית)</p>
         </div>
