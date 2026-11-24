@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-import { initPresenceAndChatBadge } from './presence.js?v=1';
+import { initPresenceAndChatBadge } from './presence.js?v=2';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCUUehirog3DEx1thYy0WOt0jVzufHSv_Q",
