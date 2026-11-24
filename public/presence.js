@@ -5,12 +5,12 @@
 
 import {
     doc, setDoc, collection, onSnapshot, query, orderBy, limit, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-// 🔧 הגדרות – ודא שתואם לשמות ב-chat.js שלך:
-const CHAT_COLLECTION_NAME = 'messages';     // למשל 'messages' או 'chat_messages'
-const CHAT_TIMESTAMP_FIELD = 'timestamp';    // למשל 'timestamp' או 'createdAt'
-const CHAT_UID_FIELD = 'uid';                // שדה מזהה השולח בהודעה (למשל 'uid' או 'userId')
+// 🔧 הגדרות מותאמות בדיוק ל-firebase-manager.js שלך:
+const CHAT_COLLECTION_NAME = 'chats';
+const CHAT_TIMESTAMP_FIELD = 'timestamp';
+const CHAT_EMAIL_FIELD = 'userEmail';              // שדה מזהה השולח בהודעה (למשל 'uid' או 'userId')
 
 const ONLINE_THRESHOLD_MS = 2 * 60 * 1000;   // נחשב מחובר אם נראה ב-2 הדקות האחרונות
 const HEARTBEAT_INTERVAL_MS = 45 * 1000;     // עדכון נוכחות כל 45 שניות
@@ -279,7 +279,7 @@ export function initPresenceAndChatBadge(db, user) {
             const rawTs = msg[CHAT_TIMESTAMP_FIELD];
             const msgTimeMs = rawTs?.toMillis ? rawTs.toMillis() : (typeof rawTs === 'number' ? rawTs : Date.now());
             const lastReadMs = Number(localStorage.getItem(LAST_READ_KEY) || 0);
-            const isFromMe = msg[CHAT_UID_FIELD] === user.uid;
+            const isFromMe = msg[CHAT_EMAIL_FIELD] === user.email;
             const isInChatNow = typeof currentView !== 'undefined' && currentView === 'chat';
 
             if (isInChatNow) {
