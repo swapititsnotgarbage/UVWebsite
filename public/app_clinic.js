@@ -1,13 +1,13 @@
 // ==========================================
-// === קובץ app_clinic.js (בטא) ===
-// דף חדר מטופלים - סימולטור אבחון קליני (ללא צמחים)
+// === קובץ app_clinic.js (v3 - מצב עיוור מתקדם) ===
+// חדר מטופלים - רפואה סינית בלבד, ללא חשיפת האיבר לפני האבחון
 // ==========================================
 
-const CLINIC_STORAGE_KEY = 'uv_clinic_solved_v1';
+const CLINIC_STORAGE_KEY = 'uv_clinic_solved_v3';
 
-let clinicFilter = 'all'; // 'all' | 'tcm' | 'western'
+let clinicFilter = 'all'; // 'all' | 'unsolved' | 'קל' | 'בינוני' | 'מתקדם'
 let activeClinicCaseId = null;
-let clinicStepAnswers = {}; // { stepIdx: chosenOptionIdx }
+let clinicStepAnswers = {};
 
 function getSolvedClinicCases() {
     try {
@@ -31,7 +31,7 @@ function injectClinicStyles() {
     style.id = 'clinic-room-styles';
     style.innerHTML = `
         .clinic-header-banner {
-            background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
+            background: linear-gradient(135deg, #2d3436 0%, #0984e3 100%);
             color: white;
             border-radius: 18px;
             padding: 26px 24px;
@@ -79,8 +79,7 @@ function injectClinicStyles() {
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
         }
-        .clinic-patient-card.tcm { border-right-color: #00b894; }
-        .clinic-patient-card.western { border-right-color: #d63031; }
+        .clinic-patient-card.solved { border-right-color: #00b894; }
         .clinic-patient-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 22px rgba(0,0,0,0.1);
@@ -97,9 +96,8 @@ function injectClinicStyles() {
             border-radius: 18px;
             padding: 26px;
             margin-bottom: 22px;
-            border-top: 5px solid #00b894;
+            border-top: 5px solid #0984e3;
         }
-        .clinic-chart-box.western { border-top-color: #d63031; }
         .clinic-vitals-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -108,7 +106,7 @@ function injectClinicStyles() {
         }
         .clinic-vital-item {
             background: rgba(9, 132, 227, 0.06);
-            border: 1px solid rgba(9, 132, 227, 0.18);
+            border: 1px solid rgba(9, 132, 227, 0.2);
             border-radius: 12px;
             padding: 12px 14px;
             font-size: 0.96rem;
@@ -172,7 +170,12 @@ function injectClinicStyles() {
     document.head.appendChild(style);
 }
 
-// --- פתיחת חדר ההמתנה (מסך ראשי של חדר המטופלים) ---
+function getDifficultyColor(diff) {
+    if (diff === 'מתקדם') return '#d63031';
+    if (diff.includes('בינוני')) return '#e17055';
+    return '#0984e3';
+}
+
 function openClinicRoom() {
     injectClinicStyles();
     if (typeof saveCurrentScroll === 'function') saveCurrentScroll();
@@ -202,11 +205,17 @@ function setClinicFilter(filterType) {
     renderClinicLobby();
 }
 
+function getFilteredClinicCases() {
+    if (typeof clinicCasesData === 'undefined') return [];
+    const solved = getSolvedClinicCases();
+    if (clinicFilter === 'all') return clinicCasesData;
+    if (clinicFilter === 'unsolved') return clinicCasesData.filter(c => !solved.includes(c.id));
+    return clinicCasesData.filter(c => c.difficulty.includes(clinicFilter));
+}
+
 function openRandomClinicCase() {
-    if (typeof clinicCasesData === 'undefined' || !clinicCasesData.length) return;
-    const filtered = clinicFilter === 'all'
-        ? clinicCasesData
-        : clinicCasesData.filter(c => c.category === clinicFilter);
+    const filtered = getFilteredClinicCases();
+    if (!filtered.length) return;
     const randomCase = filtered[Math.floor(Math.random() * filtered.length)];
     if (randomCase) openClinicCase(randomCase.id);
 }
@@ -220,18 +229,18 @@ function resetClinicProgress() {
 function renderClinicLobby() {
     if (typeof clinicCasesData === 'undefined') return;
     const solved = getSolvedClinicCases();
-    const filtered = clinicFilter === 'all'
-        ? clinicCasesData
-        : clinicCasesData.filter(c => c.category === clinicFilter);
+    const filtered = getFilteredClinicCases();
 
-    const cardsHtml = filtered.map(c => {
+    const cardsHtml = filtered.map((c) => {
+        const caseNum = clinicCasesData.findIndex(x => x.id === c.id) + 1;
         const isSolved = solved.includes(c.id);
-        const badgeBg = c.category === 'tcm' ? '#00b894' : '#d63031';
+        const badgeBg = isSolved ? '#00b894' : getDifficultyColor(c.difficulty);
+        const topLabel = isSolved ? `✅ אובחן • ${c.categoryLabel}` : `תיק #${caseNum} • רמה: ${c.difficulty}`;
+
         return `
-            <div class="clinic-patient-card theme-box ${c.category}" onclick="openClinicCase('${c.id}')">
+            <div class="clinic-patient-card theme-box ${isSolved ? 'solved' : ''}" onclick="openClinicCase('${c.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <span class="clinic-badge" style="background:${badgeBg};">${c.categoryLabel}</span>
-                    <span style="font-size:0.82rem; color:#7f8c8d;">${isSolved ? '✅ אובחן' : `רמה: ${c.difficulty}`}</span>
+                    <span class="clinic-badge" style="background:${badgeBg};">${topLabel}</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
                     <span style="font-size:2rem;">${c.avatar}</span>
@@ -240,8 +249,8 @@ function renderClinicLobby() {
                         <div style="font-size:0.9rem; color:#636e72; font-weight:600;">${c.chiefComplaint}</div>
                     </div>
                 </div>
-                <p style="font-size:0.9rem; color:#636e72; margin:8px 0 0 0; line-height:1.45;">
-                    ${c.story.slice(0, 95)}...
+                <p style="font-size:0.88rem; color:#636e72; margin:8px 0 0 0; line-height:1.45;">
+                    ${c.story.slice(0, 92)}...
                 </p>
             </div>
         `;
@@ -249,24 +258,25 @@ function renderClinicLobby() {
 
     document.getElementById('content-area').innerHTML = `
         <div class="clinic-header-banner">
-            <span style="background:rgba(255,255,255,0.22); padding:4px 14px; border-radius:20px; font-size:0.85rem; font-weight:bold;">גרסת בטא • סימולטור קליני (ללא צמחים)</span>
-            <h1 style="margin:12px 0 8px 0; color:white;">🏥 חדר מטופלים – אבחון מקרים</h1>
-            <p style="margin:0; opacity:0.95;">קרא את תיק המטופל, נתח לשון, דופק ומדדים, וקבע פתולוגיה וטיפול. אובחנו עד כה: <strong>${solved.length} / ${clinicCasesData.length}</strong></p>
+            <span style="background:rgba(255,255,255,0.2); padding:4px 14px; border-radius:20px; font-size:0.85rem; font-weight:bold;">אבחון עיוור • ללא חשיפת האיבר • ללא צמחים</span>
+            <h1 style="margin:12px 0 8px 0; color:white;">🏥 חדר מטופלים – אתגר קליני</h1>
+            <p style="margin:0; opacity:0.95;">נתח בעצמך לשון, דופק ותסמינים, זהה את הפתולוגיה והבחן בין נקודות דומות. אובחנו עד כה: <strong>${solved.length} / ${clinicCasesData.length}</strong></p>
         </div>
 
         <div class="clinic-controls">
             <button class="clinic-tab-btn ${clinicFilter === 'all' ? 'active' : ''}" onclick="setClinicFilter('all')">הכל (${clinicCasesData.length})</button>
-            <button class="clinic-tab-btn ${clinicFilter === 'tcm' ? 'active' : ''}" onclick="setClinicFilter('tcm')">☯️ רפואה סינית</button>
-            <button class="clinic-tab-btn ${clinicFilter === 'western' ? 'active' : ''}" onclick="setClinicFilter('western')">🩺 רפואה מערבית</button>
-            <button class="clinic-tab-btn" style="background:#6c5ce7; color:white; border-color:#6c5ce7;" onclick="openRandomClinicCase()">🎲 קרא למטופל אקראי</button>
+            <button class="clinic-tab-btn ${clinicFilter === 'unsolved' ? 'active' : ''}" onclick="setClinicFilter('unsolved')">🆕 טרם אובחנו (${clinicCasesData.length - solved.length})</button>
+            <button class="clinic-tab-btn ${clinicFilter === 'קל' ? 'active' : ''}" onclick="setClinicFilter('קל')">קל</button>
+            <button class="clinic-tab-btn ${clinicFilter === 'בינוני' ? 'active' : ''}" onclick="setClinicFilter('בינוני')">בינוני</button>
+            <button class="clinic-tab-btn ${clinicFilter === 'מתקדם' ? 'active' : ''}" onclick="setClinicFilter('מתקדם')">🔥 מתקדם</button>
+            <button class="clinic-tab-btn" style="background:#6c5ce7; color:white; border-color:#6c5ce7;" onclick="openRandomClinicCase()">🎲 מטופל אקראי</button>
             ${solved.length > 0 ? `<button class="clinic-tab-btn" onclick="resetClinicProgress()">🔄 אפס התקדמות</button>` : ''}
         </div>
 
-        <div class="clinic-cases-grid">${cardsHtml}</div>
+        <div class="clinic-cases-grid">${cardsHtml || '<p style="text-align:center; grid-column:1/-1;">אין מטופלים בקטגוריה זו.</p>'}</div>
     `;
 }
 
-// --- פתיחת תיק מטופל ספציפי ---
 function openClinicCase(caseId) {
     const c = clinicCasesData.find(item => item.id === caseId);
     if (!c) return;
@@ -287,8 +297,6 @@ function answerClinicQuestion(stepIdx, optIdx) {
     if (!c) return;
 
     clinicStepAnswers[stepIdx] = optIdx;
-
-    // אם ענה על כל השלבים של המטופל – נסמן כאובחן
     if (Object.keys(clinicStepAnswers).length === c.questions.length) {
         markClinicCaseSolved(c.id);
     }
@@ -296,12 +304,13 @@ function answerClinicQuestion(stepIdx, optIdx) {
 }
 
 function renderActiveClinicCase(c) {
-    const isTcm = c.category === 'tcm';
-    const badgeBg = isTcm ? '#00b894' : '#d63031';
     const allAnswered = Object.keys(clinicStepAnswers).length === c.questions.length;
-
     const currentIdx = clinicCasesData.findIndex(item => item.id === c.id);
     const nextCase = clinicCasesData[(currentIdx + 1) % clinicCasesData.length];
+
+    // בתיק הפתוח לא חושפים את האיבר עד שהמשתמש סיים לענות על כל השאלות!
+    const headerBadgeText = allAnswered ? `✅ ${c.categoryLabel}` : `תיק #${currentIdx + 1} • רמה: ${c.difficulty}`;
+    const headerBadgeBg = allAnswered ? '#00b894' : getDifficultyColor(c.difficulty);
 
     const questionsHtml = c.questions.map((qObj, sIdx) => {
         const chosen = clinicStepAnswers[sIdx];
@@ -333,12 +342,17 @@ function renderActiveClinicCase(c) {
         `;
     }).join('');
 
+    const bookBtnHtml = (c.chapterKey && typeof openMaciociaChapter === 'function')
+        ? `<button class="clinic-tab-btn" style="background:#6c5ce7; color:white; border-color:#6c5ce7;" onclick="openMaciociaChapter('${c.chapterKey}')">📚 לחזרה ב${c.chapterLabel}</button>`
+        : '';
+
     const finalSummaryHtml = allAnswered ? `
         <div class="theme-box" style="border-radius:16px; padding:22px; border-right:5px solid #6c5ce7; margin-top:20px;">
-            <h3 style="margin-top:0; color:#6c5ce7;">📋 סיכום תיק ומסקנות קליניות</h3>
+            <h3 style="margin-top:0; color:#6c5ce7;">📋 סיכום תיק ומסקנות קליניות (${c.categoryLabel})</h3>
             <p style="line-height:1.7; margin-bottom:16px;">${c.summary}</p>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="clinic-tab-btn active" onclick="openClinicCase('${nextCase.id}')">למטופל הבא: ${nextCase.patientName} ⬅️</button>
+                ${bookBtnHtml}
                 <button class="clinic-tab-btn" onclick="openClinicRoom()">חזרה לחדר ההמתנה</button>
             </div>
         </div>
@@ -347,7 +361,7 @@ function renderActiveClinicCase(c) {
     document.getElementById('content-area').innerHTML = `
         <button onclick="openClinicRoom()" style="background:var(--ink); color:#fff; padding:9px 18px; border:none; border-radius:8px; margin-bottom:18px; cursor:pointer;">⬅ חזור לחדר ההמתנה</button>
 
-        <div class="clinic-chart-box theme-box ${c.category}">
+        <div class="clinic-chart-box theme-box">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <span style="font-size:2.4rem;">${c.avatar}</span>
@@ -356,7 +370,7 @@ function renderActiveClinicCase(c) {
                         <div style="color:#636e72; font-weight:bold;">תלונה עיקרית: ${c.chiefComplaint}</div>
                     </div>
                 </div>
-                <span class="clinic-badge" style="background:${badgeBg}; font-size:0.88rem; padding:5px 14px;">${c.categoryLabel} • ${c.difficulty}</span>
+                <span class="clinic-badge" style="background:${headerBadgeBg}; font-size:0.88rem; padding:5px 14px;">${headerBadgeText}</span>
             </div>
 
             <div style="font-size:1.08rem; line-height:1.75; color:var(--ink); margin-bottom:14px;">
@@ -364,8 +378,8 @@ function renderActiveClinicCase(c) {
             </div>
 
             <div class="clinic-vitals-grid">
-                <div class="clinic-vital-item"><strong>${isTcm ? '👅 לשון:' : '🩺 בדיקה גופנית:'}</strong><br>${c.vitals.tongue}</div>
-                <div class="clinic-vital-item"><strong>${isTcm ? '💓 דופק:' : '📊 מדדים / האזנה:'}</strong><br>${c.vitals.pulse}</div>
+                <div class="clinic-vital-item"><strong>👅 לשון:</strong><br>${c.vitals.tongue}</div>
+                <div class="clinic-vital-item"><strong>💓 דופק:</strong><br>${c.vitals.pulse}</div>
                 <div class="clinic-vital-item"><strong>🔎 ממצאים נוספים:</strong><br>${c.vitals.extra}</div>
             </div>
 
