@@ -230,23 +230,7 @@ function injectSmartSearchUI() {
         searchInput.placeholder = 'חיפוש חכם (Ctrl+K): "נקודות בפנים", "Ma Huang מול Gui Zhi", "צמחים מרים לכבד"...';
     }
 
-    if (searchContainer && !document.getElementById('smart-chips-bar')) {
-        const chipsBar = document.createElement('div');
-        chipsBar.id = 'smart-chips-bar';
-        chipsBar.className = 'smart-chips-bar';
-        const quickQueries = [
-            { label: '📍 נקודות בפנים', q: 'נקודות בפנים' },
-            { label: '🌿 צמחים דרגה A', q: 'צמחים דרגה A' },
-            { label: '🤰 מותר בהריון לחום', q: 'צמחים לחום מותר בהריון' },
-            { label: '⚔️ Ma Huang מול Gui Zhi', q: 'Ma Huang מול Gui Zhi' },
-            { label: '🩺 כאב ראש ברקות טעם מר', q: 'כאב ראש ברקות טעם מר עצבנות' },
-            { label: '📚 ספר ג׳ובאני', q: 'גובאני יין ויאנג' }
-        ];
-        chipsBar.innerHTML = quickQueries.map(item =>
-            `<button type="button" class="smart-chip" onclick="runSmartChip('${item.q.replace(/'/g, "\\'")}')">${item.label}</button>`
-        ).join('');
-        searchContainer.insertAdjacentElement('afterend', chipsBar);
-    }
+    
 
     // קיצור מקלדת Ctrl + K לפתיחה ומיקוד של החיפוש מכל מקום באתר
     if (!window._smartSearchKeybound) {
